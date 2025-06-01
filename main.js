@@ -1,5 +1,5 @@
 import { Player } from './scripts/modules/player.class.js';
-import { Keyboard } from './scripts/modules/keyboard.js';
+import { Keyboard } from './scripts/modules/keyboard.class.js';
 
 window.addEventListener('load', () => {
     const canvas = document.getElementById('canvas1');

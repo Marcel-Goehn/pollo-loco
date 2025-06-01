@@ -1,10 +1,10 @@
 const states = {
-    WALKING : 0,
-    JUMPING : 1,
-    HURT : 2,
-    DEAD : 3,
-    IDLE : 4,
-    SLEEPING : 5
+    WALKING: 0,
+    JUMPING: 1,
+    HURT: 2,
+    DEAD: 3,
+    IDLE: 4,
+    SLEEPING: 5
 };
 
 
@@ -27,7 +27,116 @@ export class Walking extends State {
     };
 
 
-    handleInput() {
+    handleInput(inputKeys) {
+        if (inputKeys.length === 0) {
+            this.player.setState(states.IDLE);
+        }
+        else if (inputKeys.includes('ArrowUp')) {
+            this.player.setState(states.JUMPING);
+            console.log(this.player.currentState);
+        }
+    };
+};
+
+
+export class Jumping extends State {
+    constructor(player) {
+        super('JUMPING');
+        this.player = player;
+    };
+
+
+    enter() {
+        if (this.player.isOnGround()) {
+            this.player.verticalMovement -= this.player.jumpSpeed;
+        } 
+        this.player.frameY = 1;
+    };
+
+
+    handleInput(inputKeys) {
+        if (inputKeys.length === 0 && this.player.isOnGround()) {
+            this.player.setState(states.IDLE);
+        }
+        else if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.isOnGround()) {
+            this.player.setState(states.WALKING);
+        }
+    };
+};
+
+
+export class Hurt extends State {
+    constructor(player) {
+        super('HURT');
+        this.player = player;
+    };
+
+
+    enter() {
+        this.player.frameY = 2;
+    };
+
+
+    handleInput(inputKeys) {
+
+    };
+};
+
+
+export class Dead extends State {
+    constructor(player) {
+        super('DEAD');
+        this.player = player;
+    };
+
+
+    enter() {
+        this.player.frameY = 3;
+    };
+
+
+    handleInput(inputKeys) {
+
+    };
+};
+
+
+export class Idle extends State {
+    constructor(player) {
+        super('IDLE');
+        this.player = player;
+    };
+
+
+    enter() {
+        this.player.frameY = 4;
+    };
+
+
+    handleInput(inputKeys) {
+        if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
+            this.player.setState(states.WALKING);
+        }
+        else if (inputKeys.includes('ArrowUp')) {
+            this.player.setState(states.JUMPING);
+        }
+    };
+};
+
+
+export class Sleeping extends State {
+    constructor(player) {
+        super('SLEEPING');
+        this.player = player;
+    };
+
+
+    enter() {
+        this.player.frameY = 5;
+    };
+
+
+    handleInput(inputKeys) {
 
     };
 };

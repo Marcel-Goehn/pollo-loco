@@ -1,4 +1,4 @@
-import { Walking } from "./player-states.class.js";
+import { Walking, Jumping, Hurt, Dead, Idle, Sleeping } from "./player-states.class.js";
 
 export class Player {
     constructor(game) {
@@ -17,13 +17,15 @@ export class Player {
         this.verticalMovement = 0;
         this.jumpSpeed = 20;
         this.gravity = 1;
-        this.states = [new Walking(this)];
+        this.states = [new Walking(this), new Jumping(this), new Hurt(this), new Dead(this), new Idle(this), new Sleeping(this)];
         this.currentState = this.states[0];
         this.currentState.enter();
     };
 
 
     update(inputKeys) {
+        this.currentState.handleInput(inputKeys);
+
         // Horizontal Movement
         this.x += this.horizontalMovement;
 
@@ -37,6 +39,7 @@ export class Player {
             this.horizontalMovement = 0;
         };
 
+        // Prevents that the Player can walk out of the canvas
         if (this.x < 0) {
             this.x = 0;
         };
@@ -45,9 +48,9 @@ export class Player {
         };
 
         // Vertical Movement
-        if (inputKeys.includes('ArrowUp') && this.isOnGround()) {
-            this.verticalMovement -= this.jumpSpeed;
-        };
+        // if (inputKeys.includes('ArrowUp') && this.isOnGround()) {
+        //     this.verticalMovement -= this.jumpSpeed;
+        // };
 
         this.y += this.verticalMovement;
 
@@ -67,5 +70,11 @@ export class Player {
 
     isOnGround() {
         return this.y >= this.game.height - this.playerHeight;
-    }
+    };
+
+
+    setState(state) {
+        this.currentState = this.states[state];
+        this.currentState.enter();
+    };
 };
