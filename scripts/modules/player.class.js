@@ -1,3 +1,5 @@
+import { Walking } from "./player-states.class.js";
+
 export class Player {
     constructor(game) {
         this.game = game;
@@ -8,11 +10,16 @@ export class Player {
         this.x = 0;
         this.y = this.game.height - this.playerHeight;
         this.image = document.getElementById('player');
+        this.frameX = 0;
+        this.frameY = 0;
         this.horizontalMovement = 0;
         this.maxSpeed = 5;
         this.verticalMovement = 0;
         this.jumpSpeed = 20;
         this.gravity = 1;
+        this.states = [new Walking(this)];
+        this.currentState = this.states[0];
+        this.currentState.enter();
     };
 
 
@@ -54,7 +61,7 @@ export class Player {
 
 
     draw(context) {
-        context.drawImage(this.image, 0, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.playerWidth, this.playerHeight);
+        context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.playerWidth, this.playerHeight);
     };
 
 
