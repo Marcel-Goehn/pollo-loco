@@ -18,7 +18,7 @@ window.addEventListener('load', () => {
         
 
         update() {
-            this.player.update();
+            this.player.update(this.keyboard.keys);
         }
 
 
