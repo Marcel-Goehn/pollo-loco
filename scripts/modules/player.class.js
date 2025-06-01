@@ -8,23 +8,26 @@ export class Player {
         this.x = 0;
         this.y = this.game.height - this.playerHeight;
         this.image = document.getElementById('player');
-        this.speed = 0;
+        this.horizontalMovement = 0;
         this.maxSpeed = 5;
+        this.verticalMovement = 0;
+        this.jumpSpeed = 20;
+        this.gravity = 1;
     };
 
 
     update(inputKeys) {
         // Horizontal Movement
-        this.x += this.speed;
+        this.x += this.horizontalMovement;
 
         if (inputKeys.includes('ArrowRight')) {
-            this.speed = this.maxSpeed;
+            this.horizontalMovement = this.maxSpeed;
         }
         else if (inputKeys.includes('ArrowLeft')) {
-            this.speed = -this.maxSpeed;
+            this.horizontalMovement = -this.maxSpeed;
         }
         else {
-            this.speed = 0;
+            this.horizontalMovement = 0;
         };
 
         if (this.x < 0) {
@@ -33,10 +36,29 @@ export class Player {
         if (this.x > (this.game.width - 100)) {
             this.x = this.game.width - 100;
         };
+
+        // Vertical Movement
+        if (inputKeys.includes('ArrowUp') && this.isOnGround()) {
+            this.verticalMovement -= this.jumpSpeed;
+        };
+
+        this.y += this.verticalMovement;
+
+        if (!this.isOnGround()) {
+            this.verticalMovement += this.gravity;
+        }
+        else {
+            this.verticalMovement = 0;
+        };
     };
 
 
     draw(context) {
         context.drawImage(this.image, 0, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.playerWidth, this.playerHeight);
     };
+
+
+    isOnGround() {
+        return this.y >= this.game.height - this.playerHeight;
+    }
 };
