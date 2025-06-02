@@ -31,11 +31,10 @@ export class Walking extends State {
 
     handleInput(inputKeys) {
         if (inputKeys.length === 0) {
-            this.player.setState(states.IDLE);
+            this.player.setState(states.IDLE, 0);
         }
         else if (inputKeys.includes('ArrowUp')) {
-            this.player.setState(states.JUMPING);
-            console.log(this.player.currentState);
+            this.player.setState(states.JUMPING, 1);
         };
     };
 };
@@ -60,10 +59,10 @@ export class Jumping extends State {
 
     handleInput(inputKeys) {
         if (inputKeys.length === 0 && this.player.isOnGround()) {
-            this.player.setState(states.IDLE);
+            this.player.setState(states.IDLE, 0);
         }
         else if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.isOnGround()) {
-            this.player.setState(states.WALKING);
+            this.player.setState(states.WALKING, 1);
         };
     };
 };
@@ -125,10 +124,10 @@ export class Idle extends State {
 
     handleInput(inputKeys) {
         if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
-            this.player.setState(states.WALKING);
+            this.player.setState(states.WALKING, 1);
         }
         else if (inputKeys.includes('ArrowUp')) {
-            this.player.setState(states.JUMPING);
+            this.player.setState(states.JUMPING, 1);
         };
     };
 };
