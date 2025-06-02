@@ -35,6 +35,6 @@ canvas {
     background-color: black;
 }
 
-#player {
+#player, #air, #clouds, #layer_three, #layer_two, #layer_one {
     display: none;
 }

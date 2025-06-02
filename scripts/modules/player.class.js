@@ -8,7 +8,7 @@ export class Player {
         this.playerWidth = 100;
         this.playerHeight = 200;
         this.x = 0;
-        this.y = this.game.height - this.playerHeight;
+        this.y = this.game.height - this.playerHeight - this.game.groundMargin;
         this.image = document.getElementById('player');
         this.frameX = 0;
         this.frameY = 0;
@@ -84,7 +84,7 @@ export class Player {
 
 
     isOnGround() {
-        return this.y >= this.game.height - this.playerHeight;
+        return this.y >= this.game.height - this.playerHeight - this.game.groundMargin;
     };
 
 
