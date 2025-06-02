@@ -23,6 +23,8 @@ export class Walking extends State {
 
 
     enter() {
+        this.player.frameX = 0;
+        this.player.maxFrameX = 5;
         this.player.frameY = 0;
     };
 
@@ -34,7 +36,7 @@ export class Walking extends State {
         else if (inputKeys.includes('ArrowUp')) {
             this.player.setState(states.JUMPING);
             console.log(this.player.currentState);
-        }
+        };
     };
 };
 
@@ -48,8 +50,10 @@ export class Jumping extends State {
 
     enter() {
         if (this.player.isOnGround()) {
-            this.player.verticalMovement -= this.player.jumpSpeed;
-        } 
+            this.player.verticalMovement -= this.player.jumpHeight;
+        };
+        this.player.frameX = 0;
+        this.player.maxFrameX = 8; 
         this.player.frameY = 1;
     };
 
@@ -60,7 +64,7 @@ export class Jumping extends State {
         }
         else if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.isOnGround()) {
             this.player.setState(states.WALKING);
-        }
+        };
     };
 };
 
@@ -73,6 +77,8 @@ export class Hurt extends State {
 
 
     enter() {
+        this.player.frameX = 0;
+        this.player.maxFrameX = 2;
         this.player.frameY = 2;
     };
 
@@ -91,6 +97,8 @@ export class Dead extends State {
 
 
     enter() {
+        this.player.frameX = 0;
+        this.player.maxFrameX = 6;
         this.player.frameY = 3;
     };
 
@@ -109,6 +117,8 @@ export class Idle extends State {
 
 
     enter() {
+        this.player.frameX = 0;
+        this.player.maxFrameX = 9;
         this.player.frameY = 4;
     };
 
@@ -119,7 +129,7 @@ export class Idle extends State {
         }
         else if (inputKeys.includes('ArrowUp')) {
             this.player.setState(states.JUMPING);
-        }
+        };
     };
 };
 
@@ -132,11 +142,13 @@ export class Sleeping extends State {
 
 
     enter() {
+        this.player.frameX = 0;
+        this.player.maxFrameX = 9;
         this.player.frameY = 5;
     };
 
 
     handleInput(inputKeys) {
-
+        
     };
 };

@@ -14,28 +14,30 @@ window.addEventListener('load', () => {
             this.height = height;
             this.player = new Player(this);
             this.keyboard = new Keyboard();
-        }
+        };
         
 
-        update() {
-            this.player.update(this.keyboard.keys);
-        }
+        update(deltaTime) {
+            this.player.update(this.keyboard.keys, deltaTime);
+        };
 
 
         draw(context) {
             this.player.draw(context);
-        }
-    }
+        };
+    };
 
     const game = new Game(CANVAS_WIDTH, CANVAS_HEIGHT);
     console.log(game);
+    let lastTime = 0;
 
-
-    const animate = () => {
+    const animate = (timeStamp) => {
+        const deltaTime = timeStamp - lastTime;
+        lastTime = timeStamp;
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        game.update();
+        game.update(deltaTime);
         game.draw(ctx);
         requestAnimationFrame(animate);
-    }
-    animate();
+    };
+    animate(0);
 });

@@ -12,18 +12,23 @@ export class Player {
         this.image = document.getElementById('player');
         this.frameX = 0;
         this.frameY = 0;
+        this.maxFrameX = 9;
+        this.fps = 20;
+        this.frameRate = 1000 / this.fps;
+        this.frameTimer = 0;
         this.horizontalMovement = 0;
         this.maxSpeed = 5;
         this.verticalMovement = 0;
-        this.jumpSpeed = 20;
+        this.jumpHeight = 15;
         this.gravity = 1;
         this.states = [new Walking(this), new Jumping(this), new Hurt(this), new Dead(this), new Idle(this), new Sleeping(this)];
-        this.currentState = this.states[0];
+        this.currentState = this.states[4];
         this.currentState.enter();
     };
 
 
-    update(inputKeys) {
+    update(inputKeys, deltaTime) {
+        // Watches the current state and changes it if the user presses a key (example ArrowLeft will change the state if the current state would be IDLE)
         this.currentState.handleInput(inputKeys);
 
         // Horizontal Movement
@@ -43,15 +48,11 @@ export class Player {
         if (this.x < 0) {
             this.x = 0;
         };
-        if (this.x > (this.game.width - 100)) {
-            this.x = this.game.width - 100;
+        if (this.x > (this.game.width - this.playerWidth)) {
+            this.x = this.game.width - this.playerWidth;
         };
 
         // Vertical Movement
-        // if (inputKeys.includes('ArrowUp') && this.isOnGround()) {
-        //     this.verticalMovement -= this.jumpSpeed;
-        // };
-
         this.y += this.verticalMovement;
 
         if (!this.isOnGround()) {
@@ -59,6 +60,20 @@ export class Player {
         }
         else {
             this.verticalMovement = 0;
+        };
+
+        // Sprite Animation
+        if (this.frameTimer > this.frameRate) {
+            this.frameTimer = 0;
+            if (this.frameX < this.maxFrameX) {
+                this.frameX++;
+            }
+            else {
+                this.frameX = 0;
+            };
+        }
+        else {
+            this.frameTimer += deltaTime;
         };
     };
 
