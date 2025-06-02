@@ -7,6 +7,8 @@ const states = {
     SLEEPING: 5
 };
 
+let enterIdleStateTime = 0;
+
 
 class State {
     constructor(state) {
@@ -119,11 +121,17 @@ export class Idle extends State {
         this.player.frameX = 0;
         this.player.maxFrameX = 9;
         this.player.frameY = 4;
+        enterIdleStateTime = new Date().getTime();
     };
 
 
     handleInput(inputKeys) {
-        if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
+        let idleTime = new Date().getTime();
+
+        if (idleTime - enterIdleStateTime >= 5000) {
+            this.player.setState(states.SLEEPING, 0);
+        }
+        else if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
             this.player.setState(states.WALKING, 1);
         }
         else if (inputKeys.includes('ArrowUp')) {
@@ -148,6 +156,11 @@ export class Sleeping extends State {
 
 
     handleInput(inputKeys) {
-        
+        if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
+            this.player.setState(states.WALKING, 1);
+        }
+        else if (inputKeys.includes('ArrowUp')) {
+            this.player.setState(states.JUMPING, 1);
+        };
     };
 };
