@@ -10,7 +10,7 @@ class Enemy {
 
 
     update(deltaTime) {
-        // movement 
+        // movement
         this.x -= this.speedX + this.game.gameSpeed;
 
         // sprite animation
@@ -54,16 +54,21 @@ export class RegularChicken extends Enemy {
         this.speedX = Math.random() + 1;
         this.maxFrameX = 2;
     };
-
-
-    update(deltaTime) {
-        super.update(deltaTime);
-    }
 };
 
 
-class SmallChicken extends Enemy {
-    constructor() {
+export class SmallChicken extends Enemy {
+    constructor(game) {
         super();
+        this.game = game;
+        this.spriteWidth = 236;
+        this.spriteHeight = 210;
+        this.enemyWidth = 40;
+        this.enemyHeight = 40;
+        this.x = this.game.width + Math.random() * this.game.width * 0.5;
+        this.y = this.game.height - this.enemyHeight - this.game.groundMargin;
+        this.image = document.getElementById('small_chicken');
+        this.speedX = Math.random() + 1;
+        this.maxFrameX = 2;
     };
 };

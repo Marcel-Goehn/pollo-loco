@@ -1,7 +1,7 @@
 import { Player } from './scripts/modules/player.class.js';
 import { Keyboard } from './scripts/modules/keyboard.class.js';
 import { Background } from './scripts/modules/background.class.js';
-import { RegularChicken } from './scripts/modules/enemies.class.js';
+import { RegularChicken, SmallChicken } from './scripts/modules/enemies.class.js';
 
 window.addEventListener('load', () => {
     const canvas = document.getElementById('canvas1');
@@ -24,7 +24,7 @@ window.addEventListener('load', () => {
             this.enemyTimer = 0;
             this.enemyInterval = 2000;
         };
-        
+
 
         update(deltaTime) {
             this.background.update();
@@ -60,6 +60,9 @@ window.addEventListener('load', () => {
 
         addEnemies() {
             this.enemies.push(new RegularChicken(this));
+            if (this.gameSpeed > 0 && Math.random() < 0.5) {
+                this.enemies.push(new SmallChicken(this));
+            }
             console.log(this.enemies);
         };
     };
