@@ -1,6 +1,7 @@
 import { Player } from './scripts/modules/player.class.js';
 import { Keyboard } from './scripts/modules/keyboard.class.js';
 import { Background } from './scripts/modules/background.class.js';
+import { RegularChicken } from './scripts/modules/enemies.class.js';
 
 window.addEventListener('load', () => {
     const canvas = document.getElementById('canvas1');
@@ -19,18 +20,47 @@ window.addEventListener('load', () => {
             this.player = new Player(this);
             this.keyboard = new Keyboard();
             this.background = new Background(this);
+            this.enemies = [];
+            this.enemyTimer = 0;
+            this.enemyInterval = 2000;
         };
         
 
         update(deltaTime) {
             this.background.update();
             this.player.update(this.keyboard.keys, deltaTime);
+
+            // Interval to add enemies to the game
+            if (this.enemyTimer > this.enemyInterval) {
+                this.addEnemies();
+                this.enemyTimer = 0;
+            }
+            else {
+                this.enemyTimer += deltaTime;
+            }
+            //
+
+            this.enemies.forEach(enemy => {
+                enemy.update(deltaTime);
+                if (enemy.markedForDeletion) {
+                    this.enemies.splice(this.enemies.indexOf(enemy), 1);
+                };
+            });
         };
 
 
         draw(context) {
             this.background.draw(context);
             this.player.draw(context);
+            this.enemies.forEach(enemy => {
+                enemy.draw(context);
+            });
+        };
+
+
+        addEnemies() {
+            this.enemies.push(new RegularChicken(this));
+            console.log(this.enemies);
         };
     };
 
