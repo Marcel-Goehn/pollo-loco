@@ -1,3 +1,5 @@
+import { Walking, Dead } from '../state-management/enemy-states.class.js';
+
 class Enemy {
     constructor() {
         this.frameX = 0;
@@ -6,10 +8,16 @@ class Enemy {
         this.frameRate = 1000 / this.fps;
         this.frameTimer = 0;
         this.markedForDeletion = false;
+        this.states = [new Walking(this), new Dead(this)];
+        this.currentState = this.states[0];
+        this.currentState.enter();
     };
 
 
     update(deltaTime) {
+         // Watches the current state and changes it
+        this.currentState.handleState();
+
         // movement
         this.x -= this.speedX + this.game.gameSpeed;
 
@@ -36,6 +44,12 @@ class Enemy {
 
     draw(context) {
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.enemyWidth, this.enemyHeight);
+    };
+
+
+    setState(state) {
+        this.currentState = this.states[state];
+        this.currentState.enter();
     };
 };
 

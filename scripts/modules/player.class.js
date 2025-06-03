@@ -1,4 +1,4 @@
-import { Walking, Jumping, Hurt, Dead, Idle, Sleeping } from "./player-states.class.js";
+import { Walking, Jumping, Hurt, Dead, Idle, Sleeping } from "../state-management/player-states.class.js";
 
 export class Player {
     constructor(game) {
