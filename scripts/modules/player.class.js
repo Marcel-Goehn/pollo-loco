@@ -28,6 +28,9 @@ export class Player {
 
 
     update(inputKeys, deltaTime) {
+        // Checks if a collision is happening
+        this.checkCollision();
+
         // Watches the current state and changes it if the user presses a key (example ArrowLeft will change the state if the current state would be IDLE)
         this.currentState.handleInput(inputKeys);
 
@@ -95,5 +98,22 @@ export class Player {
         this.currentState = this.states[state];
         this.game.gameSpeed = gameSpeed * this.game.maxGameSpeed;
         this.currentState.enter();
+    };
+
+
+    checkCollision() {
+        this.game.enemies.forEach(enemy => {
+            if (
+                enemy.x < this.x + this.playerWidth &&
+                enemy.x + enemy.enemyWidth > this.x &&
+                enemy.y < this.y + this.playerHeight &&
+                enemy.y + enemy.enemyHeight > this.y
+            ) {
+                enemy.markedForDeletion = true;
+            }
+            else {
+                // no collision
+            };
+        });
     };
 };
