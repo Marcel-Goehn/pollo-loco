@@ -109,7 +109,7 @@ export class Player {
                 enemy.y < this.y + this.playerHeight &&
                 enemy.y + enemy.enemyHeight > this.y
             ) {
-                enemy.markedForDeletion = true;
+                enemy.setState(1);
             }
             else {
                 // no collision

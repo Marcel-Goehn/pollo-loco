@@ -42,6 +42,9 @@ export class Dead extends State{
        this.enemy.frameX = 0;
        this.enemy.maxFrameX = 0;
        this.enemy.frameY = 1;
+       setTimeout(() => {
+        this.enemy.markedForDeletion = true;
+       }, 500);
     };
 
 
