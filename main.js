@@ -18,11 +18,12 @@ window.addEventListener('load', () => {
             this.gameSpeed = 0;
             this.maxGameSpeed = 3;
             this.player = new Player(this);
-            this.keyboard = new Keyboard();
+            this.keyboard = new Keyboard(this);
             this.background = new Background(this);
             this.enemies = [];
             this.enemyTimer = 0;
             this.enemyInterval = 2000;
+            this.debug = true;
         };
 
 
@@ -62,8 +63,7 @@ window.addEventListener('load', () => {
             this.enemies.push(new RegularChicken(this));
             if (this.gameSpeed > 0 && Math.random() < 0.5) {
                 this.enemies.push(new SmallChicken(this));
-            }
-            console.log(this.enemies);
+            };
         };
     };
 

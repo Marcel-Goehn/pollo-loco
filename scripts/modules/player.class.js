@@ -79,6 +79,9 @@ export class Player {
 
 
     draw(context) {
+        if (this.game.debug) {
+            context.strokeRect(this.x, this.y, this.playerWidth, this.playerHeight);
+        };
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.playerWidth, this.playerHeight);
     };
 
