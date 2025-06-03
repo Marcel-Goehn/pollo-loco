@@ -24,6 +24,10 @@ export class Player {
         this.states = [new Walking(this), new Jumping(this), new Hurt(this), new Dead(this), new Idle(this), new Sleeping(this)];
         this.currentState = this.states[4];
         this.currentState.enter();
+        this.hitboxOffsetX = 10;
+        this.hitboxOffsetY = 75;
+        this.hitboxWidth = this.playerWidth - 20;
+        this.hitboxHeight = this.playerHeight - 80;
     };
 
 
@@ -82,8 +86,12 @@ export class Player {
 
 
     draw(context) {
+        // if (this.game.debug) {
+        //     context.strokeRect(this.x, this.y, this.playerWidth, this.playerHeight);
+        // };
         if (this.game.debug) {
-            context.strokeRect(this.x, this.y, this.playerWidth, this.playerHeight);
+            const hitbox = this.getHitbox();
+            context.strokeRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
         };
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.playerWidth, this.playerHeight);
     };
@@ -101,13 +109,24 @@ export class Player {
     };
 
 
+    // Can get deleted later, for hitbox adjusting purposes only
+    getHitbox() {
+        return {
+            x: this.x + this.hitboxOffsetX,
+            y: this.y + this.hitboxOffsetY,
+            width: this.hitboxWidth,
+            height: this.hitboxHeight
+        };
+    };
+
+
     checkCollision() {
         this.game.enemies.forEach(enemy => {
             if (
-                enemy.x < this.x + this.playerWidth &&
-                enemy.x + enemy.enemyWidth > this.x &&
-                enemy.y < this.y + this.playerHeight &&
-                enemy.y + enemy.enemyHeight > this.y
+                enemy.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
+                enemy.x + enemy.enemyWidth > this.x + this.hitboxOffsetX &&
+                enemy.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
+                enemy.y + enemy.enemyHeight > this.y + this.hitboxOffsetY
             ) {
                 enemy.setState(1);
             }
