@@ -2,6 +2,7 @@ import { Player } from './scripts/modules/player.class.js';
 import { Keyboard } from './scripts/modules/keyboard.class.js';
 import { Background } from './scripts/modules/background.class.js';
 import { RegularChicken, SmallChicken } from './scripts/modules/enemies.class.js';
+import { BottleBar, HealthBar, CoinBar } from './scripts/modules/statusbar.class.js';
 
 window.addEventListener('load', () => {
     const canvas = document.getElementById('canvas1');
@@ -24,6 +25,10 @@ window.addEventListener('load', () => {
             this.enemyTimer = 0;
             this.enemyInterval = 2000;
             this.debug = true;
+            this.salsaBottles = 0;
+            this.healthPoints = 100;
+            this.coins = 0;
+            this.statusBars = [new BottleBar(this), new HealthBar(this), new CoinBar(this)];
         };
 
 
@@ -41,6 +46,7 @@ window.addEventListener('load', () => {
             }
             //
 
+            // Enemy deletion
             this.enemies.forEach(enemy => {
                 enemy.update(deltaTime);
                 if (enemy.markedForDeletion) {
@@ -56,6 +62,9 @@ window.addEventListener('load', () => {
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
             });
+            this.statusBars.forEach(statusBar => {
+                statusBar.draw(context);
+            })
         };
 
 
