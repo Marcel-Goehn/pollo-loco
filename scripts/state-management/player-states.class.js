@@ -4,7 +4,8 @@ const states = {
     HURT: 2,
     DEAD: 3,
     IDLE: 4,
-    SLEEPING: 5
+    SLEEPING: 5,
+    FALLING: 6
 };
 
 let enterIdleStateTime = 0;
@@ -54,18 +55,21 @@ export class Jumping extends State {
             this.player.verticalMovement -= this.player.jumpHeight;
         };
         this.player.frameX = 0;
-        this.player.maxFrameX = 8; 
+        this.player.maxFrameX = 8;
         this.player.frameY = 1;
     };
 
 
     handleInput(inputKeys) {
-        if (inputKeys.length === 0 && this.player.isOnGround()) {
-            this.player.setState(states.IDLE, 0);
+        if (this.player.verticalMovement > this.player.gravity) {
+            this.player.setState(states.FALLING, 1);
         }
-        else if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.isOnGround()) {
-            this.player.setState(states.WALKING, 1);
-        };
+        // else if (inputKeys.length === 0 && this.player.isOnGround()) {
+        //     this.player.setState(states.IDLE, 0);
+        // }
+        // else if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.isOnGround()) {
+        //     this.player.setState(states.WALKING, 1);
+        // };
     };
 };
 
@@ -161,6 +165,28 @@ export class Sleeping extends State {
         }
         else if (inputKeys.includes('ArrowUp')) {
             this.player.setState(states.JUMPING, 1);
+        };
+    };
+};
+
+
+export class Falling extends State {
+    constructor(player) {
+        super('FALLING');
+        this.player = player;
+    };
+
+
+    enter() {
+        this.player.frameX = 0;
+        this.player.maxFrameX = 8;
+        this.player.frameY = 1;
+    };
+
+
+    handleInput(inputKeys) {
+        if (inputKeys.length === 0 && this.player.isOnGround()) {
+            this.player.setState(states.IDLE, 0);
         };
     };
 };

@@ -1,4 +1,4 @@
-import { Walking, Jumping, Hurt, Dead, Idle, Sleeping } from "../state-management/player-states.class.js";
+import { Walking, Jumping, Hurt, Dead, Idle, Sleeping, Falling } from "../state-management/player-states.class.js";
 
 export class Player {
     constructor(game) {
@@ -21,7 +21,7 @@ export class Player {
         this.verticalMovement = 0;
         this.jumpHeight = 15;
         this.gravity = 1;
-        this.states = [new Walking(this), new Jumping(this), new Hurt(this), new Dead(this), new Idle(this), new Sleeping(this)];
+        this.states = [new Walking(this), new Jumping(this), new Hurt(this), new Dead(this), new Idle(this), new Sleeping(this), new Falling(this)];
         this.currentState = this.states[4];
         this.currentState.enter();
         this.hitboxOffsetX = 10;
