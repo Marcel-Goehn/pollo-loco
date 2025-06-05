@@ -121,17 +121,31 @@ export class Player {
 
 
     checkCollision() {
+        this.collisionWithEnemies();
+    };
+
+
+    collisionWithEnemies() {
         this.game.enemies.forEach(enemy => {
             if (
-                enemy.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
-                enemy.x + enemy.enemyWidth > this.x + this.hitboxOffsetX &&
-                enemy.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
-                enemy.y + enemy.enemyHeight > this.y + this.hitboxOffsetY
+                (enemy.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
+                    enemy.x + enemy.enemyWidth > this.x + this.hitboxOffsetX &&
+                    enemy.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
+                    enemy.y + enemy.enemyHeight > this.y + this.hitboxOffsetY) &&
+                this.verticalMovement > 0
             ) {
+                enemy.willBeDeleted = true;
                 enemy.setState(1);
             }
-            else {
-                // no collision
+            else if (
+                (enemy.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
+                    enemy.x + enemy.enemyWidth > this.x + this.hitboxOffsetX &&
+                    enemy.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
+                    enemy.y + enemy.enemyHeight > this.y + this.hitboxOffsetY) &&
+                this.isOnGround() &&
+                enemy.willBeDeleted === false
+            ) {
+                this.setState(2, 0);
             };
         });
     };

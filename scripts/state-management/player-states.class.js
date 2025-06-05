@@ -89,7 +89,12 @@ export class Hurt extends State {
 
 
     handleInput(inputKeys) {
-
+        if (this.player.frameX >= this.player.maxFrameX && this.player.isOnGround()) {
+            this.player.setState(states.IDLE, 0);
+        }
+        else if (this.player.frameX >= this.player.maxFrameX && !this.player.isOnGround()) {
+            this.player.setState(states.FALLING, 1);
+        };
     };
 };
 
@@ -187,6 +192,9 @@ export class Falling extends State {
     handleInput(inputKeys) {
         if (inputKeys.length === 0 && this.player.isOnGround()) {
             this.player.setState(states.IDLE, 0);
+        }
+        else if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight') && this.player.isOnGround()) {
+            this.player.setState(states.WALKING, 1);
         };
     };
 };

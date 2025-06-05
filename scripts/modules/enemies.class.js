@@ -8,6 +8,7 @@ class Enemy {
         this.frameRate = 1000 / this.fps;
         this.frameTimer = 0;
         this.markedForDeletion = false;
+        this.willBeDeleted = false;
         this.states = [new Walking(this), new Dead(this)];
         this.currentState = this.states[0];
         this.currentState.enter();
