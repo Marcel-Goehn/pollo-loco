@@ -122,6 +122,7 @@ export class Player {
 
     checkCollision() {
         this.collisionWithEnemies();
+        this.collisionWithBottle();
     };
 
 
@@ -145,8 +146,30 @@ export class Player {
                 this.isOnGround() &&
                 enemy.willBeDeleted === false
             ) {
-                this.setState(2, 0);
+                if (this.game.healthPoints > 0) {
+                    this.game.healthPoints--;
+                    this.setState(2, 0);
+                }
+                else {
+                    this.game.healthPoints = 0;
+                    this.setState(3, 0);
+                };
             };
+        });
+    };
+
+
+    collisionWithBottle() {
+        this.game.bottles.forEach(bottle => {
+            if(
+                bottle.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
+                bottle.x + bottle.width > this.x + this.hitboxOffsetX &&
+                bottle.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
+                bottle.y + bottle.height > this.y + this.hitboxOffsetY
+            ) {
+                bottle.markedForDeletion = true;
+                this.game.salsaBottles++;
+            }
         });
     };
 };
