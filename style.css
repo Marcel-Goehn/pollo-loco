@@ -35,6 +35,6 @@ canvas {
     background-color: black;
 }
 
-#player, #air, #clouds, #layer_three, #layer_two, #layer_one, #regular_chicken, #small_chicken, #salsa_statusbar, #health_statusbar, #coin_statusbar, #salsa_bottle_ground, #salsa_bottle_air {
+#player, #air, #clouds, #layer_three, #layer_two, #layer_one, #regular_chicken, #small_chicken, #salsa_statusbar, #health_statusbar, #coin_statusbar, #salsa_bottle_ground, #salsa_bottle_air, #bottle_spritesheet {
     display: none;
 }
