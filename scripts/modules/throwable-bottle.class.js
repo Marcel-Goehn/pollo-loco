@@ -76,8 +76,13 @@ export class ThrowableBottle {
     };
 
 
+    checkCollisionWithenemies() {
+        
+    }
+
+
     collisionWithGround() {
-        if (this.y < this.game.height - this.game.groundMargin) {
+        if (this.y > this.game.height - this.height - this.game.groundMargin) {
             this.setState(1);
         };
     }

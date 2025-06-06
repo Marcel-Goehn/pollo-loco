@@ -68,7 +68,7 @@ window.addEventListener('load', () => {
 
             // Initialize throwing bottle
             this.throwableBottles.forEach(bottle => {
-                bottle.update();
+                bottle.update(deltaTime);
             });
 
             if (this.keyboard.keys.includes('d') && this.salsaBottles > 0) {
