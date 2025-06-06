@@ -4,6 +4,7 @@ import { Background } from './scripts/modules/background.class.js';
 import { RegularChicken, SmallChicken } from './scripts/modules/enemies.class.js';
 import { BottleBar, HealthBar, CoinBar } from './scripts/modules/statusbar.class.js';
 import { AirBottle, GroundBottle } from './scripts/modules/bottle.class.js';
+import { ThrowableBottle } from './scripts/modules/throwable-bottle.class.js';
 
 window.addEventListener('load', () => {
     const canvas = document.getElementById('canvas1');
@@ -31,6 +32,7 @@ window.addEventListener('load', () => {
             this.coins = 0;
             this.statusBars = [new BottleBar(this), new HealthBar(this), new CoinBar(this)];
             this.bottles = [new GroundBottle(this, 500), new AirBottle(this, 1000), new GroundBottle(this, 1500), new GroundBottle(this, 2000), new AirBottle(this, 2500), new AirBottle(this, 3000), new AirBottle(this, 3500), new GroundBottle(this, 4000), new GroundBottle(this, 4500), new GroundBottle(this, 5000)];
+            this.throwableBottles = [];
         };
 
 
@@ -63,6 +65,23 @@ window.addEventListener('load', () => {
                     this.bottles.splice(this.bottles.indexOf(bottle), 1);
                 };
             });
+
+            // Initialize throwing bottle
+            this.throwableBottles.forEach(bottle => {
+                bottle.update();
+            });
+
+            if (this.keyboard.keys.includes('d') && this.salsaBottles > 0) {
+                this.throwableBottles.push(new ThrowableBottle(this));
+                this.salsaBottles--;
+            };
+
+            // Throwable Bottle deletion
+            this.throwableBottles.forEach(bottle => {
+                if (bottle.markedForDeletion) {
+                    this.throwableBottles.splice(this.throwableBottles.indexOf(bottle), 1);
+                };
+            });
         };
 
 
@@ -76,6 +95,9 @@ window.addEventListener('load', () => {
                 statusBar.draw(context);
             });
             this.bottles.forEach(bottle => {
+                bottle.draw(context);
+            });
+            this.throwableBottles.forEach(bottle => {
                 bottle.draw(context);
             });
         };

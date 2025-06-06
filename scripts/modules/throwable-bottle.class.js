@@ -1,4 +1,6 @@
-class ThrowableBottle {
+import { Exploding, Throwing } from "../state-management/bottle-states.class.js";
+
+export class ThrowableBottle {
     constructor(game) {
         this.game = game;
         this.spriteWidth = 128;
@@ -15,10 +17,11 @@ class ThrowableBottle {
         this.fps = 20;
         this.frameRate = 1000 / this.fps;
         this.frameTimer = 0;
+        this.speedX = 7;
         this.verticalMovement = 0;
-        this.throwHeight = 5;
+        this.throwHeight = 20;
         this.gravity = 1;
-        this.states = [];
+        this.states = [new Throwing(this), new Exploding(this)];
         this.currentState = this.states[0];
         this.currentState.enter();
     };
@@ -28,8 +31,14 @@ class ThrowableBottle {
         // Watches the current state and changes it
         this.currentState.handleState();
 
+        this.checkCollision();
+
         // Horizontal movement
-        this.x++;
+        this.x += this.speedX;
+
+        //Vertical Movement
+        this.y += this.verticalMovement;
+        this.verticalMovement += this.gravity;
 
         // sprite animation
         if (this.frameTimer > this.frameRate) {
@@ -56,7 +65,20 @@ class ThrowableBottle {
 
 
     setState(state) {
-            this.currentState = this.states[state];
-            this.currentState.enter();
+        this.currentState = this.states[state];
+        this.currentState.enter();
+    }
+
+
+    checkCollision() {
+        // this.collisionWithEnemies();
+        this.collisionWithGround();
+    };
+
+
+    collisionWithGround() {
+        if (this.y < this.game.height - this.game.groundMargin) {
+            this.setState(1);
+        };
     }
 }

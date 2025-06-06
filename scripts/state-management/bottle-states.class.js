@@ -11,7 +11,7 @@ class State {
 }
 
 
-class Throwing extends State {
+export class Throwing extends State {
     constructor(bottle) {
         super('THROWING');
         this.bottle = bottle;
@@ -19,7 +19,11 @@ class Throwing extends State {
 
 
     enter() {
+        this.bottle.frameX = 0;
+        this.bottle.maxFrameX = 3;
+        this.bottle.frameY = 0;
 
+        this.bottle.verticalMovement -= this.bottle.throwHeight;
     };
 
 
@@ -29,7 +33,7 @@ class Throwing extends State {
 }
 
 
-class Exploding extends State {
+export class Exploding extends State {
     constructor(bottle) {
         super('EXPLODING');
         this.bottle = bottle;
@@ -37,11 +41,15 @@ class Exploding extends State {
 
 
     enter() {
-
+        this.bottle.frameX = 0;
+        this.bottle.maxFrameX = 5;
+        this.bottle.frameY = 1;
     };
 
 
     handleState() {
-
+        if (this.bottle.frameX >= this.bottle.maxFrameX) {
+            this.bottle.markedForDeletion = true;
+        };
     };
 }
