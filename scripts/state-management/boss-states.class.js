@@ -89,7 +89,9 @@ export class Hurt extends State {
 
 
     handleState() {
-
+        setTimeout(() => {
+            this.boss.setState(0);
+        }, 1000);
     };
 }
 

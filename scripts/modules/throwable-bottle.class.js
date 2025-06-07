@@ -73,6 +73,7 @@ export class ThrowableBottle {
     checkCollision() {
         this.collisionWithEnemies();
         this.collisionWithGround();
+        this.collisionWithBoss();
     };
 
 
@@ -94,6 +95,19 @@ export class ThrowableBottle {
     collisionWithGround() {
         if (this.y > this.game.height - this.height - this.game.groundMargin) {
             this.setState(1);
+        };
+    }
+
+
+    collisionWithBoss() {
+        if (
+            this.game.boss.x < this.x + this.width &&
+            this.game.boss.x + this.game.boss.bossWidth > this.x &&
+            this.game.boss.y < this.x + this.width &&
+            this.game.boss.y + this.game.boss.bossHeight > this.y
+        ) {
+            this.setState(1);
+            this.game.boss.setState(3);
         };
     }
 }

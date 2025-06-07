@@ -33,6 +33,7 @@ window.addEventListener('load', () => {
             this.debug = true;
             this.salsaBottles = 0;
             this.healthPoints = 100;
+            this.bossHealthPoints = 100;
             this.coins = 0;
             this.statusBars = [new BottleBar(this), new HealthBar(this), new CoinBar(this)];
             this.bottles = [new GroundBottle(this, 500), new AirBottle(this, 1000), new GroundBottle(this, 1500), new GroundBottle(this, 2000), new AirBottle(this, 2500), new AirBottle(this, 3000), new AirBottle(this, 3500), new GroundBottle(this, 4000), new GroundBottle(this, 4500), new GroundBottle(this, 5000)];
