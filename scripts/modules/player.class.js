@@ -123,7 +123,8 @@ export class Player {
     checkCollision() {
         this.collisionWithEnemies();
         this.collisionWithBottle();
-    };
+        this.collisionWithCoin();
+    }; 
 
 
     collisionWithEnemies() {
@@ -170,6 +171,21 @@ export class Player {
                 bottle.markedForDeletion = true;
                 this.game.salsaBottles++;
             }
+        });
+    };
+
+
+    collisionWithCoin() {
+        this.game.collectableCoins.forEach(coin => {
+            if(
+                coin.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
+                coin.x + coin.width > this.x + this.hitboxOffsetX &&
+                coin.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
+                coin.y + coin.height > this.y + this.hitboxOffsetY
+            ) {
+                coin.markedForDeletion = true;
+                this.game.coins++;
+            };
         });
     };
 };
