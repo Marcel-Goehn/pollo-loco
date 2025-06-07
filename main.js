@@ -12,6 +12,7 @@ window.addEventListener('load', () => {
     const CANVAS_WIDTH = canvas.width = 720;
     const CANVAS_HEIGHT = canvas.height = 480;
 
+    let lastBottleThrown = 0;
 
     class Game {
         constructor(width, height) {
@@ -71,10 +72,14 @@ window.addEventListener('load', () => {
                 bottle.update(deltaTime);
             });
 
-            if (this.keyboard.keys.includes('d') && this.salsaBottles > 0) {
-                this.throwableBottles.push(new ThrowableBottle(this));
-                this.salsaBottles--;
-            };
+            window.addEventListener('keyup', (event) => {
+                let timePassedBy = new Date().getTime();
+                if (event.key === 'd' && this.salsaBottles > 0 && timePassedBy - lastBottleThrown > 50) {
+                    this.throwableBottles.push(new ThrowableBottle(this));
+                    this.salsaBottles--;
+                    lastBottleThrown = new Date().getTime();
+                };
+            });
 
             // Throwable Bottle deletion
             this.throwableBottles.forEach(bottle => {
