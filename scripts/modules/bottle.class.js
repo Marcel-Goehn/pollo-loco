@@ -9,7 +9,7 @@ class Bottle {
     update() {
         this.x -= this.game.gameSpeed;
 
-        // Check if enemy is off screen
+        // Check if bottle is off screen
         if (this.x + this.width < 0) {
             this.markedForDeletion = true;
         }
