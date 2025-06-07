@@ -6,6 +6,7 @@ import { BottleBar, HealthBar, CoinBar } from './scripts/modules/statusbar.class
 import { AirBottle, GroundBottle } from './scripts/modules/bottle.class.js';
 import { ThrowableBottle } from './scripts/modules/throwable-bottle.class.js';
 import { Coin } from './scripts/modules/coin.class.js';
+import { Boss } from './scripts/modules/boss.class.js';
 
 window.addEventListener('load', () => {
     const canvas = document.getElementById('canvas1');
@@ -25,6 +26,7 @@ window.addEventListener('load', () => {
             this.player = new Player(this);
             this.keyboard = new Keyboard(this);
             this.background = new Background(this);
+            this.boss = new Boss(this);
             this.enemies = [];
             this.enemyTimer = 0;
             this.enemyInterval = 2000;
@@ -42,6 +44,7 @@ window.addEventListener('load', () => {
         update(deltaTime) {
             this.background.update();
             this.player.update(this.keyboard.keys, deltaTime);
+            this.boss.update(deltaTime);
 
             // Interval to add enemies to the game
             if (this.enemyTimer > this.enemyInterval) {
@@ -103,6 +106,7 @@ window.addEventListener('load', () => {
         draw(context) {
             this.background.draw(context);
             this.player.draw(context);
+            this.boss.draw(context);
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
             });

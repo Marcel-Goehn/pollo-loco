@@ -15,7 +15,6 @@ export class Throwing extends State {
     constructor(bottle) {
         super('THROWING');
         this.bottle = bottle;
-        console.log(this.state);
     };
 
 
@@ -38,7 +37,6 @@ export class Exploding extends State {
     constructor(bottle) {
         super('EXPLODING');
         this.bottle = bottle;
-        console.log(this.state);
     };
 
 
