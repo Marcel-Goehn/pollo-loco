@@ -35,7 +35,7 @@ window.addEventListener('load', () => {
             this.statusBars = [new BottleBar(this), new HealthBar(this), new CoinBar(this)];
             this.bottles = [new GroundBottle(this, 500), new AirBottle(this, 1000), new GroundBottle(this, 1500), new GroundBottle(this, 2000), new AirBottle(this, 2500), new AirBottle(this, 3000), new AirBottle(this, 3500), new GroundBottle(this, 4000), new GroundBottle(this, 4500), new GroundBottle(this, 5000)];
             this.throwableBottles = [];
-            this.collectableCoins = [new Coin(this, 200, 200)];
+            this.collectableCoins = [new Coin(this, 1200, 250), new Coin(this, 1250, 200), new Coin(this, 1300, 150), new Coin(this, 1350, 200), new Coin(this, 1400, 250), new Coin(this, 2000, 250), new Coin(this, 2050, 200), new Coin(this, 2100, 150), new Coin(this, 2150, 200), new Coin(this, 2200, 250), new Coin(this, 5200, 250), new Coin(this, 5250, 200), new Coin(this, 5300, 150), new Coin(this, 5350, 200), new Coin(this, 5400, 250)];
         };
 
 
@@ -90,7 +90,7 @@ window.addEventListener('load', () => {
                 };
             });
 
-            // Enemy deletion
+            // Coin deletion
             this.collectableCoins.forEach(coin => {
                 coin.update();
                 if (coin.markedForDeletion) {
