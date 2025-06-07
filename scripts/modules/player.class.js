@@ -124,7 +124,8 @@ export class Player {
         this.collisionWithEnemies();
         this.collisionWithBottle();
         this.collisionWithCoin();
-    }; 
+        this.collisionWithBoss();
+    };
 
 
     collisionWithEnemies() {
@@ -162,7 +163,7 @@ export class Player {
 
     collisionWithBottle() {
         this.game.bottles.forEach(bottle => {
-            if(
+            if (
                 bottle.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
                 bottle.x + bottle.width > this.x + this.hitboxOffsetX &&
                 bottle.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
@@ -177,7 +178,7 @@ export class Player {
 
     collisionWithCoin() {
         this.game.collectableCoins.forEach(coin => {
-            if(
+            if (
                 coin.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
                 coin.x + coin.width > this.x + this.hitboxOffsetX &&
                 coin.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
@@ -187,5 +188,24 @@ export class Player {
                 this.game.coins++;
             };
         });
+    };
+
+
+    collisionWithBoss() {
+        if (
+            this.game.boss.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
+            this.game.boss.x + this.game.boss.bossWidth > this.x + this.hitboxOffsetX &&
+            this.game.boss.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
+            this.game.boss.y + this.game.boss.bossHeight > this.y + this.hitboxOffsetY
+        ) {
+            if (this.game.healthPoints > 0) {
+                this.game.healthPoints--;
+                this.setState(2, 0);
+            }
+            else {
+                this.game.healthPoints = 0;
+                this.setState(3, 0);
+            };
+        };
     };
 };
