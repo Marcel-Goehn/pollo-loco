@@ -71,13 +71,23 @@ export class ThrowableBottle {
 
 
     checkCollision() {
-        // this.collisionWithEnemies();
+        this.collisionWithEnemies();
         this.collisionWithGround();
     };
 
 
-    checkCollisionWithenemies() {
-        
+    collisionWithEnemies() {
+        this.game.enemies.forEach(enemy => {
+            if (
+                enemy.x < this.x + this.width &&
+                enemy.x + enemy.enemyWidth > this.x &&
+                enemy.y < this.y + this.height &&
+                enemy.y + enemy.enemyHeight > this.y
+            ) {
+                this.setState(1);
+                enemy.setState(1);
+            };
+        });
     }
 
 
