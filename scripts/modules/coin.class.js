@@ -4,9 +4,13 @@ export class Coin {
         this.x = x;
         this.y = y;
         this.image = document.getElementById('coin');
-        this.width = 50;
-        this.height = 50;
+        this.width = 75;
+        this.height = 75;
         this.markedForDeletion = false;
+        this.hitboxLeft = this.x + 20;
+        this.hitboxRight = this.width - 40;
+        this.hitboxTop = this.y + 20;
+        this.hitboxBottom = this.height - 40;
     };
 
 
@@ -22,7 +26,7 @@ export class Coin {
 
     draw(context) {
         if (this.game.debug) {
-            context.strokeRect(this.x, this.y, this.width, this.height);
+            context.strokeRect(this.hitboxLeft, this.hitboxTop, this.hitboxRight, this.hitboxBottom);
         };
 
         context.drawImage(this.image, this.x, this.y, this.width, this.height);
