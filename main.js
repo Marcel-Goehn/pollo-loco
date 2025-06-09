@@ -2,7 +2,7 @@ import { Player } from './scripts/modules/player.class.js';
 import { Keyboard } from './scripts/modules/keyboard.class.js';
 import { Background } from './scripts/modules/background.class.js';
 import { RegularChicken, SmallChicken } from './scripts/modules/enemies.class.js';
-import { BottleBar, HealthBar, CoinBar } from './scripts/modules/statusbar.class.js';
+import { BottleBar, HealthBar, CoinBar, BossBar } from './scripts/modules/statusbar.class.js';
 import { AirBottle, GroundBottle } from './scripts/modules/bottle.class.js';
 import { ThrowableBottle } from './scripts/modules/throwable-bottle.class.js';
 import { Coin } from './scripts/modules/coin.class.js';
@@ -41,6 +41,7 @@ startBtn.addEventListener('click', () => {
             this.bossHealthPoints = 100;
             this.coins = 0;
             this.statusBars = [new BottleBar(this), new HealthBar(this), new CoinBar(this)];
+            this.statusBossBar = new BossBar(this);
             this.bottles = [new GroundBottle(this, 500), new AirBottle(this, 1000), new GroundBottle(this, 1500), new GroundBottle(this, 2000), new AirBottle(this, 2500), new AirBottle(this, 3000), new AirBottle(this, 3500), new GroundBottle(this, 4000), new GroundBottle(this, 4500), new GroundBottle(this, 5000)];
             this.throwableBottles = [];
             this.collectableCoins = [new Coin(this, 1200, 250), new Coin(this, 1250, 200), new Coin(this, 1300, 150), new Coin(this, 1350, 200), new Coin(this, 1400, 250), new Coin(this, 2000, 250), new Coin(this, 2050, 200), new Coin(this, 2100, 150), new Coin(this, 2150, 200), new Coin(this, 2200, 250), new Coin(this, 5200, 250), new Coin(this, 5250, 200), new Coin(this, 5300, 150), new Coin(this, 5350, 200), new Coin(this, 5400, 250)];
@@ -119,6 +120,9 @@ startBtn.addEventListener('click', () => {
             this.statusBars.forEach(statusBar => {
                 statusBar.draw(context);
             });
+            if (this.boss.x < 700) {
+                this.statusBossBar.draw(context);
+            }
             this.bottles.forEach(bottle => {
                 bottle.draw(context);
             });

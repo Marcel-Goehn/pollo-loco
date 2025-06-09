@@ -27,6 +27,11 @@ img {
     src: url(./assets/fonts/kablammo.ttf);
 }
 
+@font-face {
+    font-family: 'Boogaloo';
+    src: url(./assets/fonts/Boogaloo.ttf);
+}
+
 html {
     height: 100%;
     scroll-behavior: smooth;
@@ -79,7 +84,8 @@ canvas {
 #salsa_bottle_air,
 #bottle_spritesheet,
 #coin,
-#boss {
+#boss,
+#boss_statusbar {
     display: none;
 }
 
