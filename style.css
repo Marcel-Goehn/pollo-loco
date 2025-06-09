@@ -18,6 +18,10 @@ img {
     height: auto;
 }
 
+.d_none {
+    display: none;
+}
+
 @font-face {
     font-family: 'Kablammo';
     src: url(./assets/fonts/kablammo.ttf);
@@ -152,6 +156,10 @@ dialog .wrapper {
 .dialog-header button {
     cursor: pointer;
     background-color: #dba801;
+}
+
+.dialog-header img {
+    width: 32px;
 }
 
 .control-keys-container {

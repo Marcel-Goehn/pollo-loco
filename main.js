@@ -8,8 +8,13 @@ import { ThrowableBottle } from './scripts/modules/throwable-bottle.class.js';
 import { Coin } from './scripts/modules/coin.class.js';
 import { Boss } from './scripts/modules/boss.class.js';
 
-window.addEventListener('load', () => {
+const startBtn = document.getElementById('start_btn');
+const startMenu = document.querySelector('.start-menu');
+
+startBtn.addEventListener('click', () => {
+    startMenu.classList.add('d_none');
     const canvas = document.getElementById('canvas1');
+    canvas.classList.remove('d_none');
     const ctx = canvas.getContext('2d');
     const CANVAS_WIDTH = canvas.width = 720;
     const CANVAS_HEIGHT = canvas.height = 480;
