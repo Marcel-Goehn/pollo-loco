@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>El Pollo Loco</title>
 </head>
+
 <body>
 
     <h1>El Pollo Loco</h1>
-    
-    <canvas id="canvas1"></canvas>
+
+    <div class="start-menu">
+        <div class="btn-container">
+            <button>Spiel starten</button>
+            <button>Steuerung</button>
+            <a href="./html/impressum.html" target="_blank">Impressum</a>
+        </div>
+    </div>
+
+    <canvas style="display: none;" id="canvas1"></canvas>
 
     <img src="./assets/img/pepe/spritesheet_pepe.png" id="player">
 
@@ -38,4 +48,5 @@
 
     <script type="module" src="main.js"></script>
 </body>
+
 </html>
