@@ -205,3 +205,45 @@ dialog .wrapper {
     margin-bottom: 1rem;
 }
 
+.end-screen {
+    width: 720px;
+    height: 480px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: black;
+}
+
+.win {
+    background-image: url(./assets/img/win_loose/You\ Won\ B.png);
+}
+
+.loose {
+    background-image: url(./assets/img/win_loose/Game\ Over.png);
+}
+
+.end-screen-container {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.end-screen button {
+    background-color: rgb(255, 191, 0);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-weight: 700;
+    font-size: 24px;
+    font-family: 'Kablammo', Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    transition: transform 100ms ease-in-out, background-color 100ms ease-in-out;
+}
+
+.end-screen button:hover {
+    transform: scale(1.1);
+    background-color: hsl(45, 100%, 60%);
+}
+

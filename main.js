@@ -10,6 +10,24 @@ import { Boss } from './scripts/modules/boss.class.js';
 
 const startBtn = document.getElementById('start_btn');
 const startMenu = document.querySelector('.start-menu');
+const returnToMenuBtn = document.getElementById('return_to_start_page');
+const restartBtn = document.getElementById('replay');
+const endScreen = document.querySelector('.end-screen');
+
+returnToMenuBtn.addEventListener('click', () => {
+    startMenu.classList.remove('d_none');
+    endScreen.classList.add('d_none');
+    
+    if (endScreen.classList.contains('win')) {
+        endScreen.classList.remove('win');
+    }
+    else {
+        endScreen.classList.remove('loose');
+    };
+})
+
+// startBtn.addEventListener('click', startGame());
+// restartBtn.addEventListener('clicik', startGame());
 
 startBtn.addEventListener('click', () => {
     startMenu.classList.add('d_none');
