@@ -114,7 +114,12 @@ export class Dead extends State {
 
 
     handleInput(inputKeys) {
-
+        if (this.player.frameX >= this.player.maxFrameX && !document.querySelector('.end-screen').classList.contains('loose')) {
+            let endingScreen = document.querySelector('.end-screen');
+            endingScreen.classList.add('loose');
+            endingScreen.classList.remove('d_none');
+            document.getElementById('canvas1').classList.add('d_none');
+        };
     };
 };
 

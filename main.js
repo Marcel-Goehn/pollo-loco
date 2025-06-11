@@ -8,28 +8,38 @@ import { ThrowableBottle } from './scripts/modules/throwable-bottle.class.js';
 import { Coin } from './scripts/modules/coin.class.js';
 import { Boss } from './scripts/modules/boss.class.js';
 
+let game;
+let animationFrameId;
 const startBtn = document.getElementById('start_btn');
 const startMenu = document.querySelector('.start-menu');
 const returnToMenuBtn = document.getElementById('return_to_start_page');
 const restartBtn = document.getElementById('replay');
 const endScreen = document.querySelector('.end-screen');
 
-returnToMenuBtn.addEventListener('click', () => {
+const handleReturnToMenuClick = () => {
     startMenu.classList.remove('d_none');
     endScreen.classList.add('d_none');
-    
+    if (animationFrameId) cancelAnimationFrame(animationFrameId);
+
     if (endScreen.classList.contains('win')) {
         endScreen.classList.remove('win');
     }
     else {
         endScreen.classList.remove('loose');
     };
-})
+}
 
-// startBtn.addEventListener('click', startGame());
-// restartBtn.addEventListener('clicik', startGame());
+returnToMenuBtn.addEventListener('click', handleReturnToMenuClick);
+startBtn.addEventListener('click', startGame);
+restartBtn.addEventListener('click', startGame);
 
-startBtn.addEventListener('click', () => {
+
+function startGame() {
+    if (!endScreen.classList.contains('d_none')) {
+        endScreen.classList.add('d_none');
+    }
+    if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    endScreen.classList.remove('loose');
     startMenu.classList.add('d_none');
     const canvas = document.getElementById('canvas1');
     canvas.classList.remove('d_none');
@@ -159,9 +169,53 @@ startBtn.addEventListener('click', () => {
                 this.enemies.push(new SmallChicken(this));
             };
         };
+
+
+        reset() {
+            this.gameSpeed = 0;
+            this.player = new Player(this);
+            this.keyboard = new Keyboard(this);
+            this.background = new Background(this);
+            this.boss = new Boss(this);
+            this.enemies = [];
+            this.enemyTimer = 0;
+            this.enemyInterval = 2000;
+            this.salsaBottles = 0;
+            this.healthPoints = 100;
+            this.bossHealthPoints = 100;
+            this.coins = 0;
+            this.statusBars = [
+                new BottleBar(this),
+                new HealthBar(this),
+                new CoinBar(this)
+            ];
+            this.statusBossBar = new BossBar(this);
+
+            this.bottles = [
+                new GroundBottle(this, 500), new AirBottle(this, 1000),
+                new GroundBottle(this, 1500), new GroundBottle(this, 2000),
+                new AirBottle(this, 2500), new AirBottle(this, 3000),
+                new AirBottle(this, 3500), new GroundBottle(this, 4000),
+                new GroundBottle(this, 4500), new GroundBottle(this, 5000)
+            ];
+
+            this.throwableBottles = [];
+
+            this.collectableCoins = [
+                new Coin(this, 1200, 250), new Coin(this, 1250, 200),
+                new Coin(this, 1300, 150), new Coin(this, 1350, 200),
+                new Coin(this, 1400, 250), new Coin(this, 2000, 250),
+                new Coin(this, 2050, 200), new Coin(this, 2100, 150),
+                new Coin(this, 2150, 200), new Coin(this, 2200, 250),
+                new Coin(this, 5200, 250), new Coin(this, 5250, 200),
+                new Coin(this, 5300, 150), new Coin(this, 5350, 200),
+                new Coin(this, 5400, 250)
+            ];
+        }
     };
 
-    const game = new Game(CANVAS_WIDTH, CANVAS_HEIGHT);
+    game = new Game(CANVAS_WIDTH, CANVAS_HEIGHT);
+    game.reset();
     console.log(game);
     let lastTime = 0;
 
@@ -171,7 +225,7 @@ startBtn.addEventListener('click', () => {
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         game.update(deltaTime);
         game.draw(ctx);
-        requestAnimationFrame(animate);
+        animationFrameId = requestAnimationFrame(animate);
     };
     animate(0);
-});
+};
