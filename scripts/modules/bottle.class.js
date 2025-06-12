@@ -1,3 +1,6 @@
+/**
+ * The super class for the GroundBottle and AirBottle
+ */
 class Bottle {
     constructor(game, x) {
         this.game = game;
@@ -6,6 +9,9 @@ class Bottle {
     };
 
 
+    /**
+     * Updates the position of the bottles 
+     */
     update() {
         this.x -= this.game.gameSpeed;
 
@@ -16,6 +22,11 @@ class Bottle {
     };
 
 
+    /**
+     * Draws the bottles into the canvas
+     * 
+     * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
+     */
     draw(context) {
         if (this.game.debug) {
             context.strokeRect(this.x, this.y, this.width, this.height);
@@ -26,6 +37,9 @@ class Bottle {
 }
 
 
+/**
+ * This child class creates the collectable bottles that are positioned on the ground
+ */
 export class GroundBottle extends Bottle {
     constructor(game, x) {
         super(game, x);
@@ -37,6 +51,9 @@ export class GroundBottle extends Bottle {
 }
 
 
+/**
+ * This child class creates the collectable bottles that are positioned in the air
+ */
 export class AirBottle extends Bottle {
     constructor(game, x) {
         super(game, x);

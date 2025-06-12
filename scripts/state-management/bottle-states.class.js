@@ -4,6 +4,7 @@ const states = {
 };
 
 
+// For debug purposes
 class State {
     constructor(state) {
         this.state = state;
@@ -11,6 +12,9 @@ class State {
 }
 
 
+/**
+ * A blueprint for the throwing state of the throwing bottle
+ */
 export class Throwing extends State {
     constructor(bottle) {
         super('THROWING');
@@ -18,6 +22,9 @@ export class Throwing extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.bottle.frameX = 0;
         this.bottle.maxFrameX = 3;
@@ -27,12 +34,18 @@ export class Throwing extends State {
     };
 
 
+    /**
+     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+     */
     handleState() {
 
     };
 }
 
 
+/**
+ * A blueprint for the exploding state of the throwing bottle
+ */
 export class Exploding extends State {
     constructor(bottle) {
         super('EXPLODING');
@@ -40,6 +53,9 @@ export class Exploding extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.bottle.frameX = 0;
         this.bottle.maxFrameX = 5;
@@ -47,6 +63,9 @@ export class Exploding extends State {
     };
 
 
+    /**
+     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+     */
     handleState() {
         if (this.bottle.frameX >= this.bottle.maxFrameX) {
             this.bottle.markedForDeletion = true;

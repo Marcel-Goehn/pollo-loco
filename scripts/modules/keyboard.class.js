@@ -1,3 +1,6 @@
+/**
+ * Creates an instance of the user keyboard. This is important for the control of the character/player
+ */
 export class Keyboard {
     constructor(game) {
         this.keys = [];

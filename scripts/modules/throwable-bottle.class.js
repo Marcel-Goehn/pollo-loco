@@ -1,5 +1,8 @@
 import { Exploding, Throwing } from "../state-management/bottle-states.class.js";
 
+/**
+ * This is the blueprint wich creates a new bottle if the d key is pressed and the user has at least collected one bottle
+ */
 export class ThrowableBottle {
     constructor(game) {
         this.game = game;
@@ -27,6 +30,11 @@ export class ThrowableBottle {
     };
 
 
+    /**
+     * This method updates the movement, collision and the sprite animation
+     * 
+     * @param {number} deltaTime - The time that has passed between the last animation frame and the current one 
+     */
     update(deltaTime) {
         // Watches the current state and changes it
         this.currentState.handleState();
@@ -56,6 +64,11 @@ export class ThrowableBottle {
     };
 
 
+    /**
+     * This method draws the throwable bottle on the canvas
+     * 
+     * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
+     */
     draw(context) {
         if (this.game.debug) {
             context.strokeRect(this.x, this.y, this.width, this.height);
@@ -64,12 +77,20 @@ export class ThrowableBottle {
     }
 
 
+    /**
+     * This method will change the current state of the throwing bottle if the condition is changing
+     * 
+     * @param {number} state - This number will dictate wich state of the sprite sheet will be chosen
+     */
     setState(state) {
         this.currentState = this.states[state];
         this.currentState.enter();
     }
 
 
+    /**
+     * Calls the collision methods
+     */
     checkCollision() {
         this.collisionWithEnemies();
         this.collisionWithGround();
@@ -77,6 +98,9 @@ export class ThrowableBottle {
     };
 
 
+    /**
+     * This method checks if there is a collision between an enemy and the throwing bottle
+     */
     collisionWithEnemies() {
         this.game.enemies.forEach(enemy => {
             if (
@@ -92,6 +116,9 @@ export class ThrowableBottle {
     }
 
 
+    /**
+     * This method checks if there is a collision between the throwing bottle and the ground
+     */
     collisionWithGround() {
         if (this.y > this.game.height - this.height - this.game.groundMargin) {
             this.setState(1);
@@ -99,6 +126,9 @@ export class ThrowableBottle {
     }
 
 
+    /**
+     * This method checks if there is a collision between the enemy boss and the throwing bottle
+     */
     collisionWithBoss() {
         if (
             this.game.boss.x < this.x + this.width &&

@@ -16,6 +16,10 @@ const returnToMenuBtn = document.getElementById('return_to_start_page');
 const restartBtn = document.getElementById('replay');
 const endScreen = document.querySelector('.end-screen');
 
+
+/**
+ * Returns the player to the starting menu after winning or loosing a game
+ */
 const handleReturnToMenuClick = () => {
     startMenu.classList.remove('d_none');
     endScreen.classList.add('d_none');
@@ -34,6 +38,9 @@ startBtn.addEventListener('click', startGame);
 restartBtn.addEventListener('click', startGame);
 
 
+/**
+ * This function initializes the game and all of its instances 
+ */
 function startGame() {
     if (!endScreen.classList.contains('d_none')) {
         endScreen.classList.add('d_none');
@@ -49,6 +56,10 @@ function startGame() {
 
     let lastBottleThrown = 0;
 
+
+    /**
+     * The blueprint for the whole game and wich elements will be created
+     */
     class Game {
         constructor(width, height) {
             this.width = width;
@@ -76,6 +87,11 @@ function startGame() {
         };
 
 
+        /**
+         * This method will call all the update methods of the created instances wich are getting drawn into the canvas
+         * 
+         * @param {number} deltaTime - The time that has passed since the last animation frame and the current one 
+         */
         update(deltaTime) {
             this.background.update();
             this.player.update(this.keyboard.keys, deltaTime);
@@ -138,6 +154,11 @@ function startGame() {
         };
 
 
+        /**
+         * This method will call the draw methods of the created instances, so that they are drawn into the canvas
+         * 
+         * @param {context} context - The 2d context, wich allows to use methods of the canvas api 
+         */
         draw(context) {
             this.background.draw(context);
             this.player.draw(context);
@@ -163,6 +184,9 @@ function startGame() {
         };
 
 
+        /**
+         * This method will create and add the enemies to the game
+         */
         addEnemies() {
             this.enemies.push(new RegularChicken(this));
             if (this.gameSpeed > 0 && Math.random() < 0.5) {
@@ -171,6 +195,9 @@ function startGame() {
         };
 
 
+        /**
+         * This method resets the game after the game is over
+         */
         reset() {
             this.gameSpeed = 0;
             this.player = new Player(this);
@@ -219,6 +246,12 @@ function startGame() {
     console.log(game);
     let lastTime = 0;
 
+
+    /**
+     * This method will create the ongoing animation loop of the game
+     * 
+     * @param {number} timeStamp - The timestamp of the current animation loop 
+     */
     const animate = (timeStamp) => {
         const deltaTime = timeStamp - lastTime;
         lastTime = timeStamp;

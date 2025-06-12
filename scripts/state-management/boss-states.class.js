@@ -7,6 +7,7 @@ const states = {
 }
 
 
+// For debug purposes
 class State {
     constructor(state) {
         this.state = state;
@@ -14,6 +15,9 @@ class State {
 }
 
 
+/**
+ * A blueprint for the walking state of the boss
+ */
 export class Walk extends State {
     constructor(boss) {
         super('WALK');
@@ -21,6 +25,9 @@ export class Walk extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.boss.frameX = 0;
         this.boss.maxFrameX = 3;
@@ -28,12 +35,17 @@ export class Walk extends State {
     };
 
 
+    /**
+     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+     */
     handleState() {
 
     };
 }
 
-
+/**
+ * A blueprint for the alert state of the boss
+ */
 export class Alert extends State {
     constructor(boss) {
         super('ALERT');
@@ -41,6 +53,9 @@ export class Alert extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.boss.frameX = 0;
         this.boss.maxFrameX = 7;
@@ -48,12 +63,18 @@ export class Alert extends State {
     };
 
 
+    /**
+     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+     */
     handleState() {
 
     };
 }
 
 
+/**
+ * A blueprint for the attack state of the boss
+ */
 export class Attack extends State {
     constructor(boss) {
         super('ATTACK');
@@ -61,6 +82,9 @@ export class Attack extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.boss.frameX = 0;
         this.boss.maxFrameX = 7;
@@ -68,12 +92,18 @@ export class Attack extends State {
     };
 
 
+    /**
+     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+     */
     handleState() {
 
     };
 }
 
 
+/**
+ * A blueprint for the hurt state of the boss
+ */
 export class Hurt extends State {
     constructor(boss) {
         super('HURT');
@@ -81,6 +111,9 @@ export class Hurt extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.boss.frameX = 0;
         this.boss.maxFrameX = 2;
@@ -88,6 +121,9 @@ export class Hurt extends State {
     };
 
 
+    /**
+    * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+    */
     handleState() {
         setTimeout(() => {
             this.boss.setState(0);
@@ -96,6 +132,9 @@ export class Hurt extends State {
 }
 
 
+/**
+ * A blueprint for the dead state of the boss
+ */
 export class Dead extends State {
     constructor(boss) {
         super('DEAD');
@@ -103,6 +142,9 @@ export class Dead extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.boss.frameX = 0;
         this.boss.maxFrameX = 2;
@@ -110,7 +152,9 @@ export class Dead extends State {
     };
 
 
-
+    /**
+    * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+    */
     handleState() {
 
     };

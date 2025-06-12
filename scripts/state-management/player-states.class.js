@@ -11,6 +11,7 @@ const states = {
 let enterIdleStateTime = 0;
 
 
+// For debugging purposes
 class State {
     constructor(state) {
         this.state = state;
@@ -18,6 +19,9 @@ class State {
 };
 
 
+/**
+ * A blueprint for the walking state of the player
+ */
 export class Walking extends State {
     constructor(player) {
         super('WALKING');
@@ -25,6 +29,9 @@ export class Walking extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.player.frameX = 0;
         this.player.maxFrameX = 5;
@@ -32,6 +39,9 @@ export class Walking extends State {
     };
 
 
+    /**
+     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+     */
     handleInput(inputKeys) {
         if (inputKeys.length === 0) {
             this.player.setState(states.IDLE, 0);
@@ -43,6 +53,9 @@ export class Walking extends State {
 };
 
 
+/**
+ * A blueprint for the jumping state of the player
+ */
 export class Jumping extends State {
     constructor(player) {
         super('JUMPING');
@@ -50,6 +63,9 @@ export class Jumping extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         if (this.player.isOnGround()) {
             this.player.verticalMovement -= this.player.jumpHeight;
@@ -60,6 +76,9 @@ export class Jumping extends State {
     };
 
 
+    /**
+     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+     */
     handleInput(inputKeys) {
         if (this.player.verticalMovement > this.player.gravity) {
             this.player.setState(states.FALLING, 1);
@@ -74,6 +93,9 @@ export class Jumping extends State {
 };
 
 
+/**
+ * A blueprint for the hurting state of the player
+ */
 export class Hurt extends State {
     constructor(player) {
         super('HURT');
@@ -81,6 +103,9 @@ export class Hurt extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.player.frameX = 0;
         this.player.maxFrameX = 2;
@@ -88,6 +113,9 @@ export class Hurt extends State {
     };
 
 
+    /**
+     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+     */
     handleInput(inputKeys) {
         if (this.player.frameX >= this.player.maxFrameX && this.player.isOnGround()) {
             this.player.setState(states.IDLE, 0);
@@ -99,6 +127,9 @@ export class Hurt extends State {
 };
 
 
+/**
+ * A blueprint for the dead state of the player
+ */
 export class Dead extends State {
     constructor(player) {
         super('DEAD');
@@ -106,6 +137,9 @@ export class Dead extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.player.frameX = 0;
         this.player.maxFrameX = 6;
@@ -113,6 +147,9 @@ export class Dead extends State {
     };
 
 
+    /**
+     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+     */
     handleInput(inputKeys) {
         if (this.player.frameX >= this.player.maxFrameX && !document.querySelector('.end-screen').classList.contains('loose')) {
             let endingScreen = document.querySelector('.end-screen');
@@ -124,6 +161,9 @@ export class Dead extends State {
 };
 
 
+/**
+ * A blueprint for the idle state of the player
+ */
 export class Idle extends State {
     constructor(player) {
         super('IDLE');
@@ -131,6 +171,9 @@ export class Idle extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.player.frameX = 0;
         this.player.maxFrameX = 9;
@@ -139,6 +182,9 @@ export class Idle extends State {
     };
 
 
+    /**
+     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+     */
     handleInput(inputKeys) {
         let idleTime = new Date().getTime();
 
@@ -155,6 +201,9 @@ export class Idle extends State {
 };
 
 
+/**
+ * A blueprint for the sleeping state of the player
+ */
 export class Sleeping extends State {
     constructor(player) {
         super('SLEEPING');
@@ -162,6 +211,9 @@ export class Sleeping extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.player.frameX = 0;
         this.player.maxFrameX = 9;
@@ -169,6 +221,9 @@ export class Sleeping extends State {
     };
 
 
+    /**
+     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+     */
     handleInput(inputKeys) {
         if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
             this.player.setState(states.WALKING, 1);
@@ -180,6 +235,9 @@ export class Sleeping extends State {
 };
 
 
+/**
+ * A blueprint for the falling state of the player
+ */
 export class Falling extends State {
     constructor(player) {
         super('FALLING');
@@ -187,6 +245,9 @@ export class Falling extends State {
     };
 
 
+    /**
+     * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
+     */
     enter() {
         this.player.frameX = 0;
         this.player.maxFrameX = 8;
@@ -194,6 +255,9 @@ export class Falling extends State {
     };
 
 
+    /**
+     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
+     */
     handleInput(inputKeys) {
         if (inputKeys.length === 0 && this.player.isOnGround()) {
             this.player.setState(states.IDLE, 0);

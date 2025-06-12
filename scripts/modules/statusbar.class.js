@@ -1,3 +1,6 @@
+/**
+ * This class shows how many bottles have been collected already
+ */
 export class BottleBar{
     constructor(game) {
         this.game = game;
@@ -5,6 +8,11 @@ export class BottleBar{
     };
 
 
+    /**
+     * Draws the statusbar for the collected bottles
+     * 
+     * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas 
+     */
     draw(context) {
         context.font = '50px Boogaloo';
         context.fillStyle = 'black';
@@ -15,6 +23,9 @@ export class BottleBar{
 };
 
 
+/**
+ * This class is showing the current healthpoints of the player
+ */
 export class HealthBar{
     constructor(game) {
         this.game = game;
@@ -22,6 +33,11 @@ export class HealthBar{
     };
 
 
+    /**
+     * Draws the statusbar for the healthpoints of the player
+     * 
+     * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
+     */
     draw(context) {
         context.font = '50px Boogaloo';
         context.fillStyle = 'black';
@@ -32,6 +48,9 @@ export class HealthBar{
 };
 
 
+/**
+ * This class shows how many coins have been collected
+ */
 export class CoinBar{
     constructor(game) {
         this.game = game;
@@ -39,6 +58,11 @@ export class CoinBar{
     };
 
 
+    /**
+     * Draws the statusbar for the collected coins
+     * 
+     * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
+     */
     draw(context) {
         context.font = '50px Boogaloo';
         context.fillStyle = 'black';
@@ -49,6 +73,9 @@ export class CoinBar{
 };
 
 
+/**
+ * This class is showing the current healthpoints of the boss
+ */
 export class BossBar {
     constructor(game) {
         this.game = game;
@@ -56,6 +83,11 @@ export class BossBar {
     };
 
 
+    /**
+     * Draws the statusbar for the healthpoints of the boss
+     * 
+     * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
+     */
     draw(context) {
         context.font = '50px Boogaloo';
         context.fillStyle = 'black'

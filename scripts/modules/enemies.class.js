@@ -1,5 +1,8 @@
 import { Walking, Dead } from '../state-management/enemy-states.class.js';
 
+/**
+ * Superclass for the enemies. 
+ */
 class Enemy {
     constructor() {
         this.frameX = 0;
@@ -15,6 +18,11 @@ class Enemy {
     };
 
 
+    /**
+     * Updates the position, the state and the sprite animation
+     * 
+     * @param {number} deltaTime - The time passed from the last to the current animationframe. It adjusts the fps for the sprite sheet 
+     */
     update(deltaTime) {
          // Watches the current state and changes it
         this.currentState.handleState();
@@ -43,6 +51,11 @@ class Enemy {
     };
 
 
+    /**
+     * Draws the enemies into the canvas
+     * 
+     * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
+     */
     draw(context) {
         if (this.game.debug) {
             context.strokeRect(this.x, this.y, this.enemyWidth, this.enemyHeight);
@@ -51,6 +64,11 @@ class Enemy {
     };
 
 
+    /**
+     * Changes the current state to the new state wich is getting passed as an parameter
+     * 
+     * @param {number} state - The number represents the state wich the enemie will enter 
+     */
     setState(state) {
         this.currentState = this.states[state];
         this.currentState.enter();
@@ -58,6 +76,9 @@ class Enemy {
 };
 
 
+/**
+ * This child class creates an instance of one regular chicken
+ */
 export class RegularChicken extends Enemy {
     constructor(game) {
         super();
@@ -75,6 +96,9 @@ export class RegularChicken extends Enemy {
 };
 
 
+/**
+ * This child class created an instance of one small chicken
+ */
 export class SmallChicken extends Enemy {
     constructor(game) {
         super();

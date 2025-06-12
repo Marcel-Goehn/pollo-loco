@@ -1,3 +1,6 @@
+/**
+ * Creates, updates and draws the different layers of the background
+ */
 class Layer {
     constructor(game, width, height, speedModifier, image) {
         this.game = game;
@@ -10,6 +13,9 @@ class Layer {
     };
 
 
+    /**
+     * Updates the different layers with a different speed modifier to get a parallax effect
+     */
     update() {
         if (this.x < -this.width) {
             this.x = 0;
@@ -20,6 +26,11 @@ class Layer {
     };
 
 
+    /**
+     * It draws the different layers of the background
+     * 
+     * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas 
+     */
     draw(context) {
         context.drawImage(this.image, this.x, this.y, this.width, this.height);
         context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
@@ -27,6 +38,9 @@ class Layer {
 };
 
 
+/**
+ * This class creates the background of the game
+ */
 export class Background {
     constructor(game) {
         this.game = game;
@@ -46,6 +60,9 @@ export class Background {
     };
 
 
+    /**
+     * It calls the update method of the specific layer
+     */
     update() {
         this.backgroundLayers.forEach(layer => {
             layer.update();
@@ -53,6 +70,11 @@ export class Background {
     };
 
 
+    /**
+     * It calls the draw method of the specific layer
+     * 
+     * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas 
+     */
     draw(context) {
         this.backgroundLayers.forEach(layer => {
             layer.draw(context);

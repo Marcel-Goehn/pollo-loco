@@ -1,5 +1,8 @@
 import { Walking, Jumping, Hurt, Dead, Idle, Sleeping, Falling } from "../state-management/player-states.class.js";
 
+/**
+ * This class is the blueprint for the player wich is getting created when starting the game
+ */
 export class Player {
     constructor(game) {
         this.game = game;
@@ -31,6 +34,12 @@ export class Player {
     };
 
 
+    /**
+     * This method updates the movement, checks the collision and animates the spritesheet
+     * 
+     * @param {array} inputKeys - Holds the current pressed keys to navigate the player 
+     * @param {*} deltaTime - The time that has passed since the last animation frame to the current one
+     */
     update(inputKeys, deltaTime) {
         // Checks if a collision is happening
         this.checkCollision();
@@ -85,6 +94,11 @@ export class Player {
     };
 
 
+    /**
+     * Draws the player on the canvas
+     * 
+     * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
+     */
     draw(context) {
         // if (this.game.debug) {
         //     context.strokeRect(this.x, this.y, this.playerWidth, this.playerHeight);
@@ -97,11 +111,22 @@ export class Player {
     };
 
 
+    /**
+     * This method checks on every animation frame if the player is on the ground or is in the air
+     * 
+     * @returns - returns true or false
+     */
     isOnGround() {
         return this.y >= this.game.height - this.playerHeight - this.game.groundMargin;
     };
 
 
+    /**
+     * This method changes the current state of the player if a condition is changing
+     * 
+     * @param {number} state - The number will tell the state management wich state to use 
+     * @param {number} gameSpeed - This will dictate how fast the game is running
+     */
     setState(state, gameSpeed) {
         this.currentState = this.states[state];
         this.game.gameSpeed = gameSpeed * this.game.maxGameSpeed;
@@ -120,6 +145,9 @@ export class Player {
     };
 
 
+    /**
+     * This method calls all the collision check methods, where the player could potentially collide with
+     */
     checkCollision() {
         this.collisionWithEnemies();
         this.collisionWithBottle();
@@ -128,6 +156,9 @@ export class Player {
     };
 
 
+    /**
+     * This method checks if there is a collision between the player and an enemy
+     */
     collisionWithEnemies() {
         this.game.enemies.forEach(enemy => {
             if (
@@ -161,6 +192,9 @@ export class Player {
     };
 
 
+    /**
+     * This method checks if there is a collision between the player and a collectable bottle
+     */
     collisionWithBottle() {
         this.game.bottles.forEach(bottle => {
             if (
@@ -176,6 +210,9 @@ export class Player {
     };
 
 
+    /**
+     * This method checks if there is a collision between the player and a collectable coin
+     */
     collisionWithCoin() {
         this.game.collectableCoins.forEach(coin => {
             if (
@@ -191,6 +228,9 @@ export class Player {
     };
 
 
+    /**
+     * This method checks if there is a collision between the player and the boss enemy
+     */
     collisionWithBoss() {
         if (
             this.game.boss.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
