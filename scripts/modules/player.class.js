@@ -23,6 +23,7 @@ export class Player {
         this.maxSpeed = 5;
         this.verticalMovement = 0;
         this.jumpHeight = 15;
+        this.killBounce = -7;
         this.gravity = 1;
         this.states = [new Walking(this), new Jumping(this), new Hurt(this), new Dead(this), new Idle(this), new Sleeping(this), new Falling(this)];
         this.currentState = this.states[4];
@@ -169,6 +170,9 @@ export class Player {
                     enemy.y + enemy.enemyHeight > this.y + this.hitboxOffsetY) &&
                 this.verticalMovement > 0
             ) {
+                if (!enemy.willBeDeleted) {
+                    this.verticalMovement = this.killBounce;
+                }
                 enemy.willBeDeleted = true;
                 enemy.setState(1);
             }

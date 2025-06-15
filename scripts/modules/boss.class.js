@@ -7,7 +7,7 @@ export class Boss {
         this.spriteHeight = 1217;
         this.bossWidth = 200;
         this.bossHeight = 300;
-        this.x = 1500;
+        this.x = 5000;
         this.y = this.game.height - this.bossHeight - this.game.groundMargin +10;
         this.markedForDeletion = false;
         this.image = document.getElementById('boss');
