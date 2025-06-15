@@ -46,6 +46,12 @@ export class Walking extends State {
         if (inputKeys.length === 0) {
             this.player.setState(states.IDLE, 0);
         }
+        else if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.game.bossFight) {
+            this.player.setState(states.WALKING, 0);
+        }
+        else if (inputKeys.includes('ArrowUp') && this.player.game.bossFight) {
+            this.player.setState(states.JUMPING, 0);
+        }
         else if (inputKeys.includes('ArrowUp')) {
             this.player.setState(states.JUMPING, 1);
         };
@@ -80,7 +86,10 @@ export class Jumping extends State {
      * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
      */
     handleInput(inputKeys) {
-        if (this.player.verticalMovement > this.player.gravity) {
+        if (this.player.verticalMovement > this.player.gravity && this.player.game.bossFight) {
+            this.player.setState(states.FALLING, 0);
+        }
+        else if (this.player.verticalMovement > this.player.gravity) {
             this.player.setState(states.FALLING, 1);
         }
         // else if (inputKeys.length === 0 && this.player.isOnGround()) {
@@ -119,6 +128,9 @@ export class Hurt extends State {
     handleInput(inputKeys) {
         if (this.player.frameX >= this.player.maxFrameX && this.player.isOnGround()) {
             this.player.setState(states.IDLE, 0);
+        }
+        else if (this.player.frameX >= this.player.maxFrameX && !this.player.isOnGround() && this.player.game.bossFight) {
+            this.player.setState(states.FALLING, 0);
         }
         else if (this.player.frameX >= this.player.maxFrameX && !this.player.isOnGround()) {
             this.player.setState(states.FALLING, 1);
@@ -191,8 +203,14 @@ export class Idle extends State {
         if (idleTime - enterIdleStateTime >= 5000) {
             this.player.setState(states.SLEEPING, 0);
         }
+        else if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.game.bossFight) {
+            this.player.setState(states.WALKING, 0);
+        }
         else if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
             this.player.setState(states.WALKING, 1);
+        }
+        else if (inputKeys.includes('ArrowUp') && this.player.game.bossFight) {
+            this.player.setState(states.JUMPING, 0);
         }
         else if (inputKeys.includes('ArrowUp')) {
             this.player.setState(states.JUMPING, 1);
@@ -225,8 +243,14 @@ export class Sleeping extends State {
      * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
      */
     handleInput(inputKeys) {
-        if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
+        if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.game.bossFight) {
+            this.player.setState(states.WALKING, 0);
+        }
+        else if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
             this.player.setState(states.WALKING, 1);
+        }
+        else if (inputKeys.includes('ArrowUp') && this.player.game.bossFight) {
+            this.player.setState(states.JUMPING, 0);
         }
         else if (inputKeys.includes('ArrowUp')) {
             this.player.setState(states.JUMPING, 1);
@@ -261,6 +285,9 @@ export class Falling extends State {
     handleInput(inputKeys) {
         if (inputKeys.length === 0 && this.player.isOnGround()) {
             this.player.setState(states.IDLE, 0);
+        }
+        else if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.isOnGround() && this.player.game.bossFight) {
+            this.player.setState(states.WALKING, 0);
         }
         else if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight') && this.player.isOnGround()) {
             this.player.setState(states.WALKING, 1);

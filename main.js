@@ -66,6 +66,7 @@ function startGame() {
             this.height = height;
             this.groundMargin = 55;
             this.gameSpeed = 0;
+            this.bossFight = false;
             this.maxGameSpeed = 3;
             this.player = new Player(this);
             this.keyboard = new Keyboard(this);

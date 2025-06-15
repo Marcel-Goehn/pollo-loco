@@ -7,7 +7,7 @@ export class Boss {
         this.spriteHeight = 1217;
         this.bossWidth = 200;
         this.bossHeight = 300;
-        this.x = 6000;
+        this.x = 1500;
         this.y = this.game.height - this.bossHeight - this.game.groundMargin +10;
         this.markedForDeletion = false;
         this.image = document.getElementById('boss');
@@ -31,6 +31,11 @@ export class Boss {
 
         // Horizontal Movement
         this.x -= this.maxSpeed + this.game.gameSpeed;
+
+        // Enters the final boss fight
+        if (this.x < this.game.width - this.bossWidth) {
+            this.game.bossFight = true;
+        };
 
         // sprite animation
         if (this.frameTimer > this.frameRate) {
