@@ -7,7 +7,7 @@ export class Boss {
         this.spriteHeight = 1217;
         this.bossWidth = 200;
         this.bossHeight = 300;
-        this.x = 2500;
+        this.x = 4500;
         this.y = this.game.height - this.bossHeight - this.game.groundMargin + 10;
         this.markedForDeletion = false;
         this.image = document.getElementById('boss');
@@ -26,6 +26,8 @@ export class Boss {
         this.animationType = 'WALK';
         this.animationDone = false;
         this.lastAttack = 0;
+        this.attackLeft = false;
+        this.attackRight = false;
     };
 
 
@@ -36,15 +38,29 @@ export class Boss {
         // Horizontal Movement
         if (!this.game.bossFight) {
             this.x -= this.horizontalMovement + this.game.gameSpeed;
-        } else {
+        }
+        else if (this.game.bossFight && !this.attackLeft && !this.attackRight && this.currentState !== this.states[2]) {
             if (this.x > this.game.player.x) {
                 this.x -= this.bossFightHorizontalMovement;
-            }
-            else {
+            } else {
                 this.x += this.bossFightHorizontalMovement;
             }
         }
+        // else if (this.game.bossFight && !this.attackLeft && !this.attackRight) {
+        //     if (this.x > this.game.player.x) {
+        //         this.x -= this.bossFightHorizontalMovement;
+        //     }
+        //     else {
+        //         this.x += this.bossFightHorizontalMovement;
+        //     }
+        // }
 
+        if (this.game.bossFight && this.attackLeft) {
+            this.x -= this.bossFightHorizontalMovement;
+        }
+        if (this.game.bossFight && this.attackRight) {
+            this.x += this.bossFightHorizontalMovement;
+        }
 
         if (inputKeys.includes('ArrowUp') || inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
             this.horizontalMovement = this.maxSpeed;

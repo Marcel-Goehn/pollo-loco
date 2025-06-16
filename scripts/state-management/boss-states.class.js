@@ -33,6 +33,8 @@ export class Walk extends State {
         this.boss.maxFrameX = 3;
         this.boss.frameY = 0;
         this.boss.animationType = this.state;
+        this.boss.lastAttack = new Date().getTime();
+        this.boss.bossFightHorizontalMovement = 1;
     };
 
 
@@ -40,9 +42,13 @@ export class Walk extends State {
      * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
      */
     handleState() {
-
+        let currentTime = new Date().getTime();
+        if (currentTime - this.boss.lastAttack > 2000 && (this.boss.x - this.boss.game.player.x < 200 || this.boss.game.player.x - this.boss.x > 200)) {
+            this.boss.setState(1);
+        }
     };
 }
+
 
 /**
  * A blueprint for the alert state of the boss
@@ -62,6 +68,7 @@ export class Alert extends State {
         this.boss.maxFrameX = 7;
         this.boss.frameY = 1;
         this.boss.animationType = this.state;
+        this.boss.bossFightHorizontalMovement = 0;
     };
 
 
@@ -69,7 +76,9 @@ export class Alert extends State {
      * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
      */
     handleState() {
-
+        setTimeout(() => {
+            this.boss.setState(2);
+        }, 1000);
     };
 }
 
@@ -92,6 +101,22 @@ export class Attack extends State {
         this.boss.maxFrameX = 7;
         this.boss.frameY = 2;
         this.boss.animationType = this.state;
+        this.boss.bossFightHorizontalMovement = 2;
+
+        if (this.boss.x < this.boss.game.player.x) {
+            this.boss.attackRight = true;
+            this.boss.attackLeft = false;
+        } else {
+            this.boss.attackLeft = true;
+            this.boss.attackRight = false;
+        }
+
+        // if (this.boss.x < this.game.player.x) {
+        //     this.boss.attackRight = true;
+        // }
+        // else {
+        //     this.boss.attackLeft = true;
+        // }
     };
 
 
@@ -99,7 +124,11 @@ export class Attack extends State {
      * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
      */
     handleState() {
-
+        if (this.boss.x < 0 || this.boss.x > (this.boss.game.width - this.boss.bossWidth)) {
+            this.boss.attackLeft = false;
+            this.boss.attackRight = false;
+            this.boss.setState(0);
+        }
     };
 }
 
