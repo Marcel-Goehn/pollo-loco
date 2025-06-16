@@ -7,7 +7,7 @@ export class Boss {
         this.spriteHeight = 1217;
         this.bossWidth = 200;
         this.bossHeight = 300;
-        this.x = 4000;
+        this.x = 2500;
         this.y = this.game.height - this.bossHeight - this.game.groundMargin + 10;
         this.markedForDeletion = false;
         this.image = document.getElementById('boss');
@@ -18,22 +18,33 @@ export class Boss {
         this.frameRate = 1000 / this.fps;
         this.frameTimer = 0;
         this.horizontalMovement = 0;
+        this.bossFightHorizontalMovement = 1;
         this.maxSpeed = 1;
         this.states = [new Walk(this), new Alert(this), new Attack(this), new Hurt(this), new Dead(this)];
         this.currentState = this.states[0];
         this.currentState.enter();
         this.animationType = 'WALK';
         this.animationDone = false;
+        this.lastAttack = 0;
     };
 
 
     update(inputKeys, deltaTime) {
-        console.log(this.x);
         // Watches the current state and changes it
         this.currentState.handleState();
 
         // Horizontal Movement
-        this.x -= this.horizontalMovement + this.game.gameSpeed;
+        if (!this.game.bossFight) {
+            this.x -= this.horizontalMovement + this.game.gameSpeed;
+        } else {
+            if (this.x > this.game.player.x) {
+                this.x -= this.bossFightHorizontalMovement;
+            }
+            else {
+                this.x += this.bossFightHorizontalMovement;
+            }
+        }
+
 
         if (inputKeys.includes('ArrowUp') || inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
             this.horizontalMovement = this.maxSpeed;
@@ -74,6 +85,11 @@ export class Boss {
             context.strokeRect(this.x, this.y, this.bossWidth, this.bossHeight);
         };
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.bossWidth, this.bossHeight);
+    };
+
+
+    isOnGround() {
+        return this.y >= this.game.height - this.bossHeight - this.game.groundMargin + 10;
     };
 
 
