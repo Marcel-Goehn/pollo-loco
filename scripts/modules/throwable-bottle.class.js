@@ -136,6 +136,9 @@ export class ThrowableBottle {
             this.game.boss.y < this.x + this.width &&
             this.game.boss.y + this.game.boss.bossHeight > this.y
         ) {
+            if (this.currentState !== this.states[1]) {
+                this.game.bossHealthPoints -= 20;
+            };
             this.setState(1);
             this.game.boss.setState(3);
         };

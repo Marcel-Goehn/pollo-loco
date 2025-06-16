@@ -129,7 +129,6 @@ export class Player {
      * @param {number} gameSpeed - This will dictate how fast the game is running
      */
     setState(state, gameSpeed) {
-        console.log(gameSpeed);
         this.currentState = this.states[state];
         this.game.gameSpeed = gameSpeed * this.game.maxGameSpeed;
         this.currentState.enter();

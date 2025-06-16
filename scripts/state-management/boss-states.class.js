@@ -32,6 +32,7 @@ export class Walk extends State {
         this.boss.frameX = 0;
         this.boss.maxFrameX = 3;
         this.boss.frameY = 0;
+        this.boss.animationType = this.state;
     };
 
 
@@ -60,6 +61,7 @@ export class Alert extends State {
         this.boss.frameX = 0;
         this.boss.maxFrameX = 7;
         this.boss.frameY = 1;
+        this.boss.animationType = this.state;
     };
 
 
@@ -89,6 +91,7 @@ export class Attack extends State {
         this.boss.frameX = 0;
         this.boss.maxFrameX = 7;
         this.boss.frameY = 2;
+        this.boss.animationType = this.state;
     };
 
 
@@ -118,6 +121,7 @@ export class Hurt extends State {
         this.boss.frameX = 0;
         this.boss.maxFrameX = 2;
         this.boss.frameY = 3;
+        this.boss.animationType = this.state;
     };
 
 
@@ -125,9 +129,12 @@ export class Hurt extends State {
     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
     */
     handleState() {
-        setTimeout(() => {
+        if (this.boss.game.bossHealthPoints === 0 && this.boss.frameX >= this.boss.maxFrameX) {
+            this.boss.setState(4);
+        };
+        if (this.boss.frameX >= this.boss.maxFrameX) {
             this.boss.setState(0);
-        }, 1000);
+        };
     };
 }
 
@@ -149,6 +156,7 @@ export class Dead extends State {
         this.boss.frameX = 0;
         this.boss.maxFrameX = 2;
         this.boss.frameY = 4;
+        this.boss.animationType = this.state;
     };
 
 
@@ -156,6 +164,13 @@ export class Dead extends State {
     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
     */
     handleState() {
-
+        if (this.boss.frameX >= this.boss.maxFrameX && !document.querySelector('.end-screen').classList.contains('win')) {
+            setTimeout(() => {
+                let endingScreen = document.querySelector('.end-screen');
+                endingScreen.classList.add('win');
+                endingScreen.classList.remove('d_none');
+                document.getElementById('canvas1').classList.add('d_none');
+            }, 1500);
+        };
     };
 }

@@ -96,7 +96,7 @@ function startGame() {
         update(deltaTime) {
             this.background.update();
             this.player.update(this.keyboard.keys, deltaTime);
-            this.boss.update(deltaTime);
+            this.boss.update(this.keyboard.keys, deltaTime);
 
             // Interval to add enemies to the game
             if (this.enemyTimer > this.enemyInterval) {

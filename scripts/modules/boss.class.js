@@ -7,8 +7,8 @@ export class Boss {
         this.spriteHeight = 1217;
         this.bossWidth = 200;
         this.bossHeight = 300;
-        this.x = 5000;
-        this.y = this.game.height - this.bossHeight - this.game.groundMargin +10;
+        this.x = 4000;
+        this.y = this.game.height - this.bossHeight - this.game.groundMargin + 10;
         this.markedForDeletion = false;
         this.image = document.getElementById('boss');
         this.frameX = 0;
@@ -22,15 +22,24 @@ export class Boss {
         this.states = [new Walk(this), new Alert(this), new Attack(this), new Hurt(this), new Dead(this)];
         this.currentState = this.states[0];
         this.currentState.enter();
+        this.animationType = 'WALK';
+        this.animationDone = false;
     };
 
 
-    update(deltaTime) {
+    update(inputKeys, deltaTime) {
+        console.log(this.x);
         // Watches the current state and changes it
         this.currentState.handleState();
 
         // Horizontal Movement
-        this.x -= this.maxSpeed + this.game.gameSpeed;
+        this.x -= this.horizontalMovement + this.game.gameSpeed;
+
+        if (inputKeys.includes('ArrowUp') || inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
+            this.horizontalMovement = this.maxSpeed;
+        } else {
+            this.horizontalMovement = 0;
+        }
 
         // Enters the final boss fight
         if (this.x < this.game.width - this.bossWidth) {
@@ -38,19 +47,26 @@ export class Boss {
         };
 
         // sprite animation
-        if (this.frameTimer > this.frameRate) {
-            this.frameTimer = 0;
-            if (this.frameX < this.maxFrameX) {
-                this.frameX++;
+        if (!this.animationDone) {
+            if (this.frameTimer > this.frameRate) {
+                this.frameTimer = 0;
+                if (this.frameX < this.maxFrameX) {
+                    this.frameX++;
+                }
+                else {
+                    if (this.animationType === 'DEAD') {
+                        this.animationDone = true;
+                    }
+                    else {
+                        this.frameX = 0;
+                    }
+                };
             }
             else {
-                this.frameX = 0;
+                this.frameTimer += deltaTime;
             };
-        }
-        else {
-            this.frameTimer += deltaTime;
         };
-    };
+    }
 
 
     draw(context) {
