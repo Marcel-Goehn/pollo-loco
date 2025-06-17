@@ -109,11 +109,6 @@ export class Boss {
     };
 
 
-    isOnGround() {
-        return this.y >= this.game.height - this.bossHeight - this.game.groundMargin + 10;
-    };
-
-
     setState(state) {
         this.currentState = this.states[state];
         this.currentState.enter();

@@ -42,7 +42,11 @@ export class ThrowableBottle {
         this.checkCollision();
 
         // Horizontal movement
-        this.x += this.speedX;
+        if (this.game.player.left) {
+            this.x -= this.speedX;
+        } else {
+            this.x += this.speedX;
+        }
 
         //Vertical Movement
         this.y += this.verticalMovement;
@@ -73,7 +77,15 @@ export class ThrowableBottle {
         if (this.game.debug) {
             context.strokeRect(this.x, this.y, this.width, this.height);
         };
-        context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
+
+        if (this.game.player.left) {
+            context.save();
+            context.scale(-1, 1);
+            context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, -this.x - this.width, this.y, this.width, this.height);
+            context.restore();
+        } else {
+            context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
+        }
     }
 
 
