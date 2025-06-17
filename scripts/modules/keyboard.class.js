@@ -9,7 +9,8 @@ export class Keyboard {
             if ((e.key === 'ArrowDown' ||
                 e.key === 'ArrowUp' ||
                 e.key === 'ArrowLeft' ||
-                e.key === 'ArrowRight') && 
+                e.key === 'ArrowRight' ||
+                e.key === ' ') && 
                 !this.keys.includes(e.key)) {
                 this.keys.push(e.key);
             }
@@ -21,7 +22,8 @@ export class Keyboard {
             if (e.key === 'ArrowDown' ||
                 e.key === 'ArrowUp' ||
                 e.key === 'ArrowLeft' ||
-                e.key === 'ArrowRight') {
+                e.key === 'ArrowRight' ||
+                e.key === ' ') {
                 this.keys.splice(this.keys.indexOf(e.key), 1);
             };
         });

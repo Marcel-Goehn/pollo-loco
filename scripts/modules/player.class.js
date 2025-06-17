@@ -32,6 +32,7 @@ export class Player {
         this.hitboxOffsetY = 75;
         this.hitboxWidth = this.playerWidth - 20;
         this.hitboxHeight = this.playerHeight - 80;
+        this.doubleJump = false;
     };
 
 

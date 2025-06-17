@@ -5,9 +5,9 @@ export class Boss {
         this.game = game;
         this.spriteWidth = 1045;
         this.spriteHeight = 1217;
-        this.bossWidth = 200;
-        this.bossHeight = 300;
-        this.x = 4500;
+        this.bossWidth = 150;
+        this.bossHeight = 200;
+        this.x = 2500;
         this.y = this.game.height - this.bossHeight - this.game.groundMargin + 10;
         this.markedForDeletion = false;
         this.image = document.getElementById('boss');
@@ -46,14 +46,6 @@ export class Boss {
                 this.x += this.bossFightHorizontalMovement;
             }
         }
-        // else if (this.game.bossFight && !this.attackLeft && !this.attackRight) {
-        //     if (this.x > this.game.player.x) {
-        //         this.x -= this.bossFightHorizontalMovement;
-        //     }
-        //     else {
-        //         this.x += this.bossFightHorizontalMovement;
-        //     }
-        // }
 
         if (this.game.bossFight && this.attackLeft) {
             this.x -= this.bossFightHorizontalMovement;
