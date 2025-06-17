@@ -33,6 +33,7 @@ export class Player {
         this.hitboxWidth = this.playerWidth - 20;
         this.hitboxHeight = this.playerHeight - 80;
         this.doubleJump = false;
+        this.left = false;
     };
 
 
@@ -54,9 +55,11 @@ export class Player {
 
         if (inputKeys.includes('ArrowRight')) {
             this.horizontalMovement = this.maxSpeed;
+            this.left = false;
         }
         else if (inputKeys.includes('ArrowLeft')) {
             this.horizontalMovement = -this.maxSpeed;
+            this.left = true;
         }
         else {
             this.horizontalMovement = 0;
@@ -109,7 +112,15 @@ export class Player {
             const hitbox = this.getHitbox();
             context.strokeRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
         };
-        context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.playerWidth, this.playerHeight);
+
+        if (this.left) {
+            context.save();
+            context.scale(-1, 1);
+            context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, -this.x - this.playerWidth, this.y, this.playerWidth, this.playerHeight);
+            context.restore();
+        } else {
+            context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.playerWidth, this.playerHeight);
+        }
     };
 
 
