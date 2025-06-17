@@ -99,7 +99,7 @@ function startGame() {
             this.boss.update(this.keyboard.keys, deltaTime);
 
             // Interval to add enemies to the game
-            if (this.enemyTimer > this.enemyInterval) {
+            if (this.enemyTimer > this.enemyInterval && this.boss.x > 2000) {
                 this.addEnemies();
                 this.enemyTimer = 0;
             }

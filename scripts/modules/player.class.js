@@ -53,11 +53,19 @@ export class Player {
         // Horizontal Movement
         this.x += this.horizontalMovement;
 
-        if (inputKeys.includes('ArrowRight')) {
+        if (inputKeys.includes('ArrowRight') && this.doubleJump) {
+            this.horizontalMovement = this.maxSpeed * 2;
+            this.left = false;
+        }
+        else if (inputKeys.includes('ArrowLeft') && this.doubleJump) {
+            this.horizontalMovement = -this.maxSpeed * 2;
+            this.left = true;
+        }
+        else if (inputKeys.includes('ArrowRight') && !this.doubleJump) {
             this.horizontalMovement = this.maxSpeed;
             this.left = false;
         }
-        else if (inputKeys.includes('ArrowLeft')) {
+        else if (inputKeys.includes('ArrowLeft') && !this.doubleJump) {
             this.horizontalMovement = -this.maxSpeed;
             this.left = true;
         }
