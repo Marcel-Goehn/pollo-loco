@@ -28,6 +28,7 @@ export class Boss {
         this.lastAttack = 0;
         this.attackLeft = false;
         this.attackRight = false;
+        this.right = false;
     };
 
 
@@ -41,16 +42,20 @@ export class Boss {
         }
         else if (this.game.bossFight && !this.attackLeft && !this.attackRight && this.currentState !== this.states[2]) {
             if (this.x > this.game.player.x) {
+                this.right = false;
                 this.x -= this.bossFightHorizontalMovement;
             } else {
+                this.right = true;
                 this.x += this.bossFightHorizontalMovement;
             }
         }
 
         if (this.game.bossFight && this.attackLeft) {
+            this.right = false;
             this.x -= this.bossFightHorizontalMovement;
         }
         if (this.game.bossFight && this.attackRight) {
+            this.right = true;
             this.x += this.bossFightHorizontalMovement;
         }
 
@@ -92,7 +97,15 @@ export class Boss {
         if (this.game.debug) {
             context.strokeRect(this.x, this.y, this.bossWidth, this.bossHeight);
         };
-        context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.bossWidth, this.bossHeight);
+
+        if (this.right) {
+            context.save();
+            context.scale(-1, 1);
+            context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, -this.x - this.bossWidth, this.y, this.bossWidth, this.bossHeight);
+            context.restore();
+        } else {
+            context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.bossWidth, this.bossHeight);
+        }
     };
 
 
