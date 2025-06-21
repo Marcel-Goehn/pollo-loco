@@ -1,5 +1,6 @@
 import { Walking, Dead } from '../state-management/enemy-states.class.js';
 
+
 /**
  * Superclass for the enemies. 
  */

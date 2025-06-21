@@ -1,5 +1,6 @@
 import { Walk, Alert, Attack, Hurt, Dead } from "../state-management/boss-states.class.js";
 
+
 export class Boss {
     constructor(game) {
         this.game = game;

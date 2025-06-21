@@ -1,5 +1,6 @@
 import { Walking, Jumping, Hurt, Dead, Idle, Sleeping, Falling } from "../state-management/player-states.class.js";
 
+
 /**
  * This class is the blueprint for the player wich is getting created when starting the game
  */
@@ -57,7 +58,9 @@ export class Player {
         this.currentState.handleInput(inputKeys);
 
         // Horizontal Movement
-        this.x += this.horizontalMovement;
+        if (this.game.healthPoints !== 0) {
+            this.x += this.horizontalMovement;
+        }
 
         if (inputKeys.includes('ArrowRight') && this.doubleJump) {
             this.horizontalMovement = this.maxSpeed * 2;

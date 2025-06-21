@@ -1,5 +1,6 @@
 import { Exploding, Throwing } from "../state-management/bottle-states.class.js";
 
+
 /**
  * This is the blueprint wich creates a new bottle if the d key is pressed and the user has at least collected one bottle
  */
