@@ -17,7 +17,7 @@ export class ThrowableBottle {
         this.frameY = 0;
         this.maxFrameX = 5;
         this.markedForDeletion = false;
-        this.fps = 20;
+        this.fps = 30;
         this.frameRate = 1000 / this.fps;
         this.frameTimer = 0;
         this.speedX = 7;
@@ -44,8 +44,8 @@ export class ThrowableBottle {
         this.x += this.speedX;
 
         //Vertical Movement
-        this.y += this.verticalMovement;
-        this.verticalMovement += this.gravity;
+            this.y += this.verticalMovement;
+            this.verticalMovement += this.gravity;
 
         // sprite animation
         if (this.frameTimer > this.frameRate) {

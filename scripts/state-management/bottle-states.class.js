@@ -29,6 +29,8 @@ export class Throwing extends State {
         if (this.bottle.game.player.left) {
             this.bottle.speedX = -this.bottle.speedX;
         }
+        this.bottle.fps = 30;
+        this.bottle.frameRate = 1000 / this.bottle.fps;
         this.bottle.frameX = 0;
         this.bottle.maxFrameX = 3;
         this.bottle.frameY = 0;
@@ -60,6 +62,8 @@ export class Exploding extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        this.bottle.fps = 30;
+        this.bottle.frameRate = 1000 / this.bottle.fps;
         this.bottle.frameX = 0;
         this.bottle.maxFrameX = 5;
         this.bottle.frameY = 1;

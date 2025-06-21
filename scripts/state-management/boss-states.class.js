@@ -29,6 +29,8 @@ export class Walk extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        this.boss.fps = 10;
+        this.boss.frameRate = 1000 / this.boss.fps;
         this.boss.frameX = 0;
         this.boss.maxFrameX = 3;
         this.boss.frameY = 0;
@@ -44,7 +46,7 @@ export class Walk extends State {
     handleState() {
         let currentTime = new Date().getTime();
         if (currentTime - this.boss.lastAttack > 2000 && (this.boss.x - this.boss.game.player.x < 200 || this.boss.game.player.x - this.boss.x > 200)) {
-            this.boss.setState(1);
+            this.boss.setState(states.ALERT);
         }
     };
 }
@@ -64,6 +66,8 @@ export class Alert extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        this.boss.fps = 10;
+        this.boss.frameRate = 1000 / this.boss.fps;
         this.boss.frameX = 0;
         this.boss.maxFrameX = 7;
         this.boss.frameY = 1;
@@ -76,9 +80,9 @@ export class Alert extends State {
      * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
      */
     handleState() {
-        setTimeout(() => {
-            this.boss.setState(2);
-        }, 1000);
+        if (this.boss.frameX >= this.boss.maxFrameX) {
+            this.boss.setState(states.ATTACK);
+        }
     };
 }
 
@@ -97,6 +101,8 @@ export class Attack extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        this.boss.fps = 10;
+        this.boss.frameRate = 1000 / this.boss.fps;
         this.boss.frameX = 0;
         this.boss.maxFrameX = 7;
         this.boss.frameY = 2;
@@ -110,13 +116,6 @@ export class Attack extends State {
             this.boss.attackLeft = true;
             this.boss.attackRight = false;
         }
-
-        // if (this.boss.x < this.game.player.x) {
-        //     this.boss.attackRight = true;
-        // }
-        // else {
-        //     this.boss.attackLeft = true;
-        // }
     };
 
 
@@ -127,7 +126,7 @@ export class Attack extends State {
         if (this.boss.x < 0 || this.boss.x > (this.boss.game.width - this.boss.bossWidth)) {
             this.boss.attackLeft = false;
             this.boss.attackRight = false;
-            this.boss.setState(0);
+            this.boss.setState(states.WALK);
         }
     };
 }
@@ -147,6 +146,8 @@ export class Hurt extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        this.boss.fps = 30;
+        this.boss.frameRate = 1000 / this.boss.fps;
         this.boss.frameX = 0;
         this.boss.maxFrameX = 2;
         this.boss.frameY = 3;
@@ -159,10 +160,10 @@ export class Hurt extends State {
     */
     handleState() {
         if (this.boss.game.bossHealthPoints === 0 && this.boss.frameX >= this.boss.maxFrameX) {
-            this.boss.setState(4);
+            this.boss.setState(states.DEAD);
         };
         if (this.boss.frameX >= this.boss.maxFrameX) {
-            this.boss.setState(0);
+            this.boss.setState(states.WALK);
         };
     };
 }
@@ -182,10 +183,13 @@ export class Dead extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        this.boss.fps = 30;
+        this.boss.frameRate = 1000 / this.boss.fps;
         this.boss.frameX = 0;
         this.boss.maxFrameX = 2;
         this.boss.frameY = 4;
         this.boss.animationType = this.state;
+        this.boss.enterDeadTime = new Date().getTime();
     };
 
 
@@ -193,13 +197,12 @@ export class Dead extends State {
     * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
     */
     handleState() {
-        if (this.boss.frameX >= this.boss.maxFrameX && !document.querySelector('.end-screen').classList.contains('win')) {
-            setTimeout(() => {
-                let endingScreen = document.querySelector('.end-screen');
-                endingScreen.classList.add('win');
-                endingScreen.classList.remove('d_none');
-                document.getElementById('canvas1').classList.add('d_none');
-            }, 1500);
+        let currentTime = new Date().getTime();
+        if (this.boss.frameX >= this.boss.maxFrameX && !document.querySelector('.end-screen').classList.contains('win') && currentTime - this.boss.enterDeadTime >= 1500) {
+            let endingScreen = document.querySelector('.end-screen');
+            endingScreen.classList.add('win');
+            endingScreen.classList.remove('d_none');
+            document.getElementById('canvas1').classList.add('d_none');
         };
     };
 }

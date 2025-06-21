@@ -7,7 +7,7 @@ export class Boss {
         this.spriteHeight = 1217;
         this.bossWidth = 150;
         this.bossHeight = 200;
-        this.x = 2000;
+        this.x = 1500;
         this.y = this.game.height - this.bossHeight - this.game.groundMargin + 10;
         this.markedForDeletion = false;
         this.image = document.getElementById('boss');
@@ -29,6 +29,7 @@ export class Boss {
         this.attackLeft = false;
         this.attackRight = false;
         this.right = false;
+        this.enterDeadTime = 0;
     };
 
 
@@ -66,7 +67,7 @@ export class Boss {
         }
 
         // Enters the final boss fight
-        if (this.x < this.game.width - this.bossWidth) {
+        if (this.x < this.game.width - this.bossWidth + 200) {
             this.game.bossFight = true;
         };
 
