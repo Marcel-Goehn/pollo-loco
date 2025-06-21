@@ -275,14 +275,16 @@ export class Player {
             this.game.boss.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
             this.game.boss.y + this.game.boss.bossHeight > this.y + this.hitboxOffsetY
         ) {
-            if (this.game.healthPoints > 0) {
-                this.game.healthPoints--;
+            let currentHit = new Date().getTime();
+            if (this.game.healthPoints > 0 && currentHit - this.lastHit >= 1500) {
+                this.game.healthPoints -= 20;
+                this.lastHit = new Date().getTime();
                 this.setState(2, 0);
             }
-            else {
-                this.game.healthPoints = 0;
-                this.setState(3, 0);
-            };
+            // else {
+            //     this.game.healthPoints = 0;
+            //     this.setState(3, 0);
+            // };
         };
     };
 };
