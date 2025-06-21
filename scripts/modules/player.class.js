@@ -36,6 +36,7 @@ export class Player {
         this.left = false;
         this.loopAnimation = true;
         this.lastHit = 0;
+        this.timeOfDeath = 0;
     };
 
 

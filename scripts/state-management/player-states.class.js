@@ -128,6 +128,10 @@ export class Hurt extends State {
      * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
      */
     handleInput(inputKeys) {
+        if (this.player.game.healthPoints === 0 && this.player.frameX >= this.player.maxFrameX) {
+            this.player.setState(states.DEAD, 0);
+        }
+
         let currentTime = new Date().getTime();
 
         if (currentTime - this.player.lastHit >= 500) {
@@ -163,6 +167,7 @@ export class Dead extends State {
         this.player.maxFrameX = 6;
         this.player.frameY = 3;
         this.player.loopAnimation = false;
+        this.player.timeOfDeath = new Date().getTime();
     };
 
 
@@ -170,12 +175,16 @@ export class Dead extends State {
      * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
      */
     handleInput(inputKeys) {
-        if (this.player.frameX >= this.player.maxFrameX && !document.querySelector('.end-screen').classList.contains('loose')) {
-            let endingScreen = document.querySelector('.end-screen');
-            endingScreen.classList.add('loose');
-            endingScreen.classList.remove('d_none');
-            document.getElementById('canvas1').classList.add('d_none');
-        };
+        let currentTime = new Date().getTime();
+
+        if (currentTime - this.player.timeOfDeath >= 1500) {
+            if (this.player.frameX >= this.player.maxFrameX && !document.querySelector('.end-screen').classList.contains('loose')) {
+                let endingScreen = document.querySelector('.end-screen');
+                endingScreen.classList.add('loose');
+                endingScreen.classList.remove('d_none');
+                document.getElementById('canvas1').classList.add('d_none');
+            };
+        }
     };
 };
 
