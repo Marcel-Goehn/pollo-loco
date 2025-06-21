@@ -33,6 +33,8 @@ export class Walking extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        this.player.fps = 20;
+        this.player.frameRate = 1000 / this.player.fps;
         this.player.frameX = 0;
         this.player.maxFrameX = 5;
         this.player.frameY = 0;
@@ -77,6 +79,8 @@ export class Jumping extends State {
         if (this.player.isOnGround()) {
             this.player.verticalMovement -= this.player.jumpHeight;
         };
+        this.player.fps = 30;
+        this.player.frameRate = 1000 / this.player.fps;
         this.player.frameX = 0;
         this.player.maxFrameX = 3;
         this.player.frameY = 1;
@@ -117,6 +121,8 @@ export class Hurt extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        this.player.fps = 15;
+        this.player.frameRate = 1000 / this.player.fps;
         this.player.frameX = 0;
         this.player.maxFrameX = 2;
         this.player.frameY = 2;
@@ -163,6 +169,8 @@ export class Dead extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        this.player.fps = 15;
+        this.player.frameRate = 1000 / this.player.fps;
         this.player.frameX = 0;
         this.player.maxFrameX = 6;
         this.player.frameY = 3;
@@ -203,6 +211,8 @@ export class Idle extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        this.player.fps = 10;
+        this.player.frameRate = 1000 / this.player.fps;
         this.player.frameX = 0;
         this.player.maxFrameX = 9;
         this.player.frameY = 4;
@@ -250,6 +260,8 @@ export class Sleeping extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        this.player.fps = 15;
+        this.player.frameRate = 1000 / this.player.fps;
         this.player.frameX = 0;
         this.player.maxFrameX = 9;
         this.player.frameY = 5;
@@ -291,6 +303,8 @@ export class Falling extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        this.player.fps = 30;
+        this.player.frameRate = 1000 / this.player.fps;
         this.player.frameX = 4;
         this.player.maxFrameX = 8;
         this.player.frameY = 1;

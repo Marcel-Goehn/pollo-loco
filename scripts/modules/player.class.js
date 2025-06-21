@@ -217,13 +217,13 @@ export class Player {
                     this.lastHit = new Date().getTime();
                     this.setState(2, 0);
                 }
-                else {
-                    enemy.willBeDeleted = true;
-                    enemy.setState(1);
-                    this.game.healthPoints = 0;
-                    this.lastHit = new Date().getTime();
-                    this.setState(3, 0);
-                };
+                // else {
+                //     enemy.willBeDeleted = true;
+                //     enemy.setState(1);
+                //     this.game.healthPoints = 0;
+                //     this.lastHit = new Date().getTime();
+                //     this.setState(3, 0);
+                // };
             };
         });
     };

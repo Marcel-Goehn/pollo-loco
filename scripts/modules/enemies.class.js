@@ -28,7 +28,12 @@ class Enemy {
         this.currentState.handleState();
 
         // movement
-        this.x -= this.speedX + this.game.gameSpeed;
+        if (!this.willBeDeleted) {
+            this.x -= this.speedX + this.game.gameSpeed;
+        }
+        else {
+            this.x -= this.game.gameSpeed;
+        }
 
         // sprite animation
         if (this.frameTimer > this.frameRate) {
