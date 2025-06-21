@@ -127,6 +127,8 @@ export class Hurt extends State {
         this.player.maxFrameX = 2;
         this.player.frameY = 2;
         this.player.loopAnimation = false;
+        this.player.hurtMusic.volume = 0.05;
+        this.player.hurtMusic.play();
     };
 
 
@@ -187,6 +189,9 @@ export class Dead extends State {
 
         if (currentTime - this.player.timeOfDeath >= 1500) {
             if (this.player.frameX >= this.player.maxFrameX && !document.querySelector('.end-screen').classList.contains('loose')) {
+                this.player.game.backgroundMusic.pause();
+                this.player.game.gameOverMusic.volume = 0.05;
+                this.player.game.gameOverMusic.play();
                 let endingScreen = document.querySelector('.end-screen');
                 endingScreen.classList.add('loose');
                 endingScreen.classList.remove('d_none');

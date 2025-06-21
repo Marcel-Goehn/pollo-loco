@@ -7,7 +7,7 @@ export class Boss {
         this.spriteHeight = 1217;
         this.bossWidth = 150;
         this.bossHeight = 200;
-        this.x = 1500;
+        this.x = 5000;
         this.y = this.game.height - this.bossHeight - this.game.groundMargin + 10;
         this.markedForDeletion = false;
         this.image = document.getElementById('boss');
@@ -30,6 +30,9 @@ export class Boss {
         this.attackRight = false;
         this.right = false;
         this.enterDeadTime = 0;
+        this.bossIntroMusic = new Audio('../assets/audio/boss_intro.mp3');
+        this.bossHurtMusic = new Audio('../assets/audio/boss_hurt.mp3');
+        this.bossDeadMusic = new Audio('../assets/audio/boss_dead.mp3');
     };
 
 
@@ -67,8 +70,10 @@ export class Boss {
         }
 
         // Enters the final boss fight
-        if (this.x < this.game.width - this.bossWidth + 200) {
+        if (this.x < this.game.width - this.bossWidth + 200 && !this.game.bossFight) {
             this.game.bossFight = true;
+            this.bossIntroMusic.volume = 0.05;
+            this.bossIntroMusic.play();
         };
 
         // sprite animation

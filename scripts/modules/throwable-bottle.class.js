@@ -24,6 +24,8 @@ export class ThrowableBottle {
         this.verticalMovement = 0;
         this.throwHeight = 20;
         this.gravity = 1;
+        this.throwBottleMusic = new Audio('../assets/audio/bottle_throw.mp3');
+        this.bottleBreaksMusic = new Audio('../assets/audio/bottle_breaks.mp3');
         this.states = [new Throwing(this), new Exploding(this)];
         this.currentState = this.states[0];
         this.currentState.enter();
@@ -44,8 +46,8 @@ export class ThrowableBottle {
         this.x += this.speedX;
 
         //Vertical Movement
-            this.y += this.verticalMovement;
-            this.verticalMovement += this.gravity;
+        this.y += this.verticalMovement;
+        this.verticalMovement += this.gravity;
 
         // sprite animation
         if (this.frameTimer > this.frameRate) {
@@ -90,6 +92,7 @@ export class ThrowableBottle {
      * @param {number} state - This number will dictate wich state of the sprite sheet will be chosen
      */
     setState(state) {
+        if (this.currentState === this.states[state]) return;
         this.currentState = this.states[state];
         this.currentState.enter();
     }

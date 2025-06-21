@@ -34,6 +34,8 @@ export class Throwing extends State {
         this.bottle.frameX = 0;
         this.bottle.maxFrameX = 3;
         this.bottle.frameY = 0;
+        this.bottle.throwBottleMusic.volume = 0.05;
+        this.bottle.throwBottleMusic.play();
 
         this.bottle.verticalMovement -= this.bottle.throwHeight;
     };
@@ -67,6 +69,8 @@ export class Exploding extends State {
         this.bottle.frameX = 0;
         this.bottle.maxFrameX = 5;
         this.bottle.frameY = 1;
+        this.bottle.bottleBreaksMusic.volume = 0.05;
+        this.bottle.bottleBreaksMusic.play();
     };
 
 
