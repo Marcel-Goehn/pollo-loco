@@ -85,7 +85,16 @@ function startGame() {
             this.bottles = [new GroundBottle(this, 500), new AirBottle(this, 1000), new GroundBottle(this, 1500), new GroundBottle(this, 2000), new AirBottle(this, 2500), new AirBottle(this, 3000), new AirBottle(this, 3500), new GroundBottle(this, 4000), new GroundBottle(this, 4500), new GroundBottle(this, 5000)];
             this.throwableBottles = [];
             this.collectableCoins = [new Coin(this, 1200, 250), new Coin(this, 1250, 200), new Coin(this, 1300, 150), new Coin(this, 1350, 200), new Coin(this, 1400, 250), new Coin(this, 2000, 250), new Coin(this, 2050, 200), new Coin(this, 2100, 150), new Coin(this, 2150, 200), new Coin(this, 2200, 250), new Coin(this, 5200, 250), new Coin(this, 5250, 200), new Coin(this, 5300, 150), new Coin(this, 5350, 200), new Coin(this, 5400, 250)];
+            this.backgroundMusic();
         };
+
+
+        backgroundMusic() {
+            let music = new Audio('./assets/audio/game_music.mp3');
+            music.loop = true;
+            music.volume = 0.005;
+            music.play();
+        }
 
 
         /**
