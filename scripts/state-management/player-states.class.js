@@ -36,6 +36,7 @@ export class Walking extends State {
         this.player.frameX = 0;
         this.player.maxFrameX = 5;
         this.player.frameY = 0;
+        this.player.loopAnimation = true;
     };
 
 
@@ -79,6 +80,7 @@ export class Jumping extends State {
         this.player.frameX = 0;
         this.player.maxFrameX = 8;
         this.player.frameY = 1;
+        this.player.loopAnimation = false;
     };
 
 
@@ -118,6 +120,7 @@ export class Hurt extends State {
         this.player.frameX = 0;
         this.player.maxFrameX = 2;
         this.player.frameY = 2;
+        this.player.loopAnimation = false;
     };
 
 
@@ -125,15 +128,19 @@ export class Hurt extends State {
      * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
      */
     handleInput(inputKeys) {
-        if (this.player.frameX >= this.player.maxFrameX && this.player.isOnGround()) {
-            this.player.setState(states.IDLE, 0);
+        let currentTime = new Date().getTime();
+
+        if (currentTime - this.player.lastHit >= 1500) {
+            if (this.player.frameX >= this.player.maxFrameX && this.player.isOnGround()) {
+                this.player.setState(states.IDLE, 0);
+            }
+            else if (this.player.frameX >= this.player.maxFrameX && !this.player.isOnGround() && this.player.game.bossFight) {
+                this.player.setState(states.FALLING, 0);
+            }
+            else if (this.player.frameX >= this.player.maxFrameX && !this.player.isOnGround()) {
+                this.player.setState(states.FALLING, 1);
+            };
         }
-        else if (this.player.frameX >= this.player.maxFrameX && !this.player.isOnGround() && this.player.game.bossFight) {
-            this.player.setState(states.FALLING, 0);
-        }
-        else if (this.player.frameX >= this.player.maxFrameX && !this.player.isOnGround()) {
-            this.player.setState(states.FALLING, 1);
-        };
     };
 };
 
@@ -155,6 +162,7 @@ export class Dead extends State {
         this.player.frameX = 0;
         this.player.maxFrameX = 6;
         this.player.frameY = 3;
+        this.player.loopAnimation = false;
     };
 
 
@@ -189,6 +197,7 @@ export class Idle extends State {
         this.player.frameX = 0;
         this.player.maxFrameX = 9;
         this.player.frameY = 4;
+        this.player.loopAnimation = true;
         enterIdleStateTime = new Date().getTime();
     };
 
@@ -235,6 +244,7 @@ export class Sleeping extends State {
         this.player.frameX = 0;
         this.player.maxFrameX = 9;
         this.player.frameY = 5;
+        this.player.loopAnimation = true;
     };
 
 
@@ -275,6 +285,7 @@ export class Falling extends State {
         this.player.frameX = 0;
         this.player.maxFrameX = 8;
         this.player.frameY = 1;
+        this.player.loopAnimation = false;
     };
 
 

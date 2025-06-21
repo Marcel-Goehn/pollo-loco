@@ -34,6 +34,8 @@ export class Player {
         this.hitboxHeight = this.playerHeight - 80;
         this.doubleJump = false;
         this.left = false;
+        this.loopAnimation = true;
+        this.lastHit = 0;
     };
 
 
@@ -98,7 +100,11 @@ export class Player {
                 this.frameX++;
             }
             else {
-                this.frameX = 0;
+                if (!this.loopAnimation) {
+                    this.frameX = this.maxFrameX;
+                } else {
+                    this.frameX = 0;
+                }
             };
         }
         else {
@@ -204,11 +210,17 @@ export class Player {
                 enemy.willBeDeleted === false
             ) {
                 if (this.game.healthPoints > 0) {
-                    this.game.healthPoints--;
+                    enemy.willBeDeleted = true;
+                    enemy.setState(1);
+                    this.game.healthPoints -= 10;
+                    this.lastHit = new Date().getTime();
                     this.setState(2, 0);
                 }
                 else {
+                    enemy.willBeDeleted = true;
+                    enemy.setState(1);
                     this.game.healthPoints = 0;
+                    this.lastHit = new Date().getTime();
                     this.setState(3, 0);
                 };
             };
