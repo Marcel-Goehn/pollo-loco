@@ -58,6 +58,10 @@ h1 {
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
 
+p {
+    font-family: 'Boogaloo', Arial, Helvetica, sans-serif;
+}
+
 canvas {
     display: block;
     /* position: absolute;
@@ -168,12 +172,26 @@ dialog .wrapper {
     width: 32px;
 }
 
-.control-keys-container {
+/* .control-keys-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 50px;
-    flex-wrap: wrap;
+} */
+
+.control-keys-container {
+    display: flex;
+    flex-direction: column; /* <--- wichtig */
+    gap: 32px; /* für etwas Abstand */
+    margin-top: 50px;
+    align-items: center; /* zentriert die inneren Container */
+}
+
+.navigation-keys,
+.special-moves-keys {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
 }
 
 .control-keys {
