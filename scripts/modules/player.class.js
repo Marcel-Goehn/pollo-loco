@@ -39,8 +39,14 @@ export class Player {
         this.lastHit = 0;
         this.timeOfDeath = 0;
         this.hurtMusic = new Audio('../assets/audio/player_hurt.mp3');
+        this.hurtMusic.muted = this.game.audioMuted;
+        this.hurtMusic.volume = 0.05;
         this.collectedCoinMusic = new Audio('../assets/audio/coin_collected.mp3');
+        this.collectedCoinMusic.muted = this.game.audioMuted;
+        this.collectedCoinMusic.volume = 0.05;
         this.collectedBottleMusic = new Audio('../assets/audio/bottle_collected.mp3');
+        this.collectedBottleMusic.muted = this.game.audioMuted;
+        this.collectedBottleMusic.volume = 0.5;
     };
 
 
@@ -51,6 +57,11 @@ export class Player {
      * @param {*} deltaTime - The time that has passed since the last animation frame to the current one
      */
     update(inputKeys, deltaTime) {
+        // Watches the state of the audio
+        this.hurtMusic.muted = this.game.audioMuted;
+        this.collectedCoinMusic.muted = this.game.audioMuted;
+        this.collectedBottleMusic.muted = this.game.audioMuted;
+
         // Checks if a collision is happening
         this.checkCollision();
 
@@ -247,7 +258,6 @@ export class Player {
                 bottle.y + bottle.height > this.y + this.hitboxOffsetY
             ) {
                 bottle.markedForDeletion = true;
-                this.collectedBottleMusic.volume = 0.5;
                 this.collectedBottleMusic.play();
                 this.game.salsaBottles++;
             }
@@ -267,7 +277,6 @@ export class Player {
                 coin.y + coin.height > this.y + this.hitboxOffsetY
             ) {
                 coin.markedForDeletion = true;
-                this.collectedCoinMusic.volume = 0.05;
                 this.collectedCoinMusic.play();
                 this.game.coins++;
             };

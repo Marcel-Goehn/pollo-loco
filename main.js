@@ -14,6 +14,7 @@ const startBtn = document.getElementById('start_btn');
 const startMenu = document.querySelector('.start-menu');
 const returnToMenuBtn = document.getElementById('return_to_start_page');
 const restartBtn = document.getElementById('replay');
+const muteBtn = document.getElementById('mute_btn');
 const endScreen = document.querySelector('.end-screen');
 
 
@@ -85,22 +86,20 @@ function startGame() {
             this.bottles = [new GroundBottle(this, 500), new AirBottle(this, 1000), new GroundBottle(this, 1500), new GroundBottle(this, 2000), new AirBottle(this, 2500), new AirBottle(this, 3000), new AirBottle(this, 3500), new GroundBottle(this, 4000), new GroundBottle(this, 4500), new GroundBottle(this, 5000)];
             this.throwableBottles = [];
             this.collectableCoins = [new Coin(this, 1200, 250), new Coin(this, 1250, 200), new Coin(this, 1300, 150), new Coin(this, 1350, 200), new Coin(this, 1400, 250), new Coin(this, 2000, 250), new Coin(this, 2050, 200), new Coin(this, 2100, 150), new Coin(this, 2150, 200), new Coin(this, 2200, 250), new Coin(this, 5200, 250), new Coin(this, 5250, 200), new Coin(this, 5300, 150), new Coin(this, 5350, 200), new Coin(this, 5400, 250)];
+            this.audioMuted = false;
             this.backgroundMusic = new Audio('./assets/audio/game_music.mp3');
             this.backgroundMusic.loop = true;
+            this.backgroundMusic.muted = this.audioMuted;
             this.backgroundMusic.volume = 0.005;
             this.backgroundMusic.play();
             this.youWinMusic = new Audio('./assets/audio/you_win.mp3');
+            this.youWinMusic.muted = this.audioMuted;
+            this.youWinMusic.volume = 0.05;
             this.gameOverMusic = new Audio('./assets/audio/game_over.mp3');
-            // this.backgroundMusic();
+            this.gameOverMusic.muted = this.audioMuted;
+            this.gameOverMusic.volume = 0.05;
+            muteBtn.addEventListener('click', () => this.muteAudio());
         };
-
-
-        // backgroundMusic() {
-        //     let music = new Audio('./assets/audio/game_music.mp3');
-        //     music.loop = true;
-        //     music.volume = 0.005;
-        //     music.play();
-        // }
 
 
         /**
@@ -109,6 +108,10 @@ function startGame() {
          * @param {number} deltaTime - The time that has passed since the last animation frame and the current one 
          */
         update(deltaTime) {
+            this.backgroundMusic.muted = this.audioMuted;
+            this.youWinMusic.muted = this.audioMuted;
+            this.gameOverMusic.muted = this.audioMuted;
+
             this.background.update();
             this.player.update(this.keyboard.keys, deltaTime);
             this.boss.update(this.keyboard.keys, deltaTime);
@@ -209,6 +212,17 @@ function startGame() {
                 this.enemies.push(new SmallChicken(this));
             };
         };
+
+
+        muteAudio() {
+            console.log('Mute Audio');
+            if (!this.audioMuted) {
+                this.audioMuted = true;
+            }
+            else {
+                this.audioMuted = false;
+            }
+        }
 
 
         /**

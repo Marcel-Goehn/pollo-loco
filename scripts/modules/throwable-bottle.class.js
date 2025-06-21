@@ -26,7 +26,11 @@ export class ThrowableBottle {
         this.throwHeight = 20;
         this.gravity = 1;
         this.throwBottleMusic = new Audio('../assets/audio/bottle_throw.mp3');
+        this.throwBottleMusic.muted = this.game.audioMuted;
+        this.throwBottleMusic.volume = 0.05;
         this.bottleBreaksMusic = new Audio('../assets/audio/bottle_breaks.mp3');
+        this.bottleBreaksMusic.muted = this.game.audioMuted;
+        this.bottleBreaksMusic.volume = 0.05;
         this.states = [new Throwing(this), new Exploding(this)];
         this.currentState = this.states[0];
         this.currentState.enter();
@@ -39,6 +43,10 @@ export class ThrowableBottle {
      * @param {number} deltaTime - The time that has passed between the last animation frame and the current one 
      */
     update(deltaTime) {
+        // Watches the current state of the audio
+        this.throwBottleMusic.muted = this.game.audioMuted;
+        this.bottleBreaksMusic.muted = this.game.audioMuted;
+
         // Watches the current state and changes it
         this.currentState.handleState();
 

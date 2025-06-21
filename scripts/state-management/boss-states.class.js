@@ -152,7 +152,6 @@ export class Hurt extends State {
         this.boss.maxFrameX = 2;
         this.boss.frameY = 3;
         if (this.boss.game.bossHealthPoints !== 0) {
-            this.boss.bossHurtMusic.volume = 0.05;
             this.boss.bossHurtMusic.play();
         }
         this.boss.animationType = this.state;
@@ -192,7 +191,6 @@ export class Dead extends State {
         this.boss.frameX = 0;
         this.boss.maxFrameX = 2;
         this.boss.frameY = 4;
-        this.boss.bossDeadMusic.volume = 0.05;
         this.boss.bossDeadMusic.play();
         this.boss.animationType = this.state;
         this.boss.enterDeadTime = new Date().getTime();
@@ -206,7 +204,6 @@ export class Dead extends State {
         let currentTime = new Date().getTime();
         if (this.boss.frameX >= this.boss.maxFrameX && !document.querySelector('.end-screen').classList.contains('win') && currentTime - this.boss.enterDeadTime >= 1500) {
             this.boss.game.backgroundMusic.pause();
-            this.boss.game.youWinMusic.volume = 0.05;
             this.boss.game.youWinMusic.play();
             let endingScreen = document.querySelector('.end-screen');
             endingScreen.classList.add('win');

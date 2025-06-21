@@ -32,12 +32,23 @@ export class Boss {
         this.right = false;
         this.enterDeadTime = 0;
         this.bossIntroMusic = new Audio('../assets/audio/boss_intro.mp3');
+        this.bossIntroMusic.muted = this.game.audioMuted;
+        this.bossIntroMusic.volume = 0.05;
         this.bossHurtMusic = new Audio('../assets/audio/boss_hurt.mp3');
+        this.bossHurtMusic.muted = this.game.audioMuted;
+        this.bossHurtMusic.volume = 0.05;
         this.bossDeadMusic = new Audio('../assets/audio/boss_dead.mp3');
+        this.bossDeadMusic.muted = this.game.audioMuted;
+        this.bossDeadMusic.volume = 0.05;
     };
 
 
     update(inputKeys, deltaTime) {
+        // Watches the state of the audio
+        this.bossIntroMusic.muted = this.game.audioMuted;
+        this.bossHurtMusic.muted = this.game.audioMuted;
+        this.bossDeadMusic.muted = this.game.audioMuted;
+
         // Watches the current state and changes it
         this.currentState.handleState();
 
@@ -73,7 +84,6 @@ export class Boss {
         // Enters the final boss fight
         if (this.x < this.game.width - this.bossWidth + 200 && !this.game.bossFight) {
             this.game.bossFight = true;
-            this.bossIntroMusic.volume = 0.05;
             this.bossIntroMusic.play();
         };
 
