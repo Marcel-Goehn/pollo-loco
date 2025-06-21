@@ -78,7 +78,7 @@ export class Jumping extends State {
             this.player.verticalMovement -= this.player.jumpHeight;
         };
         this.player.frameX = 0;
-        this.player.maxFrameX = 8;
+        this.player.maxFrameX = 3;
         this.player.frameY = 1;
         this.player.loopAnimation = false;
     };
@@ -130,7 +130,7 @@ export class Hurt extends State {
     handleInput(inputKeys) {
         let currentTime = new Date().getTime();
 
-        if (currentTime - this.player.lastHit >= 1500) {
+        if (currentTime - this.player.lastHit >= 500) {
             if (this.player.frameX >= this.player.maxFrameX && this.player.isOnGround()) {
                 this.player.setState(states.IDLE, 0);
             }
@@ -282,7 +282,7 @@ export class Falling extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
-        this.player.frameX = 0;
+        this.player.frameX = 4;
         this.player.maxFrameX = 8;
         this.player.frameY = 1;
         this.player.loopAnimation = false;
