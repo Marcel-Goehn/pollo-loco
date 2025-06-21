@@ -26,6 +26,9 @@ export class Throwing extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
+        if (this.bottle.game.player.left) {
+            this.bottle.speedX = -this.bottle.speedX;
+        }
         this.bottle.frameX = 0;
         this.bottle.maxFrameX = 3;
         this.bottle.frameY = 0;

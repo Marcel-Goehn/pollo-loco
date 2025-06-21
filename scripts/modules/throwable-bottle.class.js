@@ -41,12 +41,7 @@ export class ThrowableBottle {
 
         this.checkCollision();
 
-        // Horizontal movement
-        if (this.game.player.left) {
-            this.x -= this.speedX;
-        } else {
-            this.x += this.speedX;
-        }
+        this.x += this.speedX;
 
         //Vertical Movement
         this.y += this.verticalMovement;
