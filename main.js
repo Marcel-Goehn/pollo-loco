@@ -10,6 +10,7 @@ import { Boss } from './scripts/modules/boss.class.js';
 
 let game;
 let animationFrameId;
+let gameStarted = false;
 const startBtn = document.getElementById('start_btn');
 const startMenu = document.querySelector('.start-menu');
 const returnToMenuBtn = document.getElementById('return_to_start_page');
@@ -37,6 +38,37 @@ const handleReturnToMenuClick = () => {
 returnToMenuBtn.addEventListener('click', handleReturnToMenuClick);
 startBtn.addEventListener('click', startGame);
 restartBtn.addEventListener('click', startGame);
+
+
+const checkScreenOrientation = () => {
+    const portrait = window.matchMedia("(orientation: portrait)").matches;
+    console.log(portrait);
+
+    if (portrait) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    }
+    else if (!portrait && animationFrameId === null && gameStarted) {
+        resumeAnimation();
+    }
+}
+
+
+addEventListener('load', checkScreenOrientation);
+
+
+window.matchMedia("(orientation: portrait)").addEventListener('change', e => {
+    const portrait = e.matches;
+
+    if (portrait) {
+        console.log('Portrait');
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    } else if (!portrait && animationFrameId === null && gameStarted) {
+        console.log('Landscape');
+        resumeAnimation();
+    }
+})
 
 
 /**
@@ -282,7 +314,6 @@ function startGame() {
     game = new Game(CANVAS_WIDTH, CANVAS_HEIGHT);
     game.reset();
     console.log(game);
-    let lastTime = 0;
 
 
     /**
@@ -290,13 +321,18 @@ function startGame() {
      * 
      * @param {number} timeStamp - The timestamp of the current animation loop 
      */
-    const animate = (timeStamp) => {
-        const deltaTime = timeStamp - lastTime;
-        lastTime = timeStamp;
-        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        game.update(deltaTime);
-        game.draw(ctx);
-        animationFrameId = requestAnimationFrame(animate);
-    };
-    animate(0);
+    window.resumeAnimation = () => {
+        let lastTime = 0;
+        gameStarted = true;
+        const animate = (timeStamp) => {
+            const deltaTime = timeStamp - lastTime;
+            lastTime = timeStamp;
+            ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            game.update(deltaTime);
+            game.draw(ctx);
+            animationFrameId = requestAnimationFrame(animate);
+        };
+        animate(0);
+    }
+    resumeAnimation();
 };
