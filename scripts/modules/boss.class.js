@@ -53,32 +53,34 @@ export class Boss {
         this.currentState.handleState();
 
         // Horizontal Movement
-        if (!this.game.bossFight) {
-            this.x -= this.horizontalMovement + this.game.gameSpeed;
-        }
-        else if (this.game.bossFight && !this.attackLeft && !this.attackRight && this.currentState !== this.states[2]) {
-            if (this.x > this.game.player.x) {
+        if (this.game.bossHealthPoints !== 0) {
+            if (!this.game.bossFight) {
+                this.x -= this.horizontalMovement + this.game.gameSpeed;
+            }
+            else if (this.game.bossFight && !this.attackLeft && !this.attackRight && this.currentState !== this.states[2]) {
+                if (this.x > this.game.player.x) {
+                    this.right = false;
+                    this.x -= this.bossFightHorizontalMovement;
+                } else {
+                    this.right = true;
+                    this.x += this.bossFightHorizontalMovement;
+                }
+            }
+
+            if (this.game.bossFight && this.attackLeft) {
                 this.right = false;
                 this.x -= this.bossFightHorizontalMovement;
-            } else {
+            }
+            if (this.game.bossFight && this.attackRight) {
                 this.right = true;
                 this.x += this.bossFightHorizontalMovement;
             }
-        }
 
-        if (this.game.bossFight && this.attackLeft) {
-            this.right = false;
-            this.x -= this.bossFightHorizontalMovement;
-        }
-        if (this.game.bossFight && this.attackRight) {
-            this.right = true;
-            this.x += this.bossFightHorizontalMovement;
-        }
-
-        if (inputKeys.includes('ArrowUp') || inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
-            this.horizontalMovement = this.maxSpeed;
-        } else {
-            this.horizontalMovement = 0;
+            if (inputKeys.includes('ArrowUp') || inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
+                this.horizontalMovement = this.maxSpeed;
+            } else {
+                this.horizontalMovement = 0;
+            }
         }
 
         // Enters the final boss fight
