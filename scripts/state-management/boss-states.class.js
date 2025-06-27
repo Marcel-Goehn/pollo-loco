@@ -206,6 +206,8 @@ export class Dead extends State {
             this.boss.game.backgroundMusic.pause();
             this.boss.game.youWinMusic.play();
             let endingScreen = document.querySelector('.end-screen');
+            gameStarted = false;
+            this.boss.game.stop();
             endingScreen.classList.add('win');
             endingScreen.classList.remove('d_none');
             document.getElementById('canvas1').classList.add('d_none');

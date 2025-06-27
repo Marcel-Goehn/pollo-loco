@@ -280,8 +280,40 @@ dialog .wrapper {
     background-color: hsl(45, 100%, 60%);
 }
 
+.device-orientation {
+    background-color: #dba801;
+    padding-inline: 15px;
+    padding-block: 10px;
+    border-radius: 15px;
+    width: 720px;
+    height: 480px;
+}
+
+.device-orientation-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.device-orientation h2 {
+    font-size: 48px;
+}
+
+.device-orientation img {
+    width: 120px;
+    margin-top: 24px;
+}
+
+.device-orientation p {
+    margin-top: 24px;
+    font-size: 24px;
+}
+
 @media only screen and (max-width: 720px) {
-    canvas, .start-menu, dialog {
+    canvas, .start-menu, dialog, .device-orientation {
         width: 100%;
     }
 
@@ -317,7 +349,7 @@ dialog .wrapper {
 }
 
 @media only screen and (max-height: 480px) {
-    canvas, .start-menu, dialog {
+    canvas, .start-menu, dialog, .device-orientation {
         height: 100dvh;
     }
 

@@ -10,13 +10,15 @@ import { Boss } from './scripts/modules/boss.class.js';
 
 let game;
 let animationFrameId;
-let gameStarted = false;
+window.gameStarted = false;
 const startBtn = document.getElementById('start_btn');
 const startMenu = document.querySelector('.start-menu');
 const returnToMenuBtn = document.getElementById('return_to_start_page');
 const restartBtn = document.getElementById('replay');
 const muteBtn = document.getElementById('mute_btn');
 const endScreen = document.querySelector('.end-screen');
+const canvasContainer = document.querySelector('.canvas-container');
+const deviceOrientationPopUp = document.querySelector('.device-orientation');
 
 
 /**
@@ -42,14 +44,19 @@ restartBtn.addEventListener('click', startGame);
 
 const checkScreenOrientation = () => {
     const portrait = window.matchMedia("(orientation: portrait)").matches;
-    console.log(portrait);
 
-    if (portrait) {
+    if (portrait && gameStarted) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
+        canvasContainer.classList.add('d_none');
+        deviceOrientationPopUp.classList.remove('d_none');
+        console.log(portrait);
     }
     else if (!portrait && animationFrameId === null && gameStarted) {
         resumeAnimation();
+        canvasContainer.classList.remove('d_none');
+        deviceOrientationPopUp.classList.add('d_none');
+        console.log(portrait);
     }
 }
 
@@ -60,13 +67,17 @@ addEventListener('load', checkScreenOrientation);
 window.matchMedia("(orientation: portrait)").addEventListener('change', e => {
     const portrait = e.matches;
 
-    if (portrait) {
+    if (portrait && gameStarted) {
         console.log('Portrait');
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
+        canvasContainer.classList.add('d_none');
+        deviceOrientationPopUp.classList.remove('d_none');
     } else if (!portrait && animationFrameId === null && gameStarted) {
         console.log('Landscape');
         resumeAnimation();
+        canvasContainer.classList.remove('d_none');
+        deviceOrientationPopUp.classList.add('d_none');
     }
 })
 
@@ -265,6 +276,12 @@ function startGame() {
         }
 
 
+        stop() {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+        }
+
+
         /**
          * This method resets the game after the game is over
          */
@@ -325,6 +342,7 @@ function startGame() {
         let lastTime = 0;
         gameStarted = true;
         const animate = (timeStamp) => {
+            if (!gameStarted) return;
             const deltaTime = timeStamp - lastTime;
             lastTime = timeStamp;
             ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
