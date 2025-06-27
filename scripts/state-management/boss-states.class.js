@@ -202,7 +202,7 @@ export class Dead extends State {
     */
     handleState() {
         let currentTime = new Date().getTime();
-        if (this.boss.frameX >= this.boss.maxFrameX && !document.querySelector('.end-screen').classList.contains('win') && currentTime - this.boss.enterDeadTime >= 1500) {
+        if (currentTime - this.boss.enterDeadTime >= 1500) {
             this.boss.game.backgroundMusic.pause();
             this.boss.game.youWinMusic.play();
             let endingScreen = document.querySelector('.end-screen');
