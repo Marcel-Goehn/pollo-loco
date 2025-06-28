@@ -92,10 +92,11 @@ export class Jumping extends State {
      * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
      */
     handleInput(inputKeys) {
-        if (inputKeys.includes(' ') && !this.player.doubleJump && this.player.game.bossFight && this.player.game.coins > 0) {
-            this.player.verticalMovement -= this.player.jumpHeight * 1.25;
+        if (inputKeys.includes('ArrowUp') && !this.player.doubleJump && this.player.jumpKeyReleased && this.player.jumpKeyPressed && this.player.game.bossFight && this.player.game.coins > 0) {
+            this.player.verticalMovement = -this.player.jumpHeight * 1.5;
             this.player.game.coins--;
             this.player.doubleJump = true;
+            this.player.jumpKeyReleased = false;
         }
         else if (this.player.verticalMovement > this.player.gravity && this.player.game.bossFight) {
             this.player.setState(states.FALLING, 0);
@@ -319,10 +320,11 @@ export class Falling extends State {
      * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
      */
     handleInput(inputKeys) {
-        if (inputKeys.includes(' ') && !this.player.doubleJump && this.player.game.bossFight && this.player.game.coins > 0) {
-            this.player.verticalMovement -= this.player.jumpHeight * 1.25;
+        if (inputKeys.includes('ArrowUp') && !this.player.doubleJump && this.player.jumpKeyReleased && this.player.jumpKeyPressed && this.player.game.bossFight && this.player.game.coins > 0) {
+            this.player.verticalMovement = -this.player.jumpHeight * 1.5;
             this.player.game.coins--;
             this.player.doubleJump = true;
+            this.player.jumpKeyReleased = false;
             this.player.setState(states.JUMPING, 0);
         }
         else if (inputKeys.length === 0 && this.player.isOnGround()) {

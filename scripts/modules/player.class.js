@@ -47,6 +47,8 @@ export class Player {
         this.collectedBottleMusic = new Audio('../assets/audio/bottle_collected.mp3');
         this.collectedBottleMusic.muted = this.game.audioMuted;
         this.collectedBottleMusic.volume = 0.5;
+        this.jumpKeyReleased = false;
+        this.jumpKeyPressed = false;
     };
 
 
@@ -61,6 +63,13 @@ export class Player {
         this.hurtMusic.muted = this.game.audioMuted;
         this.collectedCoinMusic.muted = this.game.audioMuted;
         this.collectedBottleMusic.muted = this.game.audioMuted;
+
+        // Resets the ability to double jump
+        if (this.isOnGround()) {
+            this.doubleJump = false;
+            this.jumpKeyReleased = false;
+            this.jumpKeyPressed = false;
+        }
 
         // Checks if a collision is happening
         this.checkCollision();
