@@ -137,6 +137,14 @@ export class Player {
         else {
             this.frameTimer += deltaTime;
         };
+
+        // Checks if the player is falling below the ground. If that is the case the player will get reset to ist usual position
+        const maxY = this.game.height - this.playerHeight - this.game.groundMargin;
+
+        if (this.y > maxY) {
+            this.y = maxY;
+            this.verticalMovement = 0;
+        };
     };
 
 
