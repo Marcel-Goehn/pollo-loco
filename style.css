@@ -195,17 +195,12 @@ dialog .wrapper {
 
 .control-keys-container {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 32px;
     margin-top: 50px;
     align-items: center;
-}
-
-.navigation-keys,
-.special-moves-keys {
-    display: flex;
-    gap: 24px;
-    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .control-keys {
