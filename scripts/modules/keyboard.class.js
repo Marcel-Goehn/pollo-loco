@@ -39,34 +39,34 @@ export class Keyboard {
             }
         });
 
-        this.leftBtn.addEventListener('mousedown', () => {
+        this.leftBtn.addEventListener('touchstart', () => {
             if (!this.keys.includes('ArrowLeft')) {
                 this.keys.push('ArrowLeft');
             }
         });
 
-        this.rightBtn.addEventListener('mousedown', () => {
+        this.rightBtn.addEventListener('touchstart', () => {
             if (!this.keys.includes('ArrowRight')) {
                 this.keys.push('ArrowRight');
             }
         });
 
-        this.upBtn.addEventListener('mousedown', () => {
+        this.upBtn.addEventListener('touchstart', () => {
             if (!this.keys.includes('ArrowUp')) {
                 this.keys.push('ArrowUp');
                 this.game.player.jumpKeyPressed = true;
             }
         });
 
-        this.leftBtn.addEventListener('mouseup', () => {
+        this.leftBtn.addEventListener('touchend', () => {
             this.keys.splice(this.keys.indexOf('ArrowLeft'), 1);
         });
 
-        this.rightBtn.addEventListener('mouseup', () => {
+        this.rightBtn.addEventListener('touchend', () => {
             this.keys.splice(this.keys.indexOf('ArrowRight'), 1);
         });
 
-        this.upBtn.addEventListener('mouseup', () => {
+        this.upBtn.addEventListener('touchend', () => {
             this.keys.splice(this.keys.indexOf('ArrowUp'), 1);
             this.game.player.jumpKeyReleased = true;
             this.game.player.jumpKeyPressed = false;
