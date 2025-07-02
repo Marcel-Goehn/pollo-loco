@@ -130,7 +130,7 @@ canvas {
 }
 
 .start-menu button,
-.start-menu a {
+.impressum {
     background-color: rgb(255, 191, 0);
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
@@ -143,7 +143,7 @@ canvas {
 }
 
 .start-menu button:hover,
-.start-menu a:hover {
+.impressum:hover {
     transform: scale(1.1);
     background-color: hsl(45, 100%, 60%);
 }
@@ -305,6 +305,37 @@ dialog .wrapper {
 .device-orientation p {
     margin-top: 24px;
     font-size: 24px;
+}
+
+.mobile-control-keys {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    gap: 40px;
+    width: 100%;
+    padding-inline: 32px;
+}
+
+.mobile-control-keys button {
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.move-left-btn, .move-right-btn, .move-up-btn, .throw-bottle-btn {
+    width: 48px;
+}
+
+.throw-btn { 
+   margin-left: auto;
+}
+
+.tabasco-icon-link {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    left: 0;
+    right: 0;
 }
 
 @media only screen and (max-width: 720px) {
