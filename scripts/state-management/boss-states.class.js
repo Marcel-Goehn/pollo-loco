@@ -146,7 +146,7 @@ export class Hurt extends State {
      * This method sets the x and y coordinates to the right positions to get the fitting animation for that state
      */
     enter() {
-        this.boss.fps = 30;
+        this.boss.fps = 5;
         this.boss.frameRate = 1000 / this.boss.fps;
         this.boss.frameX = 0;
         this.boss.maxFrameX = 2;
