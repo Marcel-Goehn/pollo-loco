@@ -308,7 +308,7 @@ dialog .wrapper {
 }
 
 @media only screen and (max-width: 720px) {
-    canvas, .start-menu, dialog, .device-orientation {
+    canvas, .start-menu, dialog, .device-orientation, .end-screen {
         width: 100%;
     }
 
@@ -341,10 +341,14 @@ dialog .wrapper {
     .btn-container {
         gap: 8px;
     }
+    .end-screen button {
+        font-size: 20px;
+        padding: 10px 10px;
+    }
 }
 
 @media only screen and (max-height: 480px) {
-    canvas, .start-menu, dialog, .device-orientation {
+    canvas, .start-menu, dialog, .device-orientation, .end-screen {
         height: 100dvh;
     }
 
