@@ -50,7 +50,9 @@ export class Walking extends State {
             this.player.setState(states.IDLE, 0);
         }
         else if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.game.bossFight) {
-            this.player.setState(states.WALKING, 0);
+            if (this.player.currentState !== this.player.states[states.WALKING]) {
+                this.player.setState(states.WALKING, 0);
+            }
         }
         else if (inputKeys.includes('ArrowUp') && this.player.game.bossFight) {
             this.player.setState(states.JUMPING, 0);
@@ -136,7 +138,7 @@ export class Hurt extends State {
      * This method checks for each animation frame if there is a condition that is true so that the state will be changed again
      */
     handleInput(inputKeys) {
-        if (this.player.game.healthPoints === 0 && this.player.frameX >= this.player.maxFrameX) {
+        if (this.player.game.healthPoints <= 0 && this.player.frameX >= this.player.maxFrameX) {
             this.player.setState(states.DEAD, 0);
         }
 
@@ -235,7 +237,9 @@ export class Idle extends State {
             this.player.setState(states.SLEEPING, 0);
         }
         else if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.game.bossFight) {
-            this.player.setState(states.WALKING, 0);
+            if (this.player.currentState !== this.player.states[states.WALKING]) {
+                this.player.setState(states.WALKING, 0);
+            }
         }
         else if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
             this.player.setState(states.WALKING, 1);
@@ -278,7 +282,9 @@ export class Sleeping extends State {
      */
     handleInput(inputKeys) {
         if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.game.bossFight) {
-            this.player.setState(states.WALKING, 0);
+            if (this.player.currentState !== this.player.states[states.WALKING]) {
+                this.player.setState(states.WALKING, 0);
+            }
         }
         else if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) {
             this.player.setState(states.WALKING, 1);
@@ -332,7 +338,9 @@ export class Falling extends State {
             this.player.doubleJump = false;
         }
         else if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.isOnGround() && this.player.game.bossFight) {
-            this.player.setState(states.WALKING, 0);
+            if (this.player.currentState !== this.player.states[states.WALKING]) {
+                this.player.setState(states.WALKING, 0);
+            }
             this.player.doubleJump = false;
         }
         else if (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight') && this.player.isOnGround()) {

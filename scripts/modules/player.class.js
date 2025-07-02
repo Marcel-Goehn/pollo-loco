@@ -313,7 +313,12 @@ export class Player {
         ) {
             let currentHit = new Date().getTime();
             if (this.game.healthPoints > 0 && currentHit - this.lastHit >= 1500 && this.game.bossHealthPoints > 0) {
-                this.game.healthPoints -= 20;
+                if (this.game.healthPoints <= 10) {
+                    this.game.healthPoints = 0;
+                }
+                else {
+                    this.game.healthPoints -= 20;
+                }
                 this.lastHit = new Date().getTime();
                 this.setState(2, 0);
             }

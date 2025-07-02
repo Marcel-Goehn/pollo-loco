@@ -17,6 +17,8 @@ class Layer {
      * Updates the different layers with a different speed modifier to get a parallax effect
      */
     update() {
+        if (this.game.bossFight) return;
+        
         if (this.x < -this.width) {
             this.x = 0;
         }
