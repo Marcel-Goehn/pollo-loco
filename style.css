@@ -311,7 +311,7 @@ dialog .wrapper {
     position: absolute;
     bottom: 0;
     left: 0;
-    display: flex;
+    display: none;
     gap: 40px;
     width: 100%;
     padding-inline: 32px;
@@ -320,6 +320,7 @@ dialog .wrapper {
 .mobile-control-keys button {
     background-color: transparent;
     cursor: pointer;
+    border: none;
 }
 
 .move-left-btn, .move-right-btn, .move-up-btn, .throw-bottle-btn {
@@ -336,6 +337,12 @@ dialog .wrapper {
     text-align: center;
     left: 0;
     right: 0;
+}
+
+@media only screen and (max-width: 768px) {
+    .mobile-control-keys {
+        display: flex;
+    }
 }
 
 @media only screen and (max-width: 720px) {

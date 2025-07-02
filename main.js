@@ -142,6 +142,7 @@ function startGame() {
             this.gameOverMusic.muted = this.audioMuted;
             this.gameOverMusic.volume = 0.05;
             muteBtn.addEventListener('click', () => this.muteAudio());
+            this.throwBtn = document.querySelector('.throw-bottle-btn');
         };
 
 
@@ -192,7 +193,16 @@ function startGame() {
 
             window.addEventListener('keyup', (event) => {
                 let timePassedBy = new Date().getTime();
-                if (event.key === 'd' && this.salsaBottles > 0 && timePassedBy - lastBottleThrown > 50) {
+                if (event.key === 'd'  && this.salsaBottles > 0 && timePassedBy - lastBottleThrown > 50) {
+                    this.throwableBottles.push(new ThrowableBottle(this));
+                    this.salsaBottles--;
+                    lastBottleThrown = new Date().getTime();
+                };
+            });
+
+            this.throwBtn.addEventListener('click', () => {
+                let timePassedBy = new Date().getTime();
+                if (this.salsaBottles > 0 && timePassedBy - lastBottleThrown > 50) {
                     this.throwableBottles.push(new ThrowableBottle(this));
                     this.salsaBottles--;
                     lastBottleThrown = new Date().getTime();
