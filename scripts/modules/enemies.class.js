@@ -25,35 +25,10 @@ class Enemy {
      * @param {number} deltaTime - The time passed from the last to the current animationframe. It adjusts the fps for the sprite sheet 
      */
     update(deltaTime) {
-         // Watches the current state and changes it
         this.currentState.handleState();
-
-        // movement
-        if (!this.willBeDeleted) {
-            this.x -= this.speedX + this.game.gameSpeed;
-        }
-        else {
-            this.x -= this.game.gameSpeed;
-        }
-
-        // sprite animation
-        if (this.frameTimer > this.frameRate) {
-            this.frameTimer = 0;
-            if (this.frameX < this.maxFrameX) {
-                this.frameX++;
-            }
-            else {
-                this.frameX = 0;
-            };
-        }
-        else {
-            this.frameTimer += deltaTime;
-        };
-
-        // Check if enemy is off screen
-        if (this.x + this.enemyWidth < 0) {
-            this.markedForDeletion = true;
-        }
+        this.enemyHorizontalMovement();
+        this.enemySpriteAnimation(deltaTime);
+        this.isEnemyOffScreen();
     };
 
 
@@ -79,6 +54,50 @@ class Enemy {
         this.currentState = this.states[state];
         this.currentState.enter();
     };
+
+
+    /**
+     * Implements the horizontal movement for the enemies
+     */
+    enemyHorizontalMovement() {
+        if (!this.willBeDeleted) {
+            this.x -= this.speedX + this.game.gameSpeed;
+        }
+        else {
+            this.x -= this.game.gameSpeed;
+        }
+    }
+
+
+    /**
+     * Animates the sprite sheet
+     * 
+     * @param {number} deltaTime - The time passed from the last to the current animationframe. It adjusts the fps for the sprite sheet
+     */
+    enemySpriteAnimation(deltaTime) {
+        if (this.frameTimer > this.frameRate) {
+            this.frameTimer = 0;
+            if (this.frameX < this.maxFrameX) {
+                this.frameX++;
+            }
+            else {
+                this.frameX = 0;
+            };
+        }
+        else {
+            this.frameTimer += deltaTime;
+        };
+    }
+
+
+    /**
+     * Checks if the enemy is off screen
+     */
+    isEnemyOffScreen() {
+        if (this.x + this.enemyWidth < 0) {
+            this.markedForDeletion = true;
+        }
+    }
 };
 
 

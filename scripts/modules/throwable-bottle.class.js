@@ -43,34 +43,12 @@ export class ThrowableBottle {
      * @param {number} deltaTime - The time that has passed between the last animation frame and the current one 
      */
     update(deltaTime) {
-        // Watches the current state of the audio
-        this.throwBottleMusic.muted = this.game.audioMuted;
-        this.bottleBreaksMusic.muted = this.game.audioMuted;
-
-        // Watches the current state and changes it
+        this.checkAudioState();
         this.currentState.handleState();
-
         this.checkCollision();
-
-        this.x += this.speedX;
-
-        //Vertical Movement
-        this.y += this.verticalMovement;
-        this.verticalMovement += this.gravity;
-
-        // sprite animation
-        if (this.frameTimer > this.frameRate) {
-            this.frameTimer = 0;
-            if (this.frameX < this.maxFrameX) {
-                this.frameX++;
-            }
-            else {
-                this.frameX = 0;
-            };
-        }
-        else {
-            this.frameTimer += deltaTime;
-        };
+        this.refreshHorizontalMovement();
+        this.checkVerticalMovement();
+        this.spriteAnimation(deltaTime);
     };
 
 
@@ -104,6 +82,51 @@ export class ThrowableBottle {
         if (this.currentState === this.states[state]) return;
         this.currentState = this.states[state];
         this.currentState.enter();
+    }
+
+
+    /**
+     * Checks the current state of the audio
+     */
+    checkAudioState() {
+        this.throwBottleMusic.muted = this.game.audioMuted;
+        this.bottleBreaksMusic.muted = this.game.audioMuted;
+    }
+
+
+    /**
+     * Updates the horizontal movement
+     */
+    refreshHorizontalMovement() {
+        this.x += this.speedX;
+    }
+
+
+    /**
+     * Updates the vertical movement
+     */
+    checkVerticalMovement() {
+        this.y += this.verticalMovement;
+        this.verticalMovement += this.gravity;
+    }
+
+
+    /**
+     * Animates the sprite sheet
+     */
+    spriteAnimation(deltaTime) {
+        if (this.frameTimer > this.frameRate) {
+            this.frameTimer = 0;
+            if (this.frameX < this.maxFrameX) {
+                this.frameX++;
+            }
+            else {
+                this.frameX = 0;
+            };
+        }
+        else {
+            this.frameTimer += deltaTime;
+        };
     }
 
 

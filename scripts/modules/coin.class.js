@@ -19,7 +19,6 @@ export class Coin {
     update(){
         this.x -= this.game.gameSpeed;
 
-        // Checks if coin is off screen
         if (this.x + this.width < 0) {
             this.markedForDeletion = true;
         };

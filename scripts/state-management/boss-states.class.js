@@ -108,7 +108,7 @@ export class Attack extends State {
         this.boss.frameY = 2;
         this.boss.animationType = this.state;
         this.boss.bossFightHorizontalMovement = 2;
-
+        
         if (this.boss.x < this.boss.game.player.x) {
             this.boss.attackRight = true;
             this.boss.attackLeft = false;

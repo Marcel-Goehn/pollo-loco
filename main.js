@@ -42,6 +42,9 @@ startBtn.addEventListener('click', startGame);
 restartBtn.addEventListener('click', startGame);
 
 
+/**
+ * This function checks the current state of the phone, if it's in portrait or landscape mode when starting the game
+ */
 const checkScreenOrientation = () => {
     const portrait = window.matchMedia("(orientation: portrait)").matches;
 
@@ -64,6 +67,9 @@ const checkScreenOrientation = () => {
 addEventListener('load', checkScreenOrientation);
 
 
+/**
+ * This function checks the current state of the phone, if it's in portrait or landscape mode when the window size get's adjusted (example turning the device from landscape to portrait)
+ */
 window.matchMedia("(orientation: portrait)").addEventListener('change', e => {
     const portrait = e.matches;
 
@@ -267,12 +273,20 @@ function startGame() {
         };
 
 
+        /**
+         * Get's the saved audio settings from the localstorage when opening the page
+         * 
+         * @returns - It returns a boolean value. If the value is true, the audio will be muted when starting the game otherwise it will be unmuted
+         */
         getFromLocalStorage() {
             const valueOfBoolean = JSON.parse(localStorage.getItem('audio')) || false;
             return valueOfBoolean;
         }
 
 
+        /**
+         * This method mutes or unmutes the audio and saves the settings to the localstorage
+         */
         muteAudio() {
             console.log('Mute Audio');
             if (!this.audioMuted) {
@@ -286,6 +300,9 @@ function startGame() {
         }
 
 
+        /**
+         * This method stop the requestanimationframe and so the game
+         */
         stop() {
             cancelAnimationFrame(animationFrameId);
             animationFrameId = null;

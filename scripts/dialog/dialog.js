@@ -19,6 +19,9 @@ dialog.addEventListener('click', (e) => {
 })
 
 
+/**
+ * This function opens the dialog that contains the information about the game 
+ */
 function openDialog() {
     dialog.showModal();
 }

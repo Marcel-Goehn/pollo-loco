@@ -59,92 +59,15 @@ export class Player {
      * @param {*} deltaTime - The time that has passed since the last animation frame to the current one
      */
     update(inputKeys, deltaTime) {
-        // Watches the state of the audio
-        this.hurtMusic.muted = this.game.audioMuted;
-        this.collectedCoinMusic.muted = this.game.audioMuted;
-        this.collectedBottleMusic.muted = this.game.audioMuted;
-
-        // Resets the ability to double jump
-        if (this.isOnGround()) {
-            this.doubleJump = false;
-            this.jumpKeyReleased = false;
-            this.jumpKeyPressed = false;
-        }
-
-        // Checks if a collision is happening
+        this.checkAudioState();
+        this.resetDoubleJumpAbility();
         this.checkCollision();
-
-        // Watches the current state and changes it if the user presses a key (example ArrowLeft will change the state if the current state would be IDLE)
         this.currentState.handleInput(inputKeys);
-
-        // Horizontal Movement
-        if (this.game.healthPoints !== 0) {
-            this.x += this.horizontalMovement;
-        }
-
-        if (inputKeys.includes('ArrowRight') && this.doubleJump) {
-            this.horizontalMovement = this.maxSpeed * 2;
-            this.left = false;
-        }
-        else if (inputKeys.includes('ArrowLeft') && this.doubleJump) {
-            this.horizontalMovement = -this.maxSpeed * 2;
-            this.left = true;
-        }
-        else if (inputKeys.includes('ArrowRight') && !this.doubleJump) {
-            this.horizontalMovement = this.maxSpeed;
-            this.left = false;
-        }
-        else if (inputKeys.includes('ArrowLeft') && !this.doubleJump) {
-            this.horizontalMovement = -this.maxSpeed;
-            this.left = true;
-        }
-        else {
-            this.horizontalMovement = 0;
-        };
-
-        // Prevents that the Player can walk out of the canvas
-        if (this.x < 0) {
-            this.x = 0;
-        };
-        if (this.x > (this.game.width - this.playerWidth)) {
-            this.x = this.game.width - this.playerWidth;
-        };
-
-        // Vertical Movement
-        this.y += this.verticalMovement;
-
-        if (!this.isOnGround()) {
-            this.verticalMovement += this.gravity;
-        }
-        else {
-            this.verticalMovement = 0;
-        };
-
-        // Sprite Animation
-        if (this.frameTimer > this.frameRate) {
-            this.frameTimer = 0;
-            if (this.frameX < this.maxFrameX) {
-                this.frameX++;
-            }
-            else {
-                if (!this.loopAnimation) {
-                    this.frameX = this.maxFrameX;
-                } else {
-                    this.frameX = 0;
-                }
-            };
-        }
-        else {
-            this.frameTimer += deltaTime;
-        };
-
-        // Checks if the player is falling below the ground. If that is the case the player will get reset to ist usual position
-        const maxY = this.game.height - this.playerHeight - this.game.groundMargin;
-
-        if (this.y > maxY) {
-            this.y = maxY;
-            this.verticalMovement = 0;
-        };
+        this.horizontalPlayerMovement(inputKeys);
+        this.lockPlayerIntoCanvasScreen();
+        this.verticalPlayerMovement();
+        this.playerSpriteAnimation(deltaTime);
+        this.isPlayerUnderneathTheGround();
     };
 
 
@@ -154,9 +77,6 @@ export class Player {
      * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
      */
     draw(context) {
-        // if (this.game.debug) {
-        //     context.strokeRect(this.x, this.y, this.playerWidth, this.playerHeight);
-        // };
         if (this.game.debug) {
             const hitbox = this.getHitbox();
             context.strokeRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
@@ -194,6 +114,126 @@ export class Player {
         this.game.gameSpeed = gameSpeed * this.game.maxGameSpeed;
         this.currentState.enter();
     };
+
+
+    /**
+     * Checks if the audio is muted or unmuted
+     */
+    checkAudioState() {
+        this.hurtMusic.muted = this.game.audioMuted;
+        this.collectedCoinMusic.muted = this.game.audioMuted;
+        this.collectedBottleMusic.muted = this.game.audioMuted;
+    }
+
+
+    /**
+     * Resets the ability to double jump
+     */
+    resetDoubleJumpAbility() {
+        if (this.isOnGround()) {
+            this.doubleJump = false;
+            this.jumpKeyReleased = false;
+            this.jumpKeyPressed = false;
+        }
+    }
+
+
+    /**
+     * Horizontal Movement of the player
+     * 
+     * @param {array} inputKeys - Holds the current pressed keys to navigate the player 
+     */
+    horizontalPlayerMovement(inputKeys) {
+        if (this.game.healthPoints !== 0) {
+            this.x += this.horizontalMovement;
+        }
+
+        if (inputKeys.includes('ArrowRight') && this.doubleJump) {
+            this.horizontalMovement = this.maxSpeed * 2;
+            this.left = false;
+        }
+        else if (inputKeys.includes('ArrowLeft') && this.doubleJump) {
+            this.horizontalMovement = -this.maxSpeed * 2;
+            this.left = true;
+        }
+        else if (inputKeys.includes('ArrowRight') && !this.doubleJump) {
+            this.horizontalMovement = this.maxSpeed;
+            this.left = false;
+        }
+        else if (inputKeys.includes('ArrowLeft') && !this.doubleJump) {
+            this.horizontalMovement = -this.maxSpeed;
+            this.left = true;
+        }
+        else {
+            this.horizontalMovement = 0;
+        };
+    }
+
+
+    /**
+     * Prevents that the Player can walk out of the canvas
+     */
+    lockPlayerIntoCanvasScreen() {
+        if (this.x < 0) {
+            this.x = 0;
+        };
+        if (this.x > (this.game.width - this.playerWidth)) {
+            this.x = this.game.width - this.playerWidth;
+        };
+    }
+
+
+    /**
+     * Vertical Movement of the player
+     */
+    verticalPlayerMovement() {
+        this.y += this.verticalMovement;
+
+        if (!this.isOnGround()) {
+            this.verticalMovement += this.gravity;
+        }
+        else {
+            this.verticalMovement = 0;
+        };
+    }
+
+
+    /**
+     * Animates the sprite sheet of the player
+     * 
+     * @param {number} deltaTime - The time that has passed since the last animation frame to the current one
+     */
+    playerSpriteAnimation(deltaTime) {
+        if (this.frameTimer > this.frameRate) {
+            this.frameTimer = 0;
+            if (this.frameX < this.maxFrameX) {
+                this.frameX++;
+            }
+            else {
+                if (!this.loopAnimation) {
+                    this.frameX = this.maxFrameX;
+                } else {
+                    this.frameX = 0;
+                }
+            };
+        }
+        else {
+            this.frameTimer += deltaTime;
+        };
+    }
+
+
+    /**
+     * Checks if the player is falling below the ground. If that is the case the player will get reset to ist usual position
+     */
+    isPlayerUnderneathTheGround() {
+        const maxY = this.game.height - this.playerHeight - this.game.groundMargin;
+
+        if (this.y > maxY) {
+            this.y = maxY;
+            this.verticalMovement = 0;
+        };
+    }
 
 
     // Can get deleted later, for hitbox adjusting purposes only
@@ -251,13 +291,6 @@ export class Player {
                     this.lastHit = new Date().getTime();
                     this.setState(2, 0);
                 }
-                // else {
-                //     enemy.willBeDeleted = true;
-                //     enemy.setState(1);
-                //     this.game.healthPoints = 0;
-                //     this.lastHit = new Date().getTime();
-                //     this.setState(3, 0);
-                // };
             };
         });
     };
@@ -322,10 +355,6 @@ export class Player {
                 this.lastHit = new Date().getTime();
                 this.setState(2, 0);
             }
-            // else {
-            //     this.game.healthPoints = 0;
-            //     this.setState(3, 0);
-            // };
         };
     };
 };

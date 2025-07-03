@@ -1,6 +1,9 @@
 import { Walk, Alert, Attack, Hurt, Dead } from "../state-management/boss-states.class.js";
 
 
+/**
+ * Creates, updates and draws the boss on the canvas
+ */
 export class Boss {
     constructor(game) {
         this.game = game;
@@ -8,7 +11,7 @@ export class Boss {
         this.spriteHeight = 1217;
         this.bossWidth = 150;
         this.bossHeight = 200;
-        this.x = 2000;
+        this.x = 8000;
         this.y = this.game.height - this.bossHeight - this.game.groundMargin + 10;
         this.markedForDeletion = false;
         this.image = document.getElementById('boss');
@@ -43,16 +46,69 @@ export class Boss {
     };
 
 
+    /**
+     * This method updates the movement, checks if the bossfight has begun, watches the state of the audio, animates the spritesheet and updates the state
+     * 
+     * @param {array} inputKeys - Holds the current pressed keys
+     * @param {number} deltaTime - The time that has passed since the last animation frame to the current one
+     */
     update(inputKeys, deltaTime) {
-        // Watches the state of the audio
+        this.checkAudioState();
+        this.currentState.handleState();
+        this.refreshHorizontalMovement(inputKeys);
+        this.enterFinalBossFight();
+        this.animateBoss(deltaTime);
+    }
+
+
+    /**
+     * Draws the Boss on the canvas
+     * 
+     * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
+     */
+    draw(context) {
+        if (this.game.debug) {
+            context.strokeRect(this.x, this.y, this.bossWidth, this.bossHeight);
+        };
+
+        if (this.right) {
+            context.save();
+            context.scale(-1, 1);
+            context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, -this.x - this.bossWidth, this.y, this.bossWidth, this.bossHeight);
+            context.restore();
+        } else {
+            context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.bossWidth, this.bossHeight);
+        }
+    };
+
+
+    /**
+     * Updates the state
+     * 
+     * @param {number} state - The number will tell the state management wich state to use
+     */
+    setState(state) {
+        this.currentState = this.states[state];
+        this.currentState.enter();
+    };
+
+
+    /**
+     * Checks the current state of the audio, if it's muted or not
+     */
+    checkAudioState() {
         this.bossIntroMusic.muted = this.game.audioMuted;
         this.bossHurtMusic.muted = this.game.audioMuted;
         this.bossDeadMusic.muted = this.game.audioMuted;
+    }
 
-        // Watches the current state and changes it
-        this.currentState.handleState();
 
-        // Horizontal Movement
+    /**
+     * Moves the boss on the x axis
+     * 
+     * @param {array} inputKeys - Holds the current pressed keys
+     */
+    refreshHorizontalMovement(inputKeys) {
         if (this.game.bossHealthPoints !== 0) {
             if (!this.game.bossFight) {
                 this.x -= this.horizontalMovement + this.game.gameSpeed;
@@ -82,14 +138,26 @@ export class Boss {
                 this.horizontalMovement = 0;
             }
         }
+    }
 
-        // Enters the final boss fight
+
+    /**
+     * Enters the final boss fight and plays the intro music
+     */
+    enterFinalBossFight() {
         if (this.x < this.game.width - this.bossWidth + 200 && !this.game.bossFight) {
             this.game.bossFight = true;
             this.bossIntroMusic.play();
         };
+    }
 
-        // sprite animation
+
+    /**
+     * Animates the spritesheet of the boss
+     * 
+     * @param {number} deltaTime - The time that has passed since the last animation frame to the current one
+     */
+    animateBoss(deltaTime) {
         if (!this.animationDone) {
             if (this.frameTimer > this.frameRate) {
                 this.frameTimer = 0;
@@ -110,26 +178,4 @@ export class Boss {
             };
         };
     }
-
-
-    draw(context) {
-        if (this.game.debug) {
-            context.strokeRect(this.x, this.y, this.bossWidth, this.bossHeight);
-        };
-
-        if (this.right) {
-            context.save();
-            context.scale(-1, 1);
-            context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, -this.x - this.bossWidth, this.y, this.bossWidth, this.bossHeight);
-            context.restore();
-        } else {
-            context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.bossWidth, this.bossHeight);
-        }
-    };
-
-
-    setState(state) {
-        this.currentState = this.states[state];
-        this.currentState.enter();
-    };
 }

@@ -49,13 +49,13 @@ export class Walking extends State {
         if (inputKeys.length === 0) {
             this.player.setState(states.IDLE, 0);
         }
+        else if (inputKeys.includes('ArrowUp') && this.player.game.bossFight) {
+            this.player.setState(states.JUMPING, 0);
+        }
         else if ((inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight')) && this.player.game.bossFight) {
             if (this.player.currentState !== this.player.states[states.WALKING]) {
                 this.player.setState(states.WALKING, 0);
             }
-        }
-        else if (inputKeys.includes('ArrowUp') && this.player.game.bossFight) {
-            this.player.setState(states.JUMPING, 0);
         }
         else if (inputKeys.includes('ArrowUp')) {
             this.player.setState(states.JUMPING, 1);
@@ -194,6 +194,7 @@ export class Dead extends State {
                 this.player.game.backgroundMusic.pause();
                 this.player.game.gameOverMusic.play();
                 let endingScreen = document.querySelector('.end-screen');
+                gameStarted = false;
                 endingScreen.classList.add('loose');
                 endingScreen.classList.remove('d_none');
                 document.getElementById('canvas1').classList.add('d_none');
