@@ -38,13 +38,13 @@ export class Player {
         this.loopAnimation = true;
         this.lastHit = 0;
         this.timeOfDeath = 0;
-        this.hurtMusic = new Audio('../assets/audio/player_hurt.mp3');
+        this.hurtMusic = new Audio('./assets/audio/player_hurt.mp3');
         this.hurtMusic.muted = this.game.audioMuted;
         this.hurtMusic.volume = 0.05;
-        this.collectedCoinMusic = new Audio('../assets/audio/coin_collected.mp3');
+        this.collectedCoinMusic = new Audio('./assets/audio/coin_collected.mp3');
         this.collectedCoinMusic.muted = this.game.audioMuted;
         this.collectedCoinMusic.volume = 0.05;
-        this.collectedBottleMusic = new Audio('../assets/audio/bottle_collected.mp3');
+        this.collectedBottleMusic = new Audio('./assets/audio/bottle_collected.mp3');
         this.collectedBottleMusic.muted = this.game.audioMuted;
         this.collectedBottleMusic.volume = 0.5;
         this.jumpKeyReleased = false;

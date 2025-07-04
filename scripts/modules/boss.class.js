@@ -34,13 +34,13 @@ export class Boss {
         this.attackRight = false;
         this.right = false;
         this.enterDeadTime = 0;
-        this.bossIntroMusic = new Audio('../assets/audio/boss_intro.mp3');
+        this.bossIntroMusic = new Audio('./assets/audio/boss_intro.mp3');
         this.bossIntroMusic.muted = this.game.audioMuted;
         this.bossIntroMusic.volume = 0.05;
-        this.bossHurtMusic = new Audio('../assets/audio/boss_hurt.mp3');
+        this.bossHurtMusic = new Audio('./assets/audio/boss_hurt.mp3');
         this.bossHurtMusic.muted = this.game.audioMuted;
         this.bossHurtMusic.volume = 0.05;
-        this.bossDeadMusic = new Audio('../assets/audio/boss_dead.mp3');
+        this.bossDeadMusic = new Audio('./assets/audio/boss_dead.mp3');
         this.bossDeadMusic.muted = this.game.audioMuted;
         this.bossDeadMusic.volume = 0.05;
     };

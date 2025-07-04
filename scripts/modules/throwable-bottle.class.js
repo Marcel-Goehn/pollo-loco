@@ -25,10 +25,10 @@ export class ThrowableBottle {
         this.verticalMovement = 0;
         this.throwHeight = 20;
         this.gravity = 1;
-        this.throwBottleMusic = new Audio('../assets/audio/bottle_throw.mp3');
+        this.throwBottleMusic = new Audio('./assets/audio/bottle_throw.mp3');
         this.throwBottleMusic.muted = this.game.audioMuted;
         this.throwBottleMusic.volume = 0.05;
-        this.bottleBreaksMusic = new Audio('../assets/audio/bottle_breaks.mp3');
+        this.bottleBreaksMusic = new Audio('./assets/audio/bottle_breaks.mp3');
         this.bottleBreaksMusic.muted = this.game.audioMuted;
         this.bottleBreaksMusic.volume = 0.05;
         this.states = [new Throwing(this), new Exploding(this)];
