@@ -77,11 +77,6 @@ export class Player {
      * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
      */
     draw(context) {
-        if (this.game.debug) {
-            const hitbox = this.getHitbox();
-            context.strokeRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
-        };
-
         if (this.left) {
             context.save();
             context.scale(-1, 1);

@@ -27,10 +27,6 @@ class Bottle {
      * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
      */
     draw(context) {
-        if (this.game.debug) {
-            context.strokeRect(this.x, this.y, this.width, this.height);
-        };
-
         context.drawImage(this.image, this.x, this.y, this.width, this.height);
     };
 }

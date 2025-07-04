@@ -38,9 +38,6 @@ class Enemy {
      * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
      */
     draw(context) {
-        if (this.game.debug) {
-            context.strokeRect(this.x, this.y, this.enemyWidth, this.enemyHeight);
-        };
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.enemyWidth, this.enemyHeight);
     };
 

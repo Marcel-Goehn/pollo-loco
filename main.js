@@ -118,7 +118,6 @@ function startGame() {
             this.enemies = [];
             this.enemyTimer = 0;
             this.enemyInterval = 2000;
-            this.debug = true;
             this.salsaBottles = 0;
             this.healthPoints = 100;
             this.bossHealthPoints = 100;

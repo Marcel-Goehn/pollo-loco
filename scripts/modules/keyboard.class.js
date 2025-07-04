@@ -24,9 +24,6 @@ export class Keyboard {
             if (e.key === 'ArrowUp') {
                 this.game.player.jumpKeyPressed = true;
             }
-            if (e.key === 'b') {
-                this.game.debug = !this.game.debug;
-            }
         });
 
         /**
