@@ -49,13 +49,11 @@ window.matchMedia("(orientation: portrait)").addEventListener('change', e => {
     const portrait = e.matches;
 
     if (portrait && gameStarted) {
-        console.log('Portrait');
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
         canvasContainer.classList.add('d_none');
         deviceOrientationPopUp.classList.remove('d_none');
     } else if (!portrait && animationFrameId === null && gameStarted) {
-        console.log('Landscape');
         resumeAnimation();
         canvasContainer.classList.remove('d_none');
         deviceOrientationPopUp.classList.add('d_none');
@@ -74,13 +72,11 @@ const checkScreenOrientation = () => {
         animationFrameId = null;
         canvasContainer.classList.add('d_none');
         deviceOrientationPopUp.classList.remove('d_none');
-        console.log(portrait);
     }
     else if (!portrait && animationFrameId === null && gameStarted) {
         resumeAnimation();
         canvasContainer.classList.remove('d_none');
         deviceOrientationPopUp.classList.add('d_none');
-        console.log(portrait);
     }
 }
 
@@ -155,78 +151,17 @@ function startGame() {
          * @param {number} deltaTime - The time that has passed since the last animation frame and the current one 
          */
         update(deltaTime) {
-            this.backgroundMusic.muted = this.audioMuted;
-            this.youWinMusic.muted = this.audioMuted;
-            this.gameOverMusic.muted = this.audioMuted;
-
+            this.checkAudioStatus();
             this.background.update();
             this.player.update(this.keyboard.keys, deltaTime);
             this.boss.update(this.keyboard.keys, deltaTime);
-
-            // Interval to add enemies to the game
-            if (this.enemyTimer > this.enemyInterval && this.boss.x > 2000) {
-                this.addEnemies();
-                this.enemyTimer = 0;
-            }
-            else {
-                this.enemyTimer += deltaTime;
-            }
-            //
-
-            // Enemy deletion
-            this.enemies.forEach(enemy => {
-                enemy.update(deltaTime);
-                if (enemy.markedForDeletion) {
-                    this.enemies.splice(this.enemies.indexOf(enemy), 1);
-                };
-            });
-
-            // Bottle deletion
-            this.bottles.forEach(bottle => {
-                bottle.update();
-                if (bottle.markedForDeletion) {
-                    this.bottles.splice(this.bottles.indexOf(bottle), 1);
-                };
-            });
-
-            // Initialize throwing bottle
-            this.throwableBottles.forEach(bottle => {
-                bottle.update(deltaTime);
-            });
-
-            window.addEventListener('keyup', (event) => {
-                let timePassedBy = new Date().getTime();
-                if (event.key === 'd' && this.salsaBottles > 0 && timePassedBy - lastBottleThrown > 50) {
-                    this.throwableBottles.push(new ThrowableBottle(this));
-                    this.salsaBottles--;
-                    lastBottleThrown = new Date().getTime();
-                };
-            });
-
-            this.throwBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                let timePassedBy = new Date().getTime();
-                if (this.salsaBottles > 0 && timePassedBy - lastBottleThrown > 50) {
-                    this.throwableBottles.push(new ThrowableBottle(this));
-                    this.salsaBottles--;
-                    lastBottleThrown = new Date().getTime();
-                };
-            });
-
-            // Throwable Bottle deletion
-            this.throwableBottles.forEach(bottle => {
-                if (bottle.markedForDeletion) {
-                    this.throwableBottles.splice(this.throwableBottles.indexOf(bottle), 1);
-                };
-            });
-
-            // Coin deletion
-            this.collectableCoins.forEach(coin => {
-                coin.update();
-                if (coin.markedForDeletion) {
-                    this.collectableCoins.splice(this.collectableCoins.indexOf(coin), 1);
-                };
-            });
+            this.enemyAddInterval(deltaTime);
+            this.deleteEnemy(deltaTime);
+            this.deleteBottle();
+            this.initializeThrowingBottle(deltaTime);
+            this.bottleThrowEvent();
+            this.deleteThrowableBottle();
+            this.deleteCollectableCoins();
         };
 
 
@@ -261,6 +196,103 @@ function startGame() {
 
 
         /**
+         * Checks the status for the audio
+         */
+        checkAudioStatus() {
+            this.backgroundMusic.muted = this.audioMuted;
+            this.youWinMusic.muted = this.audioMuted;
+            this.gameOverMusic.muted = this.audioMuted;
+        }
+
+
+        /**
+         * Interval to add enemies to the game
+         */
+        enemyAddInterval(deltaTime) {
+            if (this.enemyTimer > this.enemyInterval && this.boss.x > 2000) {
+                this.addEnemies();
+                this.enemyTimer = 0;
+            }
+            else {
+                this.enemyTimer += deltaTime;
+            }
+        }
+
+
+        /**
+         * This method deletes the bottles
+         */
+        deleteBottle() {
+            this.bottles.forEach(bottle => {
+                bottle.update();
+                if (bottle.markedForDeletion) {
+                    this.bottles.splice(this.bottles.indexOf(bottle), 1);
+                };
+            });
+        }
+
+
+        /**
+         * This method initializes the throwing bottle
+         */
+        initializeThrowingBottle(deltaTime) {
+            this.throwableBottles.forEach(bottle => {
+                bottle.update(deltaTime);
+            });
+        }
+
+
+        /**
+         * This method recognizes the pressed key or button and will throw the bottle
+         */
+        bottleThrowEvent() {
+            window.addEventListener('keyup', (event) => {
+                let timePassedBy = new Date().getTime();
+                if (event.key === 'd' && this.salsaBottles > 0 && timePassedBy - lastBottleThrown > 50) {
+                    this.throwableBottles.push(new ThrowableBottle(this));
+                    this.salsaBottles--;
+                    lastBottleThrown = new Date().getTime();
+                };
+            });
+
+            this.throwBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                let timePassedBy = new Date().getTime();
+                if (this.salsaBottles > 0 && timePassedBy - lastBottleThrown > 50) {
+                    this.throwableBottles.push(new ThrowableBottle(this));
+                    this.salsaBottles--;
+                    lastBottleThrown = new Date().getTime();
+                };
+            });
+        }
+
+
+        /**
+         * This method will delete the throwable bottle after collision
+         */
+        deleteThrowableBottle() {
+            this.throwableBottles.forEach(bottle => {
+                if (bottle.markedForDeletion) {
+                    this.throwableBottles.splice(this.throwableBottles.indexOf(bottle), 1);
+                };
+            });
+        }
+
+
+        /**
+         * This method will delete the coins after they got collected by the player
+         */
+        deleteCollectableCoins() {
+            this.collectableCoins.forEach(coin => {
+                coin.update();
+                if (coin.markedForDeletion) {
+                    this.collectableCoins.splice(this.collectableCoins.indexOf(coin), 1);
+                };
+            });
+        }
+
+
+        /**
          * This method will create and add the enemies to the game
          */
         addEnemies() {
@@ -269,6 +301,19 @@ function startGame() {
                 this.enemies.push(new SmallChicken(this));
             };
         };
+
+
+        /**
+         * This method deletes enemies
+         */
+        deleteEnemy(deltaTime) {
+            this.enemies.forEach(enemy => {
+                enemy.update(deltaTime);
+                if (enemy.markedForDeletion) {
+                    this.enemies.splice(this.enemies.indexOf(enemy), 1);
+                };
+            });
+        }
 
 
         /**
@@ -286,7 +331,6 @@ function startGame() {
          * This method mutes or unmutes the audio and saves the settings to the localstorage
          */
         muteAudio() {
-            console.log('Mute Audio');
             if (!this.audioMuted) {
                 this.audioMuted = true;
                 localStorage.setItem('audio', JSON.stringify(this.audioMuted));
@@ -355,7 +399,6 @@ function startGame() {
 
     game = new Game(CANVAS_WIDTH, CANVAS_HEIGHT);
     game.reset();
-    console.log(game);
 
 
     /**
