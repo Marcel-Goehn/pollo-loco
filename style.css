@@ -312,9 +312,16 @@ dialog .wrapper {
     bottom: 0;
     left: 0;
     display: none;
-    gap: 40px;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
     padding-inline: 32px;
+}
+
+.mobile-btn-space {
+    display: flex;
+    align-items: center;
+    gap: 40px;
 }
 
 .mobile-control-keys button {
