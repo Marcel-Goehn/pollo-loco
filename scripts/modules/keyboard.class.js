@@ -10,6 +10,9 @@ export class Keyboard {
         this.upBtn = document.querySelector('.move-up-btn');
         this.throwBtn = document.querySelector('.throw-bottle-btn');
 
+        /**
+         * Controls for PC user
+         */
         window.addEventListener('keydown', (e) => {
             if ((e.key === 'ArrowDown' ||
                 e.key === 'ArrowUp' ||
@@ -26,6 +29,9 @@ export class Keyboard {
             }
         });
 
+        /**
+         * Controls for PC user
+         */
         window.addEventListener('keyup', (e) => {
             if (e.key === 'ArrowDown' ||
                 e.key === 'ArrowUp' ||
@@ -39,33 +45,54 @@ export class Keyboard {
             }
         });
 
-        this.leftBtn.addEventListener('touchstart', () => {
+        /**
+         * Controls for Mobile user
+         */
+        this.leftBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
             if (!this.keys.includes('ArrowLeft')) {
                 this.keys.push('ArrowLeft');
             }
         });
 
-        this.rightBtn.addEventListener('touchstart', () => {
+        /**
+         * Controls for Mobile user
+         */
+        this.rightBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
             if (!this.keys.includes('ArrowRight')) {
                 this.keys.push('ArrowRight');
             }
         });
 
-        this.upBtn.addEventListener('touchstart', () => {
+        /**
+         * Controls for Mobile user
+         */
+        this.upBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
             if (!this.keys.includes('ArrowUp')) {
                 this.keys.push('ArrowUp');
                 this.game.player.jumpKeyPressed = true;
             }
         });
 
+        /**
+         * Controls for Mobile user
+         */
         this.leftBtn.addEventListener('touchend', () => {
             this.keys.splice(this.keys.indexOf('ArrowLeft'), 1);
         });
 
+        /**
+         * Controls for Mobile user
+         */
         this.rightBtn.addEventListener('touchend', () => {
             this.keys.splice(this.keys.indexOf('ArrowRight'), 1);
         });
 
+        /**
+         * Controls for Mobile user
+         */
         this.upBtn.addEventListener('touchend', () => {
             this.keys.splice(this.keys.indexOf('ArrowUp'), 1);
             this.game.player.jumpKeyReleased = true;

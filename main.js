@@ -43,31 +43,6 @@ restartBtn.addEventListener('click', startGame);
 
 
 /**
- * This function checks the current state of the phone, if it's in portrait or landscape mode when starting the game
- */
-const checkScreenOrientation = () => {
-    const portrait = window.matchMedia("(orientation: portrait)").matches;
-
-    if (portrait && gameStarted) {
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = null;
-        canvasContainer.classList.add('d_none');
-        deviceOrientationPopUp.classList.remove('d_none');
-        console.log(portrait);
-    }
-    else if (!portrait && animationFrameId === null && gameStarted) {
-        resumeAnimation();
-        canvasContainer.classList.remove('d_none');
-        deviceOrientationPopUp.classList.add('d_none');
-        console.log(portrait);
-    }
-}
-
-
-addEventListener('load', checkScreenOrientation);
-
-
-/**
  * This function checks the current state of the phone, if it's in portrait or landscape mode when the window size get's adjusted (example turning the device from landscape to portrait)
  */
 window.matchMedia("(orientation: portrait)").addEventListener('change', e => {
@@ -86,6 +61,28 @@ window.matchMedia("(orientation: portrait)").addEventListener('change', e => {
         deviceOrientationPopUp.classList.add('d_none');
     }
 })
+
+
+/**
+* This function checks the current state of the phone, if it's in portrait or landscape mode when starting the game
+*/
+const checkScreenOrientation = () => {
+    const portrait = window.matchMedia("(orientation: portrait)").matches;
+
+    if (portrait && gameStarted) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+        canvasContainer.classList.add('d_none');
+        deviceOrientationPopUp.classList.remove('d_none');
+        console.log(portrait);
+    }
+    else if (!portrait && animationFrameId === null && gameStarted) {
+        resumeAnimation();
+        canvasContainer.classList.remove('d_none');
+        deviceOrientationPopUp.classList.add('d_none');
+        console.log(portrait);
+    }
+}
 
 
 /**
@@ -199,14 +196,15 @@ function startGame() {
 
             window.addEventListener('keyup', (event) => {
                 let timePassedBy = new Date().getTime();
-                if (event.key === 'd'  && this.salsaBottles > 0 && timePassedBy - lastBottleThrown > 50) {
+                if (event.key === 'd' && this.salsaBottles > 0 && timePassedBy - lastBottleThrown > 50) {
                     this.throwableBottles.push(new ThrowableBottle(this));
                     this.salsaBottles--;
                     lastBottleThrown = new Date().getTime();
                 };
             });
 
-            this.throwBtn.addEventListener('click', () => {
+            this.throwBtn.addEventListener('click', (e) => {
+                e.preventDefault();
                 let timePassedBy = new Date().getTime();
                 if (this.salsaBottles > 0 && timePassedBy - lastBottleThrown > 50) {
                     this.throwableBottles.push(new ThrowableBottle(this));
