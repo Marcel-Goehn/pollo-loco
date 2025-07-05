@@ -336,6 +336,13 @@ function startGame() {
          */
         getFromLocalStorage() {
             const valueOfBoolean = JSON.parse(localStorage.getItem('audio')) || false;
+            if (!valueOfBoolean) {
+                document.getElementById('mute_img').classList.remove('d_none');
+                document.getElementById('unmute_img').classList.add('d_none');
+            } else {
+                document.getElementById('mute_img').classList.add('d_none');
+                document.getElementById('unmute_img').classList.remove('d_none');
+            }
             return valueOfBoolean;
         }
 
@@ -346,10 +353,14 @@ function startGame() {
         muteAudio() {
             if (!this.audioMuted) {
                 this.audioMuted = true;
+                document.getElementById('mute_img').classList.add('d_none');
+                document.getElementById('unmute_img').classList.remove('d_none');
                 localStorage.setItem('audio', JSON.stringify(this.audioMuted));
             }
             else {
                 this.audioMuted = false;
+                document.getElementById('mute_img').classList.remove('d_none');
+                document.getElementById('unmute_img').classList.add('d_none');
                 localStorage.setItem('audio', JSON.stringify(this.audioMuted));
             }
         }
