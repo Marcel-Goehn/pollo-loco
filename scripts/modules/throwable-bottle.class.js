@@ -13,6 +13,10 @@ export class ThrowableBottle {
         this.height = 75;
         this.x = this.game.player.x;
         this.y = this.game.player.y;
+        this.offsetLeft = 10;
+        this.offsetRight = 20;
+        this.offsetTop = 12;
+        this.offsetBottom = 22;
         this.image = document.getElementById('bottle_spritesheet');
         this.frameX = 0;
         this.frameY = 0;
@@ -142,10 +146,10 @@ export class ThrowableBottle {
     collisionWithEnemies() {
         this.game.enemies.forEach(enemy => {
             if (
-                enemy.x < this.x + this.width &&
-                enemy.x + enemy.enemyWidth > this.x &&
-                enemy.y < this.y + this.height &&
-                enemy.y + enemy.enemyHeight > this.y
+                enemy.x + enemy.offsetLeft < this.x + this.offsetLeft + this.width - this.offsetRight &&
+                enemy.x + enemy.enemyWidth - enemy.offsetRight > this.x + this.offsetLeft &&
+                enemy.y + enemy.offsetTop < this.y + this.offsetTop + this.height - this.offsetBottom &&
+                enemy.y + enemy.enemyHeight - enemy.offsetBottom > this.y + this.offsetTop
             ) {
                 this.setState(1);
                 enemy.willBeDeleted = true;
@@ -170,10 +174,10 @@ export class ThrowableBottle {
      */
     collisionWithBoss() {
         if (
-            this.game.boss.x < this.x + this.width &&
-            this.game.boss.x + this.game.boss.bossWidth > this.x &&
-            this.game.boss.y < this.x + this.width &&
-            this.game.boss.y + this.game.boss.bossHeight > this.y
+            this.game.boss.x + this.game.boss.offsetLeft < this.x + this.offsetLeft + this.width - this.offsetRight &&
+            this.game.boss.x + this.game.boss.bossWidth - this.game.boss.offsetRight > this.x + this.offsetLeft &&
+            this.game.boss.y + this.game.boss.offsetTop < this.y + this.offsetTop + this.height - this.offsetBottom &&
+            this.game.boss.y + this.game.boss.bossHeight - this.game.boss.offsetBottom > this.y + this.offsetTop
         ) {
             if (this.currentState !== this.states[1] && this.game.bossHealthPoints === 20) {
                 this.game.bossHealthPoints -= 20;
