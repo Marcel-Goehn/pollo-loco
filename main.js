@@ -37,8 +37,22 @@ const handleReturnToMenuClick = () => {
     };
 }
 
+
+/**
+ * This event listener watches for the onclick event and calls the handleReturnToMenuClick function
+ */
 returnToMenuBtn.addEventListener('click', handleReturnToMenuClick);
+
+
+/**
+ * This event listener watches for the onclick event and calls the startGame function
+ */
 startBtn.addEventListener('click', startGame);
+
+
+/**
+ * This event listener watches for the onclick event and calls the startGame function at the end of the game to restart it
+ */
 restartBtn.addEventListener('click', startGame);
 
 
