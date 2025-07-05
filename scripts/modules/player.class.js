@@ -279,10 +279,9 @@ export class Player {
                 this.isOnGround() &&
                 enemy.willBeDeleted === false
             ) {
-                if (this.game.healthPoints > 0) {
-                    enemy.willBeDeleted = true;
-                    enemy.setState(1);
+                if (this.game.healthPoints > 0 && ((new Date().getTime() - enemy.lastPlayerHit) > 1500 || enemy.lastPlayerHit === null)) {
                     this.game.healthPoints -= 10;
+                    enemy.lastPlayerHit = new Date().getTime();
                     this.lastHit = new Date().getTime();
                     this.setState(2, 0);
                 }

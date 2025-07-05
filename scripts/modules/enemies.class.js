@@ -16,6 +16,7 @@ class Enemy {
         this.states = [new Walking(this), new Dead(this)];
         this.currentState = this.states[0];
         this.currentState.enter();
+        this.lastPlayerHit = null;
     };
 
 
