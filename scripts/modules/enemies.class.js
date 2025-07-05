@@ -39,6 +39,7 @@ class Enemy {
      * @param {context} context - This is the 2d context for the canvas. It allows to use multiple methods on the canvas
      */
     draw(context) {
+        context.strokeRect(this.x + this.offsetLeft, this.y + this.offsetTop, this.enemyWidth - this.offsetRight, this.enemyHeight - this.offsetBottom);
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.enemyWidth, this.enemyHeight);
     };
 
@@ -112,6 +113,10 @@ export class RegularChicken extends Enemy {
         this.enemyHeight = 50;
         this.x = this.game.width + Math.random() * this.game.width * 0.5;
         this.y = this.game.height - this.enemyHeight - this.game.groundMargin;
+        this.offsetLeft = 5;
+        this.offsetRight = 7;
+        this.offsetTop = 5;
+        this.offsetBottom = 10;
         this.image = document.getElementById('regular_chicken');
         this.speedX = Math.random() + 1;
         this.maxFrameX = 2;
@@ -132,6 +137,10 @@ export class SmallChicken extends Enemy {
         this.enemyHeight = 40;
         this.x = this.game.width + Math.random() * this.game.width * 0.5;
         this.y = this.game.height - this.enemyHeight - this.game.groundMargin;
+        this.offsetLeft = 5;
+        this.offsetRight = 7;
+        this.offsetTop = 5;
+        this.offsetBottom = 10;
         this.image = document.getElementById('small_chicken');
         this.speedX = Math.random() + 1;
         this.maxFrameX = 2;

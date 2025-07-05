@@ -9,6 +9,10 @@ export class Coin {
         this.image = document.getElementById('coin');
         this.width = 75;
         this.height = 75;
+        this.offsetLeft = 25;
+        this.offsetRight = 50;
+        this.offsetTop = 25;
+        this.offsetBottom = 40;
         this.markedForDeletion = false;
     };
 

@@ -29,10 +29,10 @@ export class Player {
         this.states = [new Walking(this), new Jumping(this), new Hurt(this), new Dead(this), new Idle(this), new Sleeping(this), new Falling(this)];
         this.currentState = this.states[4];
         this.currentState.enter();
-        this.hitboxOffsetX = 10;
+        this.hitboxOffsetX = 20;
         this.hitboxOffsetY = 75;
-        this.hitboxWidth = this.playerWidth - 20;
-        this.hitboxHeight = this.playerHeight - 80;
+        this.hitboxWidth = this.playerWidth - 45;
+        this.hitboxHeight = this.playerHeight - 85;
         this.doubleJump = false;
         this.left = false;
         this.loopAnimation = true;
@@ -231,17 +231,6 @@ export class Player {
     }
 
 
-    // Can get deleted later, for hitbox adjusting purposes only
-    getHitbox() {
-        return {
-            x: this.x + this.hitboxOffsetX,
-            y: this.y + this.hitboxOffsetY,
-            width: this.hitboxWidth,
-            height: this.hitboxHeight
-        };
-    };
-
-
     /**
      * This method calls all the collision check methods, where the player could potentially collide with
      */
@@ -259,10 +248,10 @@ export class Player {
     collisionWithEnemies() {
         this.game.enemies.forEach(enemy => {
             if (
-                (enemy.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
-                    enemy.x + enemy.enemyWidth > this.x + this.hitboxOffsetX &&
-                    enemy.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
-                    enemy.y + enemy.enemyHeight > this.y + this.hitboxOffsetY) &&
+                (enemy.x + enemy.offsetLeft < this.x + this.hitboxOffsetX + this.hitboxWidth &&
+                    enemy.x + enemy.enemyWidth - enemy.offsetRight > this.x + this.hitboxOffsetX &&
+                    enemy.y + enemy.offsetTop < this.y + this.hitboxOffsetY + this.hitboxHeight &&
+                    enemy.y + enemy.enemyHeight - enemy.offsetBottom > this.y + this.hitboxOffsetY) &&
                 this.verticalMovement > 0
             ) {
                 if (!enemy.willBeDeleted) {
@@ -272,10 +261,10 @@ export class Player {
                 enemy.setState(1);
             }
             else if (
-                (enemy.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
-                    enemy.x + enemy.enemyWidth > this.x + this.hitboxOffsetX &&
-                    enemy.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
-                    enemy.y + enemy.enemyHeight > this.y + this.hitboxOffsetY) &&
+                (enemy.x + enemy.offsetLeft < this.x + this.hitboxOffsetX + this.hitboxWidth &&
+                    enemy.x + enemy.enemyWidth - enemy.offsetRight > this.x + this.hitboxOffsetX &&
+                    enemy.y + enemy.offsetTop < this.y + this.hitboxOffsetY + this.hitboxHeight &&
+                    enemy.y + enemy.enemyHeight - enemy.offsetBottom > this.y + this.hitboxOffsetY) &&
                 this.isOnGround() &&
                 enemy.willBeDeleted === false
             ) {
@@ -296,10 +285,10 @@ export class Player {
     collisionWithBottle() {
         this.game.bottles.forEach(bottle => {
             if (
-                bottle.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
-                bottle.x + bottle.width > this.x + this.hitboxOffsetX &&
-                bottle.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
-                bottle.y + bottle.height > this.y + this.hitboxOffsetY
+                bottle.x + bottle.offsetLeft < this.x + this.hitboxOffsetX + this.hitboxWidth &&
+                bottle.x + bottle.width - bottle.offsetRight > this.x + this.hitboxOffsetX &&
+                bottle.y + bottle.offsetTop < this.y + this.hitboxOffsetY + this.hitboxHeight &&
+                bottle.y + bottle.height - bottle.offsetBottom > this.y + this.hitboxOffsetY
             ) {
                 bottle.markedForDeletion = true;
                 this.collectedBottleMusic.play();
@@ -315,10 +304,10 @@ export class Player {
     collisionWithCoin() {
         this.game.collectableCoins.forEach(coin => {
             if (
-                coin.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
-                coin.x + coin.width > this.x + this.hitboxOffsetX &&
-                coin.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
-                coin.y + coin.height > this.y + this.hitboxOffsetY
+                coin.x + coin.offsetLeft < this.x + this.hitboxOffsetX + this.hitboxWidth &&
+                coin.x + coin.width - coin.offsetRight > this.x + this.hitboxOffsetX &&
+                coin.y + coin.offsetTop < this.y + this.hitboxOffsetY + this.hitboxHeight &&
+                coin.y + coin.height - coin.offsetBottom > this.y + this.hitboxOffsetY
             ) {
                 coin.markedForDeletion = true;
                 this.collectedCoinMusic.play();
@@ -333,10 +322,10 @@ export class Player {
      */
     collisionWithBoss() {
         if (
-            this.game.boss.x < this.x + this.hitboxOffsetX + this.hitboxWidth &&
-            this.game.boss.x + this.game.boss.bossWidth > this.x + this.hitboxOffsetX &&
-            this.game.boss.y < this.y + this.hitboxOffsetY + this.hitboxHeight &&
-            this.game.boss.y + this.game.boss.bossHeight > this.y + this.hitboxOffsetY
+            this.game.boss.x + this.game.boss.offsetLeft < this.x + this.hitboxOffsetX + this.hitboxWidth &&
+            this.game.boss.x + this.game.boss.bossWidth - this.game.boss.offsetRight > this.x + this.hitboxOffsetX &&
+            this.game.boss.y + this.game.boss.offsetTop < this.y + this.hitboxOffsetY + this.hitboxHeight &&
+            this.game.boss.y + this.game.boss.bossHeight - this.game.boss.offsetBottom > this.y + this.hitboxOffsetY
         ) {
             let currentHit = new Date().getTime();
             if (this.game.healthPoints > 0 && currentHit - this.lastHit >= 1500 && this.game.bossHealthPoints > 0) {

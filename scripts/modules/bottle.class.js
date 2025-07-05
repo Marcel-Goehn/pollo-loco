@@ -41,6 +41,10 @@ export class GroundBottle extends Bottle {
         this.width = 75;
         this.height = 75;
         this.y = this.game.height - this.height - this.game.groundMargin;
+        this.offsetTop = 15;
+        this.offsetBottom = 25;
+        this.offsetLeft = 35;
+        this.offsetRight = 50;
         this.image = document.getElementById('salsa_bottle_ground');
     };
 }
@@ -55,6 +59,10 @@ export class AirBottle extends Bottle {
         this.width = 75;
         this.height = 75;
         this.y = this.game.height - this.height - this.game.groundMargin - 150;
+        this.offsetTop = 15;
+        this.offsetBottom = 25;
+        this.offsetLeft = 35;
+        this.offsetRight = 50;
         this.image = document.getElementById('salsa_bottle_air');
     };
 }

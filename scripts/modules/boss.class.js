@@ -13,6 +13,10 @@ export class Boss {
         this.bossHeight = 200;
         this.x = 8000;
         this.y = this.game.height - this.bossHeight - this.game.groundMargin + 10;
+        this.offsetLeft = 15;
+        this.offsetRight = 25;
+        this.offsetTop = 35;
+        this.offsetBottom = 45;
         this.markedForDeletion = false;
         this.image = document.getElementById('boss');
         this.frameX = 0;
