@@ -76,22 +76,12 @@ window.matchMedia("(orientation: portrait)").addEventListener('change', e => {
 
 
 /**
-* This function checks the current state of the phone, if it's in portrait or landscape mode when starting the game
-*/
-const checkScreenOrientation = () => {
+ * 
+ * @returns - it returns a boolen that indicates if the user is on portrait or landscape mode
+ */
+const checkStartingConditions = () => {
     const portrait = window.matchMedia("(orientation: portrait)").matches;
-
-    if (portrait && gameStarted) {
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = null;
-        canvasContainer.classList.add('d_none');
-        deviceOrientationPopUp.classList.remove('d_none');
-    }
-    else if (!portrait && animationFrameId === null && gameStarted) {
-        resumeAnimation();
-        canvasContainer.classList.remove('d_none');
-        deviceOrientationPopUp.classList.add('d_none');
-    }
+    return portrait;
 }
 
 
@@ -99,6 +89,25 @@ const checkScreenOrientation = () => {
  * This function initializes the game and all of its instances 
  */
 function startGame() {
+    if (checkStartingConditions()) {
+        if (!startMenu.classList.contains('d_none')) {
+            startMenu.classList.add('d_none');
+            deviceOrientationPopUp.classList.remove('d_none');
+            setTimeout(() => {
+                deviceOrientationPopUp.classList.add('d_none');
+                startMenu.classList.remove('d_none');
+            }, 4000);
+        } 
+        else if (!endScreen.classList.contains('d_none')) {
+            endScreen.classList.add('d_none');
+            deviceOrientationPopUp.classList.remove('d_none');
+            setTimeout(() => {
+                deviceOrientationPopUp.classList.add('d_none');
+                endScreen.classList.remove('d_none');
+            }, 4000);
+        }
+        return;
+    }
     if (!endScreen.classList.contains('d_none')) {
         endScreen.classList.add('d_none');
     }
