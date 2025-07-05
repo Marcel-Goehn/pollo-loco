@@ -396,7 +396,9 @@ dialog .wrapper {
     canvas, .start-menu, dialog, .device-orientation, .end-screen {
         height: 100dvh;
     }
+}
 
+@media only screen and (max-height: 550px) {
     h1 {
         display: none;
     }

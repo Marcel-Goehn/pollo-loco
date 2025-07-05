@@ -148,6 +148,7 @@ export class ThrowableBottle {
                 enemy.y + enemy.enemyHeight > this.y
             ) {
                 this.setState(1);
+                enemy.willBeDeleted = true;
                 enemy.setState(1);
             };
         });
