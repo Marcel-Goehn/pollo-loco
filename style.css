@@ -311,7 +311,7 @@ dialog .wrapper {
     position: absolute;
     bottom: 0;
     left: 0;
-    display: none;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
@@ -344,12 +344,6 @@ dialog .wrapper {
     text-align: center;
     left: 0;
     right: 0;
-}
-
-@media only screen and (max-width: 768px) {
-    .mobile-control-keys {
-        display: flex;
-    }
 }
 
 @media only screen and (max-width: 720px) {
